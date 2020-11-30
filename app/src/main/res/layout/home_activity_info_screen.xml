@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/bg32"
+    tools:context=".MyLocationInfoScreen"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:id="@+id/frameLayout"
+        android:layout_width="match_parent"
+        android:layout_height="235dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ViewFlipper
+            android:id="@+id/infoScreen_viewFlipper"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/infoScreen_btn_previous"
+            android:layout_width="56dp"
+            android:layout_height="43dp"
+            android:layout_gravity="center|start"
+            android:adjustViewBounds="true"
+            android:background="@mipmap/bg4"
+            android:scaleType="fitCenter"
+            app:srcCompat="@mipmap/previous2" />
+
+        <ImageButton
+            android:id="@+id/infoScreen_btn_next"
+            android:layout_width="56dp"
+            android:layout_height="43dp"
+            android:layout_gravity="center|end"
+            android:adjustViewBounds="true"
+            android:background="@mipmap/bg4"
+            android:scaleType="fitCenter"
+            app:srcCompat="@mipmap/next2" />
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/infoScreen_textView1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/infoScreen_textView2"
+        android:layout_marginLeft="6dp"
+        android:text="@string/info_textview_label"
+        android:textSize="35sp"
+        android:fontFamily="@font/nabila"/>
+
+    <TextView
+        android:id="@+id/infoScreen_textView2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="6dp"
+        android:textSize="9pt"
+        android:lineSpacingMultiplier="1.15"
+        android:layout_marginLeft="6dp"
+        android:layout_marginRight="10dp"
+        android:justificationMode="inter_word"
+        android:scrollbars="vertical"
+        android:fontFamily="@font/sitka"/>
+
+
+</LinearLayout>
+
