@@ -71,6 +71,7 @@
 
         <activity android:name=".GalleryActivity"
             android:label="Your Gallery">
+
         </activity>
     </application>
 
