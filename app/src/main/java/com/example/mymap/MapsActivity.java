@@ -172,6 +172,9 @@ public class MapsActivity extends AppCompatActivity
                 else{
                     //Intent intent = new Intent(MapsActivity.this,EndJourney.class);
                     //startActivity(intent);
+                        //Toast.makeText(HomeActivity.this,"Congrat to complete Your Trip. Make feel Happier!",Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(MapsActivity.this,HomeActivity.class);
+                        startActivity(intent);
                 }
 
             }
@@ -198,6 +201,7 @@ public class MapsActivity extends AppCompatActivity
                 //drawCurLocation();
                 Log.d(TAG, "onClick: "+curLocation.latitude+""+end.latitude);
                 Intent intent = new Intent(MapsActivity.this,GalleryActivity.class);
+                intent.putExtra("reached_idx", locations_idx.get(roundIntent-2));
                 startActivity(intent);
 //                if ((curLocation.latitude-end.latitude<epsilon && end.latitude-curLocation.latitude<epsilon) &&
 //                        (curLocation.longitude-end.longitude<epsilon && end.longitude-curLocation.longitude<epsilon)){

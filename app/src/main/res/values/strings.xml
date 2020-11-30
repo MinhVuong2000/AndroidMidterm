@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">myMap</string>
+    <string name="app_name">SaigonTrip</string>
     <string name="title_activity_maps">Map</string>
     <string name="title_activity_maps__start_routing">Map</string>
     <string name="info_textview_label">Thông tin</string>

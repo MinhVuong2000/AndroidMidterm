@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -21,11 +22,14 @@ import java.util.ArrayList;
 public class GalleryActivity extends AppCompatActivity {
     private static final String TAG = "GalleryActivity";
     private TextView mTextView;
-    private int mLocationId = 1;
+    private int mLocationId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Intent intent = getIntent();
+        mLocationId = intent.getIntExtra("reached_idx", 0);
         Log.d(TAG, "onCreate: ");
         setContentView(R.layout.activity_gallery);
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this, 2);
@@ -43,6 +47,17 @@ public class GalleryActivity extends AppCompatActivity {
 
         MyGalleryAdapter adapter = new MyGalleryAdapter(this,myPhotos);
         mRecyclerView.setAdapter(adapter);
+
+        Button btnContinueTrip = findViewById(R.id.btnContinueTrip);
+        btnContinueTrip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(GalleryActivity.this,MapsActivity.class);
+                intent.putIntegerArrayListExtra("picked_locations_idx",MapsActivity.locations_idx);
+                intent.putExtra("roundIntent", MapsActivity.roundIntent);
+                startActivity(intent);
+            }
+        });
     }
 
     public void open_camera(View view) {

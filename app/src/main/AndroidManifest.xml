@@ -61,14 +61,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".PhotoActivity">
-
+        <activity android:name=".PhotoActivity"
+            android:label="Your Photo">
         </activity>
-        <activity android:name=".AndroidCameraApi">
 
+        <activity android:name=".AndroidCameraApi"
+            android:label="Camera">
         </activity>
-        <activity android:name=".GalleryActivity">
 
+        <activity android:name=".GalleryActivity"
+            android:label="Your Gallery">
         </activity>
     </application>
 
