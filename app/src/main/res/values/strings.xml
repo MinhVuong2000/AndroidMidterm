@@ -1,0 +1,69 @@
+<resources>
+    <string name="app_name">SaigonTrip</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="title_activity_maps__start_routing">Map</string>
+    <string name="info_textview_label">Thông tin</string>
+
+    <!-- Dùng cho button chụp ảnh -->
+    <string name="take_picture">Take picture</string>
+    <string name="title_activity_gallery">GalleryActivity</string>
+    <!--
+    This string is used for square devices and overridden by hello_world in
+    values-round/strings.xml for round devices.
+    -->
+    <string name="hello_world">Hello Square World!</string>
+    <string name="title_activity_photo_">Photo_Activity</string>
+
+
+    <string name="dinhdoclap_location">
+        135 Nam Kỳ khởi nghĩa, phường Bến Nghé, Quận 1
+    </string>
+    <string name="chobenthanh_location">
+        Đ. Lê Lợi, Phường Bến Thành, Quận 1
+    </string>
+    <string name="buudienthanhpho_location">
+        Số 2, Công trường Công xã Paris, phường Bến Nghé, Quận 1
+    </string>
+    <string name="phodibonguyenhue_location">
+        Phường Bến Nghế, Quận 1
+    </string>
+    <string name="duongsach_location">
+        Đường Nguyễn Văn Bình, phường Bến Nghế, Quận 1
+    </string>
+    <string name="thaocamvien_location">
+        Số 2, Nguyễn Bỉnh Khiêm, phường Bến Nghé, Quận 1
+    </string>
+    <string name="nhathoducba_location">
+        Số 1, Công xã Paris, phường Bến Nghé, Quận 1
+    </string>
+
+    <string name="dinhdoclap_info">
+        Dinh Độc Lập, còn gọi là Dinh Thống Nhất, được xây dựng trên dinh Norodom, tượng trưng cho triết lý truyền thống, nghi lễ phương Đông và cá tính của dân tộc Việt Nam trong sự kết hợp hài hòa với kiến trúc hiện đại. Dinh Độc Lập là một biểu tượng của chiến thắng, hòa bình và sự toàn vẹn lãnh thổ của đất nước Việt Nam. Nhờ ý nghĩa lịch sử đó, dinh là một trong những điểm tham quan hấp dẫn nhất thu hút số lượng lớn khách du lịch đến thành phố Hồ Chí Minh.
+    </string>
+
+    <string name="chobenthanh_info">
+        Nằm ở khu vực trung tâm thành phố, từ lâu chợ Bến Thành đã trở thành biểu tượng của Sài Gòn. Không chỉ thuần túy là nơi buôn bán, gần một trăm năm qua ngôi chợ này đã trở thành một chứng nhân lịch sử chứng kiến bao đổi thay thăng trầm của thành phố, là bộ mặt kinh tế nói lên sự phát triển của một thành phố thương mại lớn nhất nước và là điểm giao hòa giữa Sài Gòn xưa và nay. Bến Thành được xem là chợ bán lẻ quy mô nhất theo nghĩa có thể tìm thấy tại nơi này đủ thứ mặt hàng, từ bình dân đến cao cấp, đặc biệt hàng thực phẩm thuộc loại chọn lọc nhất.
+    </string>
+
+    <string name="buudienthanhpho_info">
+        Bưu điện trung tâm Sài Gòn là một trong những công trình kiến trúc tiêu biểu tại Thành phố Hồ Chí Minh, tọa lạc tại số 2, Công trường Công xã Paris, Quận 1. Đây là tòa nhà được người Pháp xây dựng trong khoảng năm 1886–1891 với phong cách châu Âu theo đồ án thiết kế của kiến trúc sư Villedieu cùng phụ tá Foulhoux. Đây là công trình kiến trúc mang phong cách phương Tây kết hợp với nét trang trí phương Đông. Bên ngoài, phía trước tòa nhà trang trí theo từng ô hình chữ nhật, trên đó ghi danh những nhà phát minh ra ngành điện tín và ngành điện. Trên các ô có đắp hình các nam nữ đội vòng nguyệt quế, trên vòng cung ngôi nhà có chiếc đồng hồ lớn. Vào phía bên trong, hai bên tường cao là hai bản đồ lịch sử mang tên: Saigon et ses environs (tạm dịch: Sài Gòn và những môi trường xung quanh), 1892 và Lignes télégraphiques du Sud Vietnam et du Cambodge (tạm dịch: Đường dây điện tín của miền Nam Việt Nam và Cambodia), 1936.
+    </string>
+
+    <string name="phodibonguyenhue_info">
+        Phố đi bộ Nguyễn Huệ nằm ngay ở trung tâm quận 1, Thành phố Hồ Chí Minh. Đây là một trong những công trình mới nhất của thành phố được hoàn thành vào lễ kỉ niệm 40 năm ngày giải phóng hoàn toàn miền Nam thống nhất đất nước 30/4/2015. Buổi tối là thời điểm phố đi bộ Nguyễn Huệ thu hút khách du lịch hơn cả. Từ trên cao nhìn xuống, phố đi bộ Nguyễn Huệ đông vui nhộn nhịp, lung linh sắc màu bởi những ánh đèn. Mọi người sẽ vô cùng thích thú khi được thưởng thức màn trình diễn nhạc nước kết hợp với những ánh đèn laser nghệ thuật tạo màu sắc cuốn hút riêng cho con phố.
+    </string>
+
+    <string name="duongsach_info">
+        Ngay giữa trung tâm thành phố Hồ Chí Minh có một con đường sách mang tên Nguyễn Văn Bình. Không chỉ là một điểm thu hút những người yêu sách mà đây còn trở thành tụ điểm gặp gỡ và thư giãn của nhiều người dân, đặc biệt là các bạn trẻ vào dịp cuối tuần. Ngoài việc tụ họp đầy đủ các đơn vị sách lớn trên cả nước, đường sách Nguyễn Văn Bình còn có khu vực cà phê sách (bên cạnh Bưu điện thành phố), khu vực bán báo, tạp chí, văn phòng phẩm, khu sân chơi,  khu trao đổi sách cũ, khu trưng bày và triển lãm sách, báo hoặc tranh ảnh theo chủ đề,… tạo nên một không gian sách “đích thực” giúp góp phần phát triển văn hoá đọc trong đời sống người dân cũng như là nơi gắn kết sách, người làm sách và bạn đọc.
+    </string>
+
+    <string name="thaocamvien_info">
+        Khởi công xây dựng từ năm 1864, trải qua hơn 150 năm hình thành và phát triển đến nay, thảo cầm viên Sài Gòn được đánh giá là một trong những khu rừng già hiếm hoi giữa lòng thành phố có số lượng lớn các cây di sản, đồng thời cũng là nơi bảo tồn động - thực vật có tuổi thọ lâu đời đứng hàng thứ 8 trên thế giới. Với những nét riêng độc đáo, lưu giữ và trưng bày bộ sưu tập động - thực vật quý hiếm, thậm chí cả những loài đứng trước nguy cơ tuyệt chủng cao, đây không chỉ là điểm đến quen thuộc của người dân thành phố mỗi dịp cuối tuần mà còn là địa chỉ bỏ túi của du khách muốn cảm nhận một Sài Gòn khác biệt, thoát khỏi những ồn ào náo nhiệt của phố thị, trải nghiệm buổi sáng của thành phố giữa không gian mướt xanh, hay một chiều êm đềm tản bộ dưới những tán cổ thụ rực rỡ nắng.
+    </string>
+
+    <string name="nhathoducba_info">
+        Nằm giữa trung tâm quận 1 thành phố Hồ Chí Minh, Nhà thờ Đức Bà đồ sộ với kiến trúc cổ của Pháp, không gian rộng thoáng từ bên ngoài vào đến bên trong thánh đường, đây cũng là một trong những biểu tượng của Sài Gòn, là điểm đến quen thuộc của giới trẻ đất Sài Thành và còn là địa điểm nằm trong danh sách ghé thăm đầu tiên của khách du lịch trong và ngoài  nước khi lần đầu đặt chân đến đây.</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+</resources>
