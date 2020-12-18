@@ -40,9 +40,6 @@
         <activity android:name=".TabActivity">
 
         </activity>
-        <activity
-            android:name=".MapsActivity_StartRouting"
-            android:label="@string/title_activity_maps__start_routing"></activity>
         <activity android:name=".MyLocationInfoScreen" /> <!-- Don't use my api key, it will not work for you. -->
         <meta-data
             android:name="com.google.android.gms.version"
