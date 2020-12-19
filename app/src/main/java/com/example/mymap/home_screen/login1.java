@@ -1,4 +1,4 @@
-package com.example.mymap;
+package com.example.mymap.home_screen;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +8,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.mymap.R;
 
 public class login1 extends AppCompatActivity {
     private EditText user, pass;

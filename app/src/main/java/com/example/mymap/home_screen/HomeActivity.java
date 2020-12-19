@@ -1,4 +1,4 @@
-package com.example.mymap;
+package com.example.mymap.home_screen;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,6 +11,10 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import com.example.mymap.DataLocations;
+import com.example.mymap.R;
+import com.example.mymap.trip_screen.TripActivity;
 
 import java.util.ArrayList;
 
@@ -78,7 +82,7 @@ public class HomeActivity extends AppCompatActivity {
         Log.d(TAG, "num picked "+picked_locations_idx.size());
         for(int i=0; i<picked_locations_idx.size(); i++)
             Log.d(TAG, "picked "+ picked_locations_idx.get(i));
-        Intent intent = new Intent(this, TabActivity.class);
+        Intent intent = new Intent(this, TripActivity.class);
         intent.putIntegerArrayListExtra("picked_locations_idx",picked_locations_idx);
         intent.putExtra("roundIntent", 1);
         startActivity(intent);

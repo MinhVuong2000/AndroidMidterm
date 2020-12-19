@@ -1,7 +1,9 @@
-package com.example.mymap;
+package com.example.mymap.trip_screen.gallery;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+
+import com.example.mymap.R;
 
 public class MyPhoto implements Parcelable {
 
@@ -26,7 +28,7 @@ public class MyPhoto implements Parcelable {
     public static final Creator<MyPhoto> CREATOR = new Creator<MyPhoto>() {
         @Override
         public MyPhoto createFromParcel(Parcel in) {
-            return new com.example.mymap.MyPhoto(in);
+            return new MyPhoto(in);
         }
 
         @Override

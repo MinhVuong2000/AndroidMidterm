@@ -1,4 +1,4 @@
-package com.example.mymap;
+package com.example.mymap.trip_screen.gallery;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.mymap.R;
 
 import java.io.File;
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package com.example.mymap;
+package com.example.mymap.home_screen;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -8,13 +8,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+
+import com.example.mymap.database.MyLocation;
+import com.example.mymap.R;
 
 import java.util.ArrayList;
 

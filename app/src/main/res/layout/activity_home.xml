@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/login5"
-    tools:context=".HomeActivity">
+    tools:context="com.example.mymap.home_screen.HomeActivity">
 
     <ListView
         android:id="@+id/listView"

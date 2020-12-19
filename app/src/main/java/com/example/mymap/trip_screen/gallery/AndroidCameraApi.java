@@ -1,4 +1,4 @@
-package com.example.mymap;
+package com.example.mymap.trip_screen.gallery;
 
 import android.Manifest;
 import android.content.Context;
@@ -33,6 +33,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+
+import com.example.mymap.DataLocations;
+import com.example.mymap.database.MyLocation;
+import com.example.mymap.R;
 
 import java.io.File;
 import java.io.FileNotFoundException;

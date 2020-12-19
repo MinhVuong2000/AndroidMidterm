@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:layout_width="match_parent"
     android:orientation="vertical"
-    tools:context=".MapsFragment">
+    tools:context=".trip_screen.MapsFragment">
 
 
     <TextView
@@ -37,7 +37,7 @@
         map:uiRotateGestures="true"
         map:uiScrollGestures="true"
         map:uiTiltGestures="true"
-        tools:context=".MapsFragment">
+        tools:context=".trip_screen.MapsFragment">
 
         <ImageButton
             android:layout_width="wrap_content"

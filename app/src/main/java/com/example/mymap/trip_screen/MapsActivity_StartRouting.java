@@ -1,4 +1,4 @@
-package com.example.mymap;
+package com.example.mymap.trip_screen;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.example.mymap.R;
 import com.google.android.gms.maps.GoogleMap;
 
 public class MapsActivity_StartRouting extends AppCompatActivity {
