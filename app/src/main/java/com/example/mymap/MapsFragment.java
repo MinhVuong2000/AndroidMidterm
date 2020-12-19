@@ -6,6 +6,8 @@ import androidx.fragment.app.Fragment;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -144,9 +146,7 @@ public class MapsFragment extends Fragment
         Log.d(TAG, "onMapReady: enter");
         mMap = googleMap;
 
-        if (permissionLocation.checkPermissions()) {
-            getLastLocation(false);
-        }
+        getLastLocation(false);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
                 android.R.layout.simple_spinner_item,itemsDisplay);
@@ -230,10 +230,10 @@ public class MapsFragment extends Fragment
         }
     }
 
-    private void arrayRoutes() {
+    public void arrayRoutes() {
         Log.d(TAG, "arrayRoutes: enter");
 
-        //curLocation = new LatLng(10.782165,106.6943696);
+        curLocation = new LatLng(10.782165,106.6943696);
 
         latLngArrayList.add(0,curLocation);
         sizeLatLngList = latLngArrayList.size();
@@ -422,14 +422,14 @@ public class MapsFragment extends Fragment
                             if (!onlyGetLocation) arrayRoutes();
                             mMap.setMyLocationEnabled(true);
                         }
-                        else  permissionLocation.requestNewLocationData();
+                        else  {
+                            permissionLocation.requestNewLocationData();
+                        }
                     }
                 });
             }
             else {
-                Toast.makeText(getActivity(),"Please turn on"+ " your location...",Toast.LENGTH_LONG).show();
-                Intent intent = new Intent( Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                startActivity(intent);
+                permissionLocation.showAlertDialog();
             }
         }
         else {
