@@ -1,28 +1,40 @@
 package com.example.mymap.trip_screen;
 
 import androidx.annotation.NonNull;
+<<<<<<< HEAD:app/src/main/java/com/example/mymap/trip_screen/MapsFragment.java
 import androidx.core.app.ActivityCompat;
+=======
+import androidx.annotation.Nullable;
+>>>>>>> 5f8429dbb58711c89f20e4ad522cbc56cf6c837e:app/src/main/java/com/example/mymap/MapsFragment.java
 import androidx.fragment.app.Fragment;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.location.Location;
-import android.location.LocationManager;
 import android.os.Bundle;
+<<<<<<< HEAD:app/src/main/java/com/example/mymap/trip_screen/MapsFragment.java
 import android.os.Looper;
+=======
+>>>>>>> 5f8429dbb58711c89f20e4ad522cbc56cf6c837e:app/src/main/java/com/example/mymap/MapsFragment.java
 import android.provider.Settings;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+<<<<<<< HEAD:app/src/main/java/com/example/mymap/trip_screen/MapsFragment.java
 import android.widget.ImageButton;
+=======
+import android.widget.EditText;
+import android.widget.Spinner;
+>>>>>>> 5f8429dbb58711c89f20e4ad522cbc56cf6c837e:app/src/main/java/com/example/mymap/MapsFragment.java
 import android.widget.Toast;
 
 import com.directions.route.AbstractRouting;
@@ -30,6 +42,7 @@ import com.directions.route.Route;
 import com.directions.route.RouteException;
 import com.directions.route.Routing;
 import com.directions.route.RoutingListener;
+<<<<<<< HEAD:app/src/main/java/com/example/mymap/trip_screen/MapsFragment.java
 import com.example.mymap.DataLocations;
 import com.example.mymap.database.MyLocation;
 import com.example.mymap.R;
@@ -38,6 +51,10 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
+=======
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.FusedLocationProviderClient;
+>>>>>>> 5f8429dbb58711c89f20e4ad522cbc56cf6c837e:app/src/main/java/com/example/mymap/MapsFragment.java
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -51,28 +68,37 @@ import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.snackbar.Snackbar;
-
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.widget.Autocomplete;
+import com.google.android.libraries.places.widget.AutocompleteActivity;
+import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+<<<<<<< HEAD:app/src/main/java/com/example/mymap/trip_screen/MapsFragment.java
 import com.example.mymap.home_screen.HomeActivity;
+=======
+import static android.app.Activity.RESULT_OK;
+>>>>>>> 5f8429dbb58711c89f20e4ad522cbc56cf6c837e:app/src/main/java/com/example/mymap/MapsFragment.java
 
 public class MapsFragment extends Fragment
         implements OnMapReadyCallback, RoutingListener {
     private static final String TAG = "MapsFragment";
     private static final double epsilon = 0.001;//check to at destination
+    private int zoomDefault = 17;
     //google map object
-    private GoogleMap mMap;
+    static GoogleMap mMap;
 
-    FusedLocationProviderClient mFusedLocationClient;
+    static FusedLocationProviderClient mFusedLocationClient;
+    PermissionLocation permissionLocation;
 
-    int PERMISSION_ID = 44;
+    static int PERMISSION_ID = 44;
 
     private Button btnGotoRouting;
-    private ImageButton btnCurLocation;
+    private EditText editTextSearch;
 
     static ArrayList<Route> routeMaps = null;
     static LatLng curLocation=null;
@@ -80,22 +106,31 @@ public class MapsFragment extends Fragment
     static ArrayList<Integer> locations_idx = null;
     static int sizeLatLngList;
     static int roundIntent;
+    static boolean startARouteInt;
 
     Integer[] distanceList=null;
     int index_minDistance, round;
-
     ArrayList<Route> routeMapsRound = null;
+
+    private Spinner spinner;
+    private static final String[] items = {"","restaurant", "coffee", "gasstation"};
+    private static final String[] itemsDisplay = {"Tìm địa điểm gần đây", "Nhà hàng", "Quán Coffee", "Trạm xăng"};
+    public static final int[] iconItems = {0,R.drawable.ic_restaurant,R.drawable.ic_drink,R.drawable.ic_gas};
+    public static ArrayList<Marker> markersItems = null;
+
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        Log.d(TAG, "onCreateView: createview");
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.activity_maps, container, false);
 
         btnGotoRouting = (Button) view.findViewById(R.id.btnGoToRouting);
-        btnCurLocation = (ImageButton) view.findViewById(R.id.btnCurLocation);
-        Log.d(TAG, "onCreateView: createview");
+
+        editTextSearch = (EditText)view.findViewById(R.id.edit_text_search);
+        spinner = (Spinner)view.findViewById(R.id.spinnerNearby);
 
         SupportMapFragment mapFragment = (SupportMapFragment)getChildFragmentManager()
                 .findFragmentById(R.id.map);
@@ -104,10 +139,10 @@ public class MapsFragment extends Fragment
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(getActivity());//get intent from HomeActivity
-
+        permissionLocation = new PermissionLocation(curLocation,MapsFragment.this);
         Bundle bundle = getArguments();
         if(bundle!=null){
             locations_idx = bundle.getIntegerArrayList("picked_locations_idx");
@@ -124,14 +159,9 @@ public class MapsFragment extends Fragment
         //init for find route
         index_minDistance = 0;
         round=1;
+        startARouteInt = false;
 
         Log.d(TAG, "onCreate: oncreate");
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        Log.d(TAG, "onResume: onResume");
     }
 
 
@@ -140,14 +170,25 @@ public class MapsFragment extends Fragment
         Log.d(TAG, "onMapReady: enter");
         mMap = googleMap;
 
-        if (checkPermissions()) {
+        if (permissionLocation.checkPermissions()) {
             getLastLocation(false);
         }
 
-        btnCurLocation.setOnClickListener(new View.OnClickListener() {
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
+                android.R.layout.simple_spinner_item,itemsDisplay);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onClick(View view) {
-                getLastLocation(true);
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
+                if (position!=0){
+                    getPlacesWithItem(items[position]);
+                    for (int i=0;i<markersItems.size();i++)
+                        markersItems.get(i).setIcon(BitmapDescriptorFactory.fromResource(iconItems[position]));
+                }
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
             }
         });
 
@@ -155,9 +196,7 @@ public class MapsFragment extends Fragment
             @Override
             public void onClick(View view) {
                 if (roundIntent!=sizeLatLngList){
-                    mMap.animateCamera(CameraUpdateFactory.newLatLng(latLngArrayList.get(roundIntent-1)));
                     startARoute();
-
                 }
                 else{
                     Intent intent = new Intent(getActivity(), HomeActivity.class);
@@ -165,14 +204,63 @@ public class MapsFragment extends Fragment
                 }
             }
         });
+
+        //init places
+        Places.initialize(getActivity(),getResources().getString(R.string.google_maps_key));
+        //set editText non focusable
+        editTextSearch.setFocusable(false);
+        editTextSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //init place field list
+                List<Place.Field> fieldList = Arrays.asList(Place.Field.ADDRESS,
+                        Place.Field.LAT_LNG, Place.Field.NAME);
+                //create intent
+                Intent intent = new Autocomplete.IntentBuilder(AutocompleteActivityMode.OVERLAY,
+                        fieldList).build(getActivity());
+                startActivityForResult(intent,100);
+            }
+        });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode==100 && resultCode== RESULT_OK ){
+            Place place = Autocomplete.getPlaceFromIntent(data);
+            Log.d(TAG, "onActivityResult: "+place.getName()+ " "+ place.getLatLng().toString());
+        }
+        else if (resultCode ==  AutocompleteActivity.RESULT_ERROR){
+            Status status = Autocomplete.getStatusFromIntent(data);
+            Toast.makeText(getActivity(),status.getStatusMessage(),Toast.LENGTH_SHORT).show();
+        }
     }
 
 
+    private void getPlacesWithItem(String item) {
+        if (curLocation!=null){
+            String url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json" +
+                    "?location="+curLocation.latitude + ","+curLocation.longitude +
+                    "&radius=100" +
+                    "&name=" + item +
+                    "&sensor=true" +
+                    "&fields=name,rating,formatted_phone_number" +
+                    "&key=" + getResources().getString(R.string.google_maps_key);
+
+            Log.d(TAG, "getPlacesWithItem: "+ url);
+            //exe place task method to download json data
+            new PlaceTask(mMap,MapsFragment.this).execute(url);
+        }
+        else{
+            Toast.makeText(getActivity(),"Unable to your Location!", Toast.LENGTH_SHORT).show();
+        }
+    }
+
     private void arrayRoutes() {
         Log.d(TAG, "arrayRoutes: enter");
-        if (curLocation==null){
-            getLastLocation(true);
-        }
+
+        //curLocation = new LatLng(10.782165,106.6943696);
+
         latLngArrayList.add(0,curLocation);
         sizeLatLngList = latLngArrayList.size();
         distanceList = new Integer[sizeLatLngList-1];
@@ -180,13 +268,15 @@ public class MapsFragment extends Fragment
         routeMapsRound = new ArrayList<>();
         routeMaps = new ArrayList<Route>(sizeLatLngList-1);
 
-        mMap.animateCamera( CameraUpdateFactory.newLatLngZoom(DataLocations.mData.get(locations_idx.get(roundIntent-1)).get_latlng(), 20));
+        mMap.animateCamera( CameraUpdateFactory.newLatLngZoom(DataLocations.mData.get(locations_idx.get(roundIntent-1)).get_latlng(), zoomDefault));
+        mMap.addMarker(new MarkerOptions().position(curLocation)
+                .icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_home)));
         for (int nextLoca=1;nextLoca<sizeLatLngList;nextLoca++){
             for (int nextNextLoca = nextLoca;nextNextLoca<sizeLatLngList;nextNextLoca++){
                 Log.d(TAG, "arrayRoutes: "+nextLoca+" "+nextNextLoca);
                 Findroutes(latLngArrayList.get(nextLoca-1),latLngArrayList.get(nextNextLoca));
             }
-            addScaleIconLocation(mMap,DataLocations.mData.get(locations_idx.get(nextLoca-1)), ((int)mMap.getCameraPosition().zoom)*100,((int)mMap.getCameraPosition().zoom)*100, false);
+            addScaleIconLocation(mMap,DataLocations.mData.get(locations_idx.get(nextLoca-1)),120,120, false);
         }
     }
 
@@ -202,15 +292,16 @@ public class MapsFragment extends Fragment
 
 
     public void startARoute() {
-        int k=routeMaps.get(roundIntent-1).getPoints().size();
-        final LatLng end = routeMaps.get(roundIntent-1).getPoints().get(k-1);
+        startARouteInt=true;
+        LatLng start = routeMaps.get(roundIntent-1).getPoints().get(0);
+        showRoute(routeMaps.get(roundIntent-1),mMap,false,startARouteInt);
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(start,zoomDefault+2));
         roundIntent++;
         btnGotoRouting.setText("Check in Destination");
         btnGotoRouting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //drawCurLocation();
-                Log.d(TAG, "onClick: " + curLocation.latitude + "" + end.latitude);
+                startARouteInt = false;
                 Intent intent = new Intent(getActivity(), GalleryActivity.class);
                 intent.putExtra("reached_idx", locations_idx.get(roundIntent - 2));
                 startActivity(intent);
@@ -239,8 +330,7 @@ public class MapsFragment extends Fragment
             if (Start==null)
             Toast.makeText(getActivity(),"Unable to get your location", Toast.LENGTH_LONG).show();
         }
-        else
-        {
+        else{
             Routing routing = new Routing.Builder()
                     .travelMode(AbstractRouting.TravelMode.DRIVING)
                     .withListener(this)
@@ -256,18 +346,20 @@ public class MapsFragment extends Fragment
     //Routing call back functions.
     @Override
     public void onRoutingFailure(RouteException e) {
-        View parentLayout = getView().findViewById(android.R.id.content);
-        Snackbar snackbar= Snackbar.make(parentLayout, e.toString(), Snackbar.LENGTH_LONG);
-        snackbar.show();
+        Toast.makeText(getActivity(),"Finding Route failed!", Toast.LENGTH_LONG).show();
+        Log.d(TAG, "onRoutingFailure: ");
     }
 
     @Override
     public void onRoutingStart() {
         Toast.makeText(getActivity(),"Finding Route...",Toast.LENGTH_LONG).show();
+        Log.d(TAG, "onRoutingStart: ");
     }
 
     @Override
     public void onRoutingCancelled() {
+        Toast.makeText(getActivity(),"Finding Route cancelled!", Toast.LENGTH_LONG).show();
+        Log.d(TAG, "onRoutingCancelled: ");
     }
 
 
@@ -277,19 +369,17 @@ public class MapsFragment extends Fragment
 
         //add route(s) to the map using polyline
         for (int i = 0; i <route.size(); i++) {
-
             if(i==shortestRouteIndex)
             {
                 routeMapsRound.add(route.get(i));
                 distanceList[index_minDistance]=route.get(i).getDistanceValue();
                 index_minDistance+=1;
-                //Toast.makeText(this,""+index_minDistance+" "+round,Toast.LENGTH_SHORT).show();
                 if (index_minDistance == sizeLatLngList-round){
                     addARoute();
-
                 }
                 break;
             }
+            Log.d(TAG, "onRoutingSuccess: ");
         }
     }
 
@@ -308,7 +398,7 @@ public class MapsFragment extends Fragment
             locations_idx.set(index_minDistance+round-1, tmp);
         }
         routeMaps.add(routeMapsRound.get(index_minDistance));
-        showRoute(routeMaps.get(round-1), mMap,roundIntent>round);
+        showRoute(routeMaps.get(round-1), mMap,roundIntent>round, startARouteInt);
         round++;
 
         routeMapsRound.clear();
@@ -318,7 +408,7 @@ public class MapsFragment extends Fragment
     }
 
 
-    public void showRoute(Route r, GoogleMap mMap, boolean changeColor){
+    public static void showRoute(Route r, GoogleMap mMap, boolean changeColor, boolean startARoute){
         List<Polyline> polylines = null;
         if(polylines!=null) {
             polylines.clear();
@@ -328,6 +418,8 @@ public class MapsFragment extends Fragment
         polylines = new ArrayList<>();
         if (changeColor)
             polyOptions.color(Color.argb(100,100,100,100));
+        if (startARoute)
+            polyOptions.color(Color.argb(255,0,0,255));
         polyOptions.width(7);
         polyOptions.addAll(r.getPoints());
         Polyline polyline = mMap.addPolyline(polyOptions);
@@ -339,9 +431,9 @@ public class MapsFragment extends Fragment
     {
         Log.d(TAG, "getLastLocation: enter");
         // check if permissions are given
-        if (checkPermissions()) {
+        if (permissionLocation.checkPermissions()) {
             // check if location is enabled
-            if (isLocationEnabled()) {
+            if (permissionLocation.isLocationEnabled()) {
 
                 Log.d(TAG, "getLastLocation: isLocationEnable");
                 // getting last location from FusedLocationClient object
@@ -354,8 +446,9 @@ public class MapsFragment extends Fragment
                                     , location.getLongitude());
                             Log.d(TAG, "Location: " + curLocation.toString());
                             if (!onlyGetLocation) arrayRoutes();
+                            mMap.setMyLocationEnabled(true);
                         }
-                        else  requestNewLocationData();
+                        else  permissionLocation.requestNewLocationData();
                     }
                 });
             }
@@ -367,63 +460,13 @@ public class MapsFragment extends Fragment
         }
         else {
             // if permissions aren't available, request for permissions
-            requestPermissions();
+            permissionLocation.requestPermissions();
         }
-    }
-
-    @SuppressLint("MissingPermission")
-    private void requestNewLocationData()
-    {
-        // Initializing LocationRequest object with appropriate methods
-        LocationRequest mLocationRequest = new LocationRequest();
-        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-        mLocationRequest.setInterval(5);
-        mLocationRequest.setFastestInterval(0);
-        mLocationRequest.setNumUpdates(1);
-
-        // setting LocationRequest on FusedLocationClient
-        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(getActivity());
-
-        mFusedLocationClient.requestLocationUpdates( mLocationRequest, mLocationCallback, Looper.myLooper());
-    }
-
-    private LocationCallback mLocationCallback = new LocationCallback() {
-
-        @Override
-        public void onLocationResult( LocationResult locationResult){
-            Location mLastLocation = locationResult.getLastLocation();
-            curLocation = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
-        }
-    };
-
-    // method to check for permissions
-    private boolean checkPermissions()
-    {
-        return ActivityCompat.checkSelfPermission(getActivity(),Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
-    }
-
-    // method to requestfor permissions
-    private void requestPermissions()
-    {
-        ActivityCompat.requestPermissions(getActivity(), new String[] { Manifest.permission.ACCESS_COARSE_LOCATION,
-                Manifest.permission.ACCESS_FINE_LOCATION }, PERMISSION_ID);
-    }
-
-    // method to check
-    // if location is enabled
-    private boolean isLocationEnabled()
-    {
-        LocationManager locationManager  = (LocationManager)getActivity().getSystemService( Context.LOCATION_SERVICE);
-
-        return locationManager.isProviderEnabled(
-                LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
     }
 
     // If everything is alright then
     @Override
-    public void
-    onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
         if (requestCode == PERMISSION_ID) {
@@ -433,3 +476,6 @@ public class MapsFragment extends Fragment
         }
     }
 }
+
+//detail place: https://www.youtube.com/watch?v=0LiRz-9Py8s&t=286s
+//https://github.com/sksoumik/Nearby-Search
