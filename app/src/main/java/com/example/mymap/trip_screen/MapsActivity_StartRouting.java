@@ -25,7 +25,6 @@ public class MapsActivity_StartRouting extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps__start_routing);
 
-        textShowRouting = (TextView) findViewById(R.id.textShowRouting);
         btnGotoRouting = (Button) findViewById(R.id.btnGoToRouting);
         btnCurLocation = (ImageButton) findViewById(R.id.btnCurLocation);
 

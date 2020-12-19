@@ -56,7 +56,6 @@
         map:uiRotateGestures="true"
         map:uiScrollGestures="true"
         map:uiTiltGestures="true"
-<<<<<<< HEAD
         tools:context=".trip_screen.MapsFragment">
 
         <ImageButton
@@ -68,8 +67,5 @@
             android:id="@+id/btnCurLocation"></ImageButton>
     </fragment>
 
-=======
-        tools:context=".MapsFragment"/>
->>>>>>> 5f8429dbb58711c89f20e4ad522cbc56cf6c837e
 
 </LinearLayout>
