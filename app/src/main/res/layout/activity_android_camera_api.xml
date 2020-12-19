@@ -3,8 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="com.example.androidcameraapi2.AndroidCameraApi">
+    android:orientation="vertical">
     <!-- TextureView cho việc preview Camera2 -->
     <TextureView
         android:id="@+id/texture"

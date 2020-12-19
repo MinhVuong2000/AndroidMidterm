@@ -2,6 +2,7 @@ package com.example.mymap;
 
 import android.content.Context;
 
+import com.example.mymap.database.MyLocation;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;

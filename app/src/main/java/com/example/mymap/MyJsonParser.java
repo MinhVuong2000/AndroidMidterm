@@ -2,7 +2,7 @@ package com.example.mymap;
 
 import android.util.Log;
 
-import com.google.gson.JsonParser;
+
 
 import org.json.JSONArray;
 import org.json.JSONException;

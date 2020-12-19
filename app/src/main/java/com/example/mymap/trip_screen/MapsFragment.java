@@ -1,13 +1,10 @@
-package com.example.mymap;
+package com.example.mymap.trip_screen;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -15,7 +12,6 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,8 +28,14 @@ import com.directions.route.Route;
 import com.directions.route.RouteException;
 import com.directions.route.Routing;
 import com.directions.route.RoutingListener;
-import com.google.android.gms.common.api.Status;
+import com.example.mymap.DataLocations;
+import com.example.mymap.PermissionLocation;
+import com.example.mymap.PlaceTask;
+import com.example.mymap.database.MyLocation;
+import com.example.mymap.R;
+import com.example.mymap.trip_screen.gallery.GalleryActivity;
 import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -57,7 +59,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-
+import com.example.mymap.home_screen.HomeActivity;
 import static android.app.Activity.RESULT_OK;
 
 public class MapsFragment extends Fragment
@@ -68,10 +70,10 @@ public class MapsFragment extends Fragment
     //google map object
     static GoogleMap mMap;
 
-    static FusedLocationProviderClient mFusedLocationClient;
+    public static FusedLocationProviderClient mFusedLocationClient;
     PermissionLocation permissionLocation;
 
-    static int PERMISSION_ID = 44;
+    public static int PERMISSION_ID = 44;
 
     private Button btnGotoRouting;
     private EditText editTextSearch;
@@ -173,7 +175,7 @@ public class MapsFragment extends Fragment
                     startARoute();
                 }
                 else{
-                    Intent intent = new Intent(getActivity(),HomeActivity.class);
+                    Intent intent = new Intent(getActivity(), HomeActivity.class);
                     startActivity(intent);
                 }
             }

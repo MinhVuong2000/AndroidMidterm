@@ -21,8 +21,8 @@ import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.LatLng;
 
-import static com.example.mymap.MapsFragment.PERMISSION_ID;
-import static com.example.mymap.MapsFragment.mFusedLocationClient;
+import static com.example.mymap.trip_screen.MapsFragment.PERMISSION_ID;
+import static com.example.mymap.trip_screen.MapsFragment.mFusedLocationClient;
 
 public class PermissionLocation {
     LatLng curLocation;
@@ -83,7 +83,8 @@ public class PermissionLocation {
 
     public void showAlertDialog(){
         AlertDialog.Builder builder1 = new AlertDialog.Builder(mActivity.getActivity());
-        builder1.setMessage("Write your message here.");
+        builder1.setMessage("You need turn on GPS to find best Trip for you. " +
+                "Can you turn on your GPS?");
         builder1.setCancelable(true);
 
         builder1.setPositiveButton(

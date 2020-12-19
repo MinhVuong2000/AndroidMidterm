@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:layout_width="match_parent"
     android:orientation="vertical"
-    tools:context=".MapsFragment">
+    tools:context=".trip_screen.MapsFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -56,6 +56,16 @@
         map:uiRotateGestures="true"
         map:uiScrollGestures="true"
         map:uiTiltGestures="true"
-        tools:context=".MapsFragment"/>
+        tools:context=".trip_screen.MapsFragment">
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/cur_location"
+            android:layout_gravity="right"
+            android:background="#aaaa"
+            android:id="@+id/btnCurLocation"></ImageButton>
+    </fragment>
+
 
 </LinearLayout>

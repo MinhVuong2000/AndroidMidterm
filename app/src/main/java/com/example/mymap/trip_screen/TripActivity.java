@@ -1,4 +1,4 @@
-package com.example.mymap;
+package com.example.mymap.trip_screen;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -7,11 +7,12 @@ import androidx.viewpager.widget.ViewPager;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.example.mymap.R;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 
-public class TabActivity extends AppCompatActivity {
+public class TripActivity extends AppCompatActivity {
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private Fragment MapFragment;

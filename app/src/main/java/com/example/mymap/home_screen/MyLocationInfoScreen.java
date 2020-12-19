@@ -1,4 +1,4 @@
-package com.example.mymap;
+package com.example.mymap.home_screen;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -12,6 +12,10 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
+
+import com.example.mymap.DataLocations;
+import com.example.mymap.database.MyLocation;
+import com.example.mymap.R;
 
 import java.util.ArrayList;
 

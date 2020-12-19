@@ -1,4 +1,4 @@
-package com.example.mymap;
+package com.example.mymap.trip_screen.gallery;
 
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
+import com.example.mymap.R;
 
 public class PhotoActivity extends AppCompatActivity {
 

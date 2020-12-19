@@ -1,18 +1,23 @@
-package com.example.mymap;
+package com.example.mymap.database;
 
 import android.annotation.SuppressLint;
 import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import com.google.android.gms.maps.model.LatLng;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 
-
+@Entity(tableName="location")
 public class MyLocation implements Serializable {
 
+    @PrimaryKey(autoGenerate = true)
+    private int id;
 
     private int _pictureID;
     private String _name;

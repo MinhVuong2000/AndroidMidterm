@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@mipmap/bg32"
-    tools:context=".MyLocationInfoScreen"
+    tools:context="com.example.mymap.home_screen.MyLocationInfoScreen"
     android:orientation="vertical">
 
     <FrameLayout

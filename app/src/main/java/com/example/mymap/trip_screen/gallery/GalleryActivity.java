@@ -1,4 +1,4 @@
-package com.example.mymap;
+package com.example.mymap.trip_screen.gallery;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +10,10 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.mymap.DataLocations;
+import com.example.mymap.database.MyLocation;
+import com.example.mymap.R;
 
 import java.util.ArrayList;
 
@@ -43,15 +47,15 @@ public class GalleryActivity extends AppCompatActivity {
         mRecyclerView.setAdapter(adapter);
 
         Button btnContinueTrip = findViewById(R.id.btnContinueTrip);
-        btnContinueTrip.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(GalleryActivity.this, MapsFragment.class);
-                intent.putIntegerArrayListExtra("picked_locations_idx", MapsFragment.locations_idx);
-                intent.putExtra("roundIntent", MapsFragment.roundIntent);
-                startActivity(intent);
-            }
-        });
+//        btnContinueTrip.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(GalleryActivity.this, MapsFragment.class);
+//                intent.putIntegerArrayListExtra("picked_locations_idx", MapsFragment.locations_idx);
+//                intent.putExtra("roundIntent", MapsFragment.roundIntent);
+//                startActivity(intent);
+//            }
+//        });
     }
 
     public void open_camera(View view) {
