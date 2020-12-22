@@ -59,7 +59,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import com.example.mymap.home_screen.HomeActivity;
+import com.example.mymap.home_screen.ChooseLocationActivity;
 import static android.app.Activity.RESULT_OK;
 
 public class MapsFragment extends Fragment
@@ -175,7 +175,7 @@ public class MapsFragment extends Fragment
                     startARoute();
                 }
                 else{
-                    Intent intent = new Intent(getActivity(), HomeActivity.class);
+                    Intent intent = new Intent(getActivity(), ChooseLocationActivity.class);
                     startActivity(intent);
                 }
             }

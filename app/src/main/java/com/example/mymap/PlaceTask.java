@@ -1,17 +1,11 @@
 package com.example.mymap;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
-import android.util.Log;
 
 import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.model.BitmapDescriptor;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.json.JSONException;
@@ -27,11 +21,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import static com.example.mymap.MapsFragment.locations_idx;
-import static com.example.mymap.MapsFragment.markersItems;
-import static com.example.mymap.MapsFragment.roundIntent;
-import static com.example.mymap.MapsFragment.routeMaps;
-import static com.example.mymap.MapsFragment.startARouteInt;
+import static com.example.mymap.trip_screen.MapsFragment.markersItems;
+//import static com.example.mymap.trip_screen.MapsFragment.startARouteInt;
 
 public class PlaceTask extends AsyncTask<String,Integer,String> {
     GoogleMap mMap;

@@ -4,7 +4,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
@@ -16,7 +15,6 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.mymap.R;
@@ -52,7 +50,7 @@ public class AddPhotoToTripActitivy extends AppCompatActivity {
         ibtn_camera = findViewById(R.id.ibtn_camera);
 
         mListPhotoPath = new ArrayList<>();
-        mListPhotoPath = MyDatabase.getInstance(this).myDAO().getListPhotoFromTrip(mTripId);
+        mListPhotoPath = MyDatabase.getInstance(this).myDAO().getListPhotoPathFromTrip(mTripId);
         myPhotoAdapter = new MyPhotoAdapter(mListPhotoPath);
 
         mRecyclerView = findViewById(R.id.recyclerView_test);
@@ -82,7 +80,7 @@ public class AddPhotoToTripActitivy extends AppCompatActivity {
         MyDatabase.getInstance(this).myDAO().insertPhoto(photo);
         Toast.makeText(this, "Add photo successfully", Toast.LENGTH_SHORT).show();
 
-        mListPhotoPath = MyDatabase.getInstance(this).myDAO().getListPhotoFromTrip(mTripId);
+        mListPhotoPath = MyDatabase.getInstance(this).myDAO().getListPhotoPathFromTrip(mTripId);
         myPhotoAdapter.setData(mListPhotoPath);
     }
 

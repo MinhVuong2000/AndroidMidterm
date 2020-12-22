@@ -5,8 +5,6 @@ import androidx.room.PrimaryKey;
 
 @Entity(tableName="trip")
 public class Trip {
-
-
     @PrimaryKey(autoGenerate = true)
     private int tripId;
 

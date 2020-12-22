@@ -27,7 +27,7 @@ public class login1 extends AppCompatActivity {
                 String example = "admin";
                 if(user.getText().toString().equals(example) && pass.getText().toString().equals(example))
                 {
-                    Intent intent = new Intent(login1.this, HomeActivity.class);
+                    Intent intent = new Intent(login1.this, ChooseLocationActivity.class);
                     startActivity(intent);
                 }
                 else

@@ -27,7 +27,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".database.AddPhotoToTripActitivy"></activity>
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -50,28 +49,26 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity android:name=".trip_screen.TripActivity">
 
-        </activity>
-        <activity android:name=".home_screen.MyLocationInfoScreen" /> <!-- Don't use my api key, it will not work for you. -->
-
-        <meta-data
-            android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
-
-        <activity android:name=".database.AddTripActivity">
+        <activity android:name=".home_screen.NamedTripActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".trip_screen.TripActivity" />
-        <activity
-            android:name=".trip_screen.MapsActivity_StartRouting"
-            android:label="@string/title_activity_maps__start_routing" />
-        <activity android:name=".home_screen.MyLocationInfoScreen" />
-        <activity android:name=".home_screen.HomeActivity"></activity>
+        <activity android:name=".database.AddPhotoToTripActitivy" />
+        <activity android:name=".trip_screen.TripActivity"></activity>
+        <activity android:name=".home_screen.MyLocationInfoScreen" /> <!-- Don't use my api key, it will not work for you. -->
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+        <activity android:name=".database.AddTripActivity">
+
+        </activity>
+
+        <activity android:name=".home_screen.ChooseLocationActivity" />
         <activity android:name=".home_screen.login1" />
         <activity
             android:name=".trip_screen.gallery.PhotoActivity"
@@ -79,9 +76,6 @@
         <activity
             android:name=".trip_screen.gallery.AndroidCameraApi"
             android:label="Camera" />
-        <activity
-            android:name=".trip_screen.gallery.GalleryActivity"
-            android:label="Your Gallery" />
     </application>
 
 </manifest>
