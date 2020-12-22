@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
+import com.bumptech.glide.Glide;
 import com.example.mymap.database.MyLocation;
 import com.example.mymap.R;
 
@@ -57,9 +58,8 @@ public class MyLocationAdapter extends ArrayAdapter<MyLocation>  implements Comp
 
         MyLocation location = _locations.get(position);
 
-        Bitmap avt = BitmapFactory.decodeResource(_context.getResources(), location.get_pictureID());
-        holder.pictureView.setImageBitmap(avt);
-        holder.locationName.setText(location.get_name());
+        Glide.with(_context).load(location.getIcon()).into(holder.pictureView);
+        holder.locationName.setText(location.getName());
 
         holder.checkBox.setTag(position);
         holder.checkBox.setChecked(_checkStates.get(position, false));

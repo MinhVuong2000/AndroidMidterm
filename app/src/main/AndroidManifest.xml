@@ -59,7 +59,7 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity android:name=".database.AddTripActivity">
+        <activity android:name=".home_screen.HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -67,11 +67,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".trip_screen.TripActivity" />
-        <activity
-            android:name=".trip_screen.MapsActivity_StartRouting"
-            android:label="@string/title_activity_maps__start_routing" />
         <activity android:name=".home_screen.MyLocationInfoScreen" />
-        <activity android:name=".home_screen.HomeActivity"></activity>
+        <activity android:name=".database.AddTripActivity"></activity>
         <activity android:name=".home_screen.login1" />
         <activity
             android:name=".trip_screen.gallery.PhotoActivity"

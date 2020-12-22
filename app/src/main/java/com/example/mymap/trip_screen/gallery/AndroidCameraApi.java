@@ -34,7 +34,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
-import com.example.mymap.DataLocations;
 import com.example.mymap.database.MyLocation;
 import com.example.mymap.R;
 
@@ -89,7 +88,7 @@ public class AndroidCameraApi extends AppCompatActivity {
 
         Intent intent = getIntent();
         int id = intent.getIntExtra("location_id", 0);
-        mLocation = DataLocations.mData.get(id);
+        mLocation = MyLocation.getLocationAtPos(id);
 
         textureView = (TextureView) findViewById(R.id.texture);
         assert textureView != null;
@@ -196,9 +195,9 @@ public class AndroidCameraApi extends AppCompatActivity {
             int rotation = getWindowManager().getDefaultDisplay().getRotation();
             captureBuilder.set(CaptureRequest.JPEG_ORIENTATION, ORIENTATIONS.get(rotation));
 
-            String uri = Environment.getExternalStorageDirectory()+"/"+ mLocation.generate_nextPhotoName();
-            final File file = new File(uri);
-            mLocation.add_uri(uri);
+            //String uri = Environment.getExternalStorageDirectory()+"/"+ mLocation.generate_nextPhotoName();
+            //final File file = new File(uri);
+            //mLocation.add_uri(uri);
             ImageReader.OnImageAvailableListener readerListener = new ImageReader.OnImageAvailableListener() {
                 @Override
                 public void onImageAvailable(ImageReader reader) {
@@ -306,7 +305,7 @@ public class AndroidCameraApi extends AppCompatActivity {
                 ActivityCompat.requestPermissions(AndroidCameraApi.this, new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_CAMERA_PERMISSION);
                 return;
             }
-            manager.openCamera(cameraId, stateCallback, null);
+            //manager.openCamera(cameraId, stateCallback, null);
         } catch (CameraAccessException e) {
             e.printStackTrace();
         }

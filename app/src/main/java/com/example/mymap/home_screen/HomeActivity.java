@@ -1,12 +1,10 @@
 package com.example.mymap.home_screen;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.View;
@@ -15,18 +13,24 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.example.mymap.DataLocations;
 import com.example.mymap.R;
+import com.example.mymap.database.MyLocation;
 import com.example.mymap.trip_screen.TripActivity;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
 public class HomeActivity extends AppCompatActivity {
+    public static DatabaseReference databaseReference;
     private static final String TAG = "HomeActivity";
-    //ArrayList<MyLocation> _listLocations;
     private ListView _listView;
     MyLocationAdapter _myLocationAdapter;
     private Button button;
+    ArrayList<MyLocation> locationsArrayList;
 
 
     @Override
@@ -35,15 +39,14 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         Toast.makeText(getApplicationContext(),"Đăng nhập thành công!",Toast.LENGTH_SHORT).show();
         setTitle("Choose Your Destinations");
+        locationsArrayList = new ArrayList<>();
         initData();
         initListView();
         initButton();
-
-
     }
 
     private void initListView() {
-        _myLocationAdapter = new MyLocationAdapter(this, R.layout.home_activity_listview_item, DataLocations.mData);
+        _myLocationAdapter = new MyLocationAdapter(this, R.layout.home_activity_listview_item, locationsArrayList);
         _listView = findViewById(R.id.listView);
         _listView.setAdapter(_myLocationAdapter);
         _listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -59,7 +62,19 @@ public class HomeActivity extends AppCompatActivity {
 
 
     private void initData() {
-        DataLocations.GenerateData(getBaseContext());
+        databaseReference= FirebaseDatabase.getInstance().getReference("myLocation");
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot di:dataSnapshot.getChildren()){
+                    locationsArrayList.add(di.getValue(MyLocation.class));
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
     }
 
 

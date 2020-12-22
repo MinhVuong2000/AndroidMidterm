@@ -27,12 +27,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import static com.example.mymap.MapsFragment.locations_idx;
-import static com.example.mymap.MapsFragment.markersItems;
-import static com.example.mymap.MapsFragment.roundIntent;
-import static com.example.mymap.MapsFragment.routeMaps;
-import static com.example.mymap.MapsFragment.startARouteInt;
-
+import static com.example.mymap.trip_screen.MapsFragment.markersItems;
 public class PlaceTask extends AsyncTask<String,Integer,String> {
     GoogleMap mMap;
     Fragment mActivity;
