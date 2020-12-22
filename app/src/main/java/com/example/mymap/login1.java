@@ -25,7 +25,8 @@ public class login1 extends AppCompatActivity {
                 String example = "admin";
                 if(user.getText().toString().equals(example) && pass.getText().toString().equals(example))
                 {
-                    Intent intent = new Intent(login1.this, HomeActivity.class);
+                    Intent intent = new Intent(login1.this, MyTrip.class);
+                    Toast.makeText(getApplicationContext(),"Đăng nhập thành công!",Toast.LENGTH_SHORT).show();
                     startActivity(intent);
                 }
                 else

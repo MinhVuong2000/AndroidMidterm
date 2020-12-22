@@ -63,5 +63,16 @@
 
     <string name="nhathoducba_info">
         Nằm giữa trung tâm quận 1 thành phố Hồ Chí Minh, Nhà thờ Đức Bà đồ sộ với kiến trúc cổ của Pháp, không gian rộng thoáng từ bên ngoài vào đến bên trong thánh đường, đây cũng là một trong những biểu tượng của Sài Gòn, là điểm đến quen thuộc của giới trẻ đất Sài Thành và còn là địa điểm nằm trong danh sách ghé thăm đầu tiên của khách du lịch trong và ngoài  nước khi lần đầu đặt chân đến đây.</string>
+    <string name="title_activity_my_trip1">MyTrip1</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
 
 </resources>
