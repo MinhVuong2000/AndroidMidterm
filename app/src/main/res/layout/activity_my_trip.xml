@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:id="@+id/drawer_layout"
     android:fitsSystemWindows="true"
-    tools:context=".MyTrip"
+    tools:context=".MyTripActivity"
     tools:openDrawer="start">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/fragment_container"

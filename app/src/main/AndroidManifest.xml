@@ -28,15 +28,15 @@
         <activity
             android:name=".AboutActivity"
             android:label="About"
-            android:parentActivityName=".MyTrip"
+            android:parentActivityName=".MyTripActivity"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".SettingsActivity"
             android:label="Settings"
-            android:parentActivityName=".MyTrip"
+            android:parentActivityName=".MyTripActivity"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
-            android:name=".MyTrip"
+            android:name=".MyTripActivity"
             android:label="My Trip"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -68,7 +68,7 @@
         <activity android:name=".MapsActivity" />
         <activity
             android:name=".HomeActivity"
-            android:parentActivityName=".MyTrip"
+            android:parentActivityName=".MyTripActivity"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".login1"

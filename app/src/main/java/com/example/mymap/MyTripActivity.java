@@ -2,15 +2,11 @@ package com.example.mymap;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Message;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
-import android.app.Fragment;
 import android.widget.Button;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.annotation.NonNull;
@@ -25,7 +21,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-public class MyTrip extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MyTripActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawer;
     private AppBarConfiguration mAppBarConfiguration;
     @Override
@@ -48,7 +44,7 @@ public class MyTrip extends AppCompatActivity implements NavigationView.OnNaviga
         new_trip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent choose_location = new Intent(MyTrip.this,HomeActivity.class);
+                Intent choose_location = new Intent(MyTripActivity.this,HomeActivity.class);
                 startActivity(choose_location);
             }
         });
@@ -63,7 +59,7 @@ public class MyTrip extends AppCompatActivity implements NavigationView.OnNaviga
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId()==R.id.person)
         {
-            Intent profile_intent = new Intent(MyTrip.this,Profile.class);
+            Intent profile_intent = new Intent(MyTripActivity.this,Profile.class);
             startActivity(profile_intent);
         }
         return super.onOptionsItemSelected(item);
@@ -72,11 +68,11 @@ public class MyTrip extends AppCompatActivity implements NavigationView.OnNaviga
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch(item.getItemId()){
             case R.id.action_settings:
-                Intent setting_intent = new Intent(MyTrip.this,SettingsActivity.class);
+                Intent setting_intent = new Intent(MyTripActivity.this,SettingsActivity.class);
                 startActivity(setting_intent);
                 break;
             case R.id.action_about:
-                Intent about_intent = new Intent(MyTrip.this,AboutActivity.class);
+                Intent about_intent = new Intent(MyTripActivity.this,AboutActivity.class);
                 startActivity(about_intent);
                 break;
         }
