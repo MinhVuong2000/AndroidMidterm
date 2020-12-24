@@ -28,7 +28,6 @@ import com.directions.route.Route;
 import com.directions.route.RouteException;
 import com.directions.route.Routing;
 import com.directions.route.RoutingListener;
-import com.example.mymap.DataLocations;
 import com.example.mymap.PermissionLocation;
 import com.example.mymap.PlaceTask;
 import com.example.mymap.database.MyLocation;
@@ -80,6 +79,7 @@ public class MapsFragment extends Fragment
 
     static ArrayList<Route> routeMaps = null;
     static LatLng curLocation=null;
+    static ArrayList<MyLocation> locationArrayList = null;
     static ArrayList<LatLng> latLngArrayList = null;
     static ArrayList<Integer> locations_idx = null;
     static int sizeLatLngList;
@@ -127,12 +127,7 @@ public class MapsFragment extends Fragment
             roundIntent = bundle.getInt("roundIntent", 0);
         }
 
-        //create list latlng for find routes
-        latLngArrayList = new ArrayList<>();
-        for (int i=0; i<locations_idx.size(); i++){
-            Log.d(TAG, "location: "+ locations_idx.get(i) + DataLocations.mData.get(locations_idx.get(i)).get_name());
-            latLngArrayList.add(DataLocations.mData.get(locations_idx.get(i)).get_latlng());
-        }
+        initData();
 
         //init for find route
         index_minDistance = 0;
@@ -140,6 +135,16 @@ public class MapsFragment extends Fragment
         startARouteInt = false;
 
         Log.d(TAG, "onCreate: oncreate");
+    }
+
+    private void initData() {
+        //create list latlng for find routes
+        latLngArrayList = new ArrayList<>();
+        for (int i=0; i<locations_idx.size(); i++){
+            locationArrayList.add(MyLocation.getLocationAtPos(i));
+            Log.d(TAG, "location: "+ locations_idx.get(i) + locationArrayList.get(i).getName());
+            latLngArrayList.add(locationArrayList.get(i).getLatlngLatlng());
+        }
     }
 
 
@@ -244,7 +249,7 @@ public class MapsFragment extends Fragment
         routeMapsRound = new ArrayList<>();
         routeMaps = new ArrayList<Route>(sizeLatLngList-1);
 
-        mMap.animateCamera( CameraUpdateFactory.newLatLngZoom(DataLocations.mData.get(locations_idx.get(roundIntent-1)).get_latlng(), zoomDefault));
+        mMap.animateCamera( CameraUpdateFactory.newLatLngZoom(locationArrayList.get(roundIntent-1).getLatlngLatlng(), zoomDefault));
         mMap.addMarker(new MarkerOptions().position(curLocation)
                 .icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_home)));
         for (int nextLoca=1;nextLoca<sizeLatLngList;nextLoca++){
@@ -252,17 +257,17 @@ public class MapsFragment extends Fragment
                 Log.d(TAG, "arrayRoutes: "+nextLoca+" "+nextNextLoca);
                 Findroutes(latLngArrayList.get(nextLoca-1),latLngArrayList.get(nextNextLoca));
             }
-            addScaleIconLocation(mMap,DataLocations.mData.get(locations_idx.get(nextLoca-1)),120,120, false);
+            addScaleIconLocation(mMap,locationArrayList.get(nextLoca-1),120,120, false);
         }
     }
 
 
     private void addScaleIconLocation(GoogleMap mMap, MyLocation myLocation, int width, int height, boolean filter) {
-        Bitmap image = BitmapFactory.decodeResource(getActivity().getResources(), myLocation.get_pictureID());
+        Bitmap image = MyLocation.getPicture(myLocation.getIcon());
         Bitmap scaledImage = Bitmap.createScaledBitmap(image, width, height, filter);
         BitmapDescriptor scaledIcon = BitmapDescriptorFactory.fromBitmap(scaledImage);
-        mMap.addMarker(new MarkerOptions().position(myLocation.get_latlng())
-                .title(myLocation.get_name())
+        mMap.addMarker(new MarkerOptions().position(myLocation.getLatlngLatlng())
+                .title(myLocation.getName())
                 .icon(scaledIcon));
     }
 

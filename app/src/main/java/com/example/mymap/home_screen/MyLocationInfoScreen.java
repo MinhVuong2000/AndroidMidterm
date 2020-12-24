@@ -1,5 +1,6 @@
 package com.example.mymap.home_screen;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -13,16 +14,23 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
 
-import com.example.mymap.DataLocations;
+import com.bumptech.glide.Glide;
 import com.example.mymap.database.MyLocation;
 import com.example.mymap.R;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+
+import static com.example.mymap.home_screen.HomeActivity.databaseReference;
 
 public class MyLocationInfoScreen extends AppCompatActivity {
 
     private static final String TAG = "LocationInfoScreen";
-    private ArrayList<Integer> mListImages = null;
+    private ArrayList<String> mListImages = null;
+    MyLocation location;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,22 +39,35 @@ public class MyLocationInfoScreen extends AppCompatActivity {
 
         Intent intent = getIntent();
         int location_idx = intent.getIntExtra("location_idx", 0);
-        MyLocation location = DataLocations.mData.get(location_idx);
-        setTitle(location.get_name());
-        mListImages = location.get_listImages();
+        databaseReference= FirebaseDatabase.getInstance().getReference("myLocation");
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot di:dataSnapshot.getChildren()){
+                    location = di.getValue(MyLocation.class);
+                    setTitle(location.getName());
+                    mListImages = location.getPictures();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
+
 
         final ViewFlipper viewFlipper = findViewById(R.id.infoScreen_viewFlipper);
         for(int i=0; i<mListImages.size(); i++)
         {
             ImageView imageView = new ImageView(this);
-            imageView.setImageResource(mListImages.get(i));
+            Glide.with(viewFlipper.getContext()).load(mListImages.get(i)).into(imageView);
             imageView.setScaleType(ImageView.ScaleType.FIT_XY);
             viewFlipper.addView(imageView);
         }
 
         TextView textView = findViewById(R.id.infoScreen_textView2);
         textView.setMovementMethod(new ScrollingMovementMethod());
-        textView.setText(location.get_info());
+        textView.setText(location.getInfo());
 
         final ImageButton btn_next = (ImageButton)findViewById(R.id.infoScreen_btn_next);
         final ImageButton btn_previous = (ImageButton)findViewById(R.id.infoScreen_btn_previous);

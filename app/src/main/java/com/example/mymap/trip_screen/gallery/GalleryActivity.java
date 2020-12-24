@@ -16,7 +16,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.mymap.DataLocations;
 import com.example.mymap.database.MyLocation;
 import com.example.mymap.R;
 
@@ -40,17 +39,15 @@ public class GalleryActivity extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
-
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(layoutManager);
-        MyLocation mLocation = DataLocations.mData.get(mLocationId);
+        //MyLocation mLocation = DataLocations.mData.get(mLocationId);
 
         ArrayList<MyPhoto> myPhotos = new ArrayList<>();
-        ArrayList<String> listUri = mLocation.getmPhotoUri();
-        for(int i=0; i<listUri.size(); i++)
-            myPhotos.add(new MyPhoto(listUri.get(i), mLocation.get_name()+i));
+       // ArrayList<String> listUri = mLocation.getmPhotoUri();
+//        for(int i=0; i<listUri.size(); i++)
+//            myPhotos.add(new MyPhoto(listUri.get(i), mLocation.get_name()+i));
 
         MyGalleryAdapter adapter = new MyGalleryAdapter(getContext(),myPhotos);
         mRecyclerView.setAdapter(adapter);
@@ -62,6 +59,5 @@ public class GalleryActivity extends Fragment {
         intent.putExtra("location_id", mLocationId);
         startActivity(intent);
     }
-
 
 }

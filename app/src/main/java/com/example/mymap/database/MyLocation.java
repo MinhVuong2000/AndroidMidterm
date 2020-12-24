@@ -1,83 +1,134 @@
 package com.example.mymap.database;
 
-import android.annotation.SuppressLint;
-import android.net.Uri;
-import android.os.Parcel;
-import android.os.Parcelable;
 
-import androidx.room.Entity;
-import androidx.room.PrimaryKey;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+
+import androidx.annotation.NonNull;
 
 import com.google.android.gms.maps.model.LatLng;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.IgnoreExtraProperties;
+import com.google.firebase.database.ValueEventListener;
 
-import java.io.Serializable;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 
-@Entity(tableName="location")
-public class MyLocation implements Serializable {
+import static com.example.mymap.home_screen.HomeActivity.databaseReference;
 
-    @PrimaryKey(autoGenerate = true)
-    private int id;
-
-    private int _pictureID;
-    private String _name;
-    private ArrayList<Integer> _listImages;
-    private String _info;
-    private LatLng _latlng;
-    private ArrayList<String> mPhotoUri;
-
-
+@IgnoreExtraProperties
+public class MyLocation {
+    private String icon;
+    private String info;
+    private String latlng;
+    private String name;
+    private String picture1;
+    private String picture2;
+    private String picture3;
 
 
+    public MyLocation(){
 
-    public MyLocation(int pictureID, String name, ArrayList<Integer> listImages, String info, LatLng latLng) {
-        _pictureID = pictureID;
-        _name = name;
-        _listImages = listImages;
-        _info = info;
-        _latlng = latLng;
-        mPhotoUri = new ArrayList<>();
     }
 
-    public int get_pictureID() {
-        return _pictureID;
+    public MyLocation(String icon, String info, String latlng, String name, String picture1, String picture2, String picture3) {
+        this.icon = icon;
+        this.info = info;
+        this.latlng = latlng;
+        this.name = name;
+        this.picture1 = picture1;
+        this.picture2 = picture2;
+        this.picture3 = picture3;
     }
 
-    public LatLng get_latlng() {
-        return _latlng;
+    public String getIcon() {
+
+        return icon;
     }
 
-    public String get_name() {
-        return _name;
+    public void setIcon(String icon) {
+        this.icon = icon;
     }
 
-    public ArrayList<Integer> get_listImages() {
-        return _listImages;
+    public String getInfo() {
+        return info;
     }
 
-    public String get_info() {
-        return _info;
+    public void setInfo(String info) {
+        this.info = info;
+    }
+
+    public String getLatlng() {
+        return latlng;
+    }
+
+    public LatLng getLatlngLatlng() {
+        String[] latlong =  latlng.split(",");
+        double latitude = Double.parseDouble(latlong[0]);
+        double longitude = Double.parseDouble(latlong[1]);
+        return new LatLng(latitude,longitude);
+    }
+
+    public void setLatlng(String latlng) {
+        this.latlng = latlng;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public ArrayList<String> getPictures(){
+        ArrayList<String> result = new ArrayList<>();
+        result.add(picture1);
+        result.add(picture2);
+        result.add(picture3);
+        return result;
+    }
+
+    public static MyLocation getLocationAtPos(final Integer pos){
+        final MyLocation[] result = new MyLocation[1];
+        databaseReference= FirebaseDatabase.getInstance().getReference("myLocation").child(pos.toString());
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                result[0] = dataSnapshot.getValue(MyLocation.class);
+                }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        return result[0];
+    }
+
+    public static Bitmap getPicture(String urlSrc){
+        try {
+            URL url = new URL(urlSrc);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setDoInput(true);
+            connection.connect();
+            InputStream input = connection.getInputStream();
+            Bitmap myBitmap = BitmapFactory.decodeStream(input);
+            return myBitmap;
+        } catch (IOException e) {
+            // Log exception
+            return null;
+        }
     }
 
     @Override
     public String toString() {
-        return this._name;
+        return name;
     }
-
-    public ArrayList<String> getmPhotoUri() {
-        return mPhotoUri;
-    }
-
-    public void add_uri(String uri)
-    {
-        mPhotoUri.add(uri);
-    }
-
-    public String generate_nextPhotoName()
-    {
-        return _name + mPhotoUri.size() + ".jpg";
-    }
-
 }
-
-
