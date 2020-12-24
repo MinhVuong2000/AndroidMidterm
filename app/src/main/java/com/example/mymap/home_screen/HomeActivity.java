@@ -11,7 +11,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.example.mymap.R;
 import com.example.mymap.database.MyLocation;
@@ -30,23 +29,23 @@ public class HomeActivity extends AppCompatActivity {
     private ListView _listView;
     MyLocationAdapter _myLocationAdapter;
     private Button button;
-    ArrayList<MyLocation> locationsArrayList;
+    ArrayList<MyLocation> mLocationsArrayList;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        Toast.makeText(getApplicationContext(),"Đăng nhập thành công!",Toast.LENGTH_SHORT).show();
         setTitle("Choose Your Destinations");
-        locationsArrayList = new ArrayList<>();
+
+        mLocationsArrayList = new ArrayList<>();
         initData();
-        initListView();
-        initButton();
+        initUI();
+
     }
 
-    private void initListView() {
-        _myLocationAdapter = new MyLocationAdapter(this, R.layout.home_activity_listview_item, locationsArrayList);
+    private void initUI() {
+        _myLocationAdapter = new MyLocationAdapter(this, R.layout.home_activity_listview_item, mLocationsArrayList);
         _listView = findViewById(R.id.listView);
         _listView.setAdapter(_myLocationAdapter);
         _listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -58,6 +57,14 @@ public class HomeActivity extends AppCompatActivity {
             }
 
         });
+
+        this.button = (Button)findViewById(R.id.button);
+        this.button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                let_go();
+            }
+        });
     }
 
 
@@ -67,7 +74,7 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot di:dataSnapshot.getChildren()){
-                    locationsArrayList.add(di.getValue(MyLocation.class));
+                    mLocationsArrayList.add(di.getValue(MyLocation.class));
                 }
             }
 
@@ -77,16 +84,6 @@ public class HomeActivity extends AppCompatActivity {
         });
     }
 
-
-    private void initButton() {
-        this.button = (Button)findViewById(R.id.button);
-        this.button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                let_go();
-            }
-        });
-    }
 
     private void let_go() {
         SparseBooleanArray sp = _myLocationAdapter.get_checkStates();

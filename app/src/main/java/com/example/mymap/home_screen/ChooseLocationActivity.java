@@ -1,5 +1,6 @@
 package com.example.mymap.home_screen;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -11,18 +12,24 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
-import com.example.mymap.DataLocations;
 import com.example.mymap.R;
 import com.example.mymap.database.MyDatabase;
+import com.example.mymap.database.MyLocation;
 import com.example.mymap.database.Trip;
 import com.example.mymap.database.TripLocation;
 import com.example.mymap.trip_screen.TripActivity;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
 public class ChooseLocationActivity extends AppCompatActivity {
     private static final String TAG = "HomeActivity";
-
+    ArrayList<MyLocation> mLocationsArrayList;
+    public static DatabaseReference firebaseReference;
     private ListView mListView;
     private Button mBtn_startTrip;
     MyLocationAdapter mLocationAdapter;
@@ -45,7 +52,7 @@ public class ChooseLocationActivity extends AppCompatActivity {
     }
 
     private void initUI() {
-        mLocationAdapter = new MyLocationAdapter(this, R.layout.home_activity_listview_item, DataLocations.mData);
+        mLocationAdapter = new MyLocationAdapter(this, R.layout.home_activity_listview_item, mLocationsArrayList);
         mListView = findViewById(R.id.listView);
         mListView.setAdapter(mLocationAdapter);
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -69,7 +76,19 @@ public class ChooseLocationActivity extends AppCompatActivity {
 
 
     private void initData() {
-        DataLocations.GenerateData(getBaseContext());
+        firebaseReference = FirebaseDatabase.getInstance().getReference("myLocation");
+        firebaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot di:dataSnapshot.getChildren()){
+                    mLocationsArrayList.add(di.getValue(MyLocation.class));
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
     }
 
 
