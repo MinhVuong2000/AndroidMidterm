@@ -1,11 +1,14 @@
-package com.example.mymap.home_screen;
+package com.example.mymap;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
@@ -13,16 +16,12 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
-import com.bumptech.glide.Glide;
-import com.example.mymap.database.MyLocation;
-import com.example.mymap.R;
-
 import java.util.ArrayList;
 
 public class MyLocationAdapter extends ArrayAdapter<MyLocation>  implements CompoundButton.OnCheckedChangeListener {
     Context _context;
     int _layoutResourceID;
-    ArrayList<MyLocation> mArrayListLocations = null;
+    ArrayList<MyLocation> _locations = null;
     SparseBooleanArray _checkStates;
 
     public MyLocationAdapter(@NonNull Context context, int textViewResourceId,
@@ -30,15 +29,10 @@ public class MyLocationAdapter extends ArrayAdapter<MyLocation>  implements Comp
         super(context, textViewResourceId, objects);
         _context = context;
         _layoutResourceID = textViewResourceId;
-        mArrayListLocations = objects;
-        _checkStates = new SparseBooleanArray(mArrayListLocations.size());
+        _locations = objects;
+        _checkStates = new SparseBooleanArray(_locations.size());
     }
 
-    public void setData(ArrayList<MyLocation> list)
-    {
-        mArrayListLocations = list;
-        notifyDataSetChanged();
-    }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -59,10 +53,11 @@ public class MyLocationAdapter extends ArrayAdapter<MyLocation>  implements Comp
             holder = (ViewHolder) convertView.getTag();
         }
 
-        MyLocation location = mArrayListLocations.get(position);
+        MyLocation location = _locations.get(position);
 
-        Glide.with(_context).load(location.getIcon()).into(holder.pictureView);
-        holder.locationName.setText(location.getName());
+        Bitmap avt = BitmapFactory.decodeResource(_context.getResources(), location.get_pictureID());
+        holder.pictureView.setImageBitmap(avt);
+        holder.locationName.setText(location.get_name());
 
         holder.checkBox.setTag(position);
         holder.checkBox.setChecked(_checkStates.get(position, false));
@@ -77,7 +72,7 @@ public class MyLocationAdapter extends ArrayAdapter<MyLocation>  implements Comp
 
     @Override
     public int getCount() {
-        return mArrayListLocations.size();
+        return _locations.size();
     }
 
     @Override

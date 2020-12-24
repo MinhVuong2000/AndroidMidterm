@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/pending"
+        android:icon="@drawable/pending"
+        android:title="PENDING">
+    </item>
+    <item
+        android:id="@+id/done"
+        android:icon="@drawable/done"
+        android:title="DONE">
+    </item>
+</menu>

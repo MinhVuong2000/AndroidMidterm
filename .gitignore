@@ -2,6 +2,10 @@
 .gradle
 /local.properties
 /.idea/caches
+<<<<<<< HEAD
+=======
+/.idea/gradle.xml
+>>>>>>> screen
 /.idea/libraries
 /.idea/modules.xml
 /.idea/workspace.xml
