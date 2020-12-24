@@ -29,12 +29,14 @@ import java.util.ArrayList;
 public class ChooseLocationActivity extends AppCompatActivity {
     private static final String TAG = "ChooseLocationActivity";
 
-    ArrayList<MyLocation> mLocationsArrayList;
+    public static ArrayList<MyLocation> mLocationsArrayList;
     public static DatabaseReference firebaseReference;
+    MyDatabase database;
+
     private ListView mListView;
     private Button mBtn_startTrip;
     MyLocationAdapter mLocationAdapter;
-    MyDatabase database;
+
     String mTripName;
 
     @Override
@@ -47,12 +49,10 @@ public class ChooseLocationActivity extends AppCompatActivity {
         Log.d(TAG, "onCreate: trip name" + mTripName);
         database = MyDatabase.getInstance(this);
         initData();
-
-        //check data
-        Log.d(TAG, "onCreate: location0: "+ mLocationsArrayList.get(0).getName());
-
         initUI();
 
+        mLocationsArrayList = new ArrayList<>();
+        initData();
     }
 
     private void initUI() {
@@ -62,7 +62,7 @@ public class ChooseLocationActivity extends AppCompatActivity {
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getApplicationContext(), MyLocationInfoScreen.class);
+                Intent intent = new Intent(getApplicationContext(), LocationInfoActivity.class);
                 intent.putExtra("location_idx", position);
                 startActivity(intent);
             }
@@ -80,6 +80,7 @@ public class ChooseLocationActivity extends AppCompatActivity {
 
 
     private void initData() {
+        mLocationsArrayList = new ArrayList<>();
         firebaseReference = FirebaseDatabase.getInstance().getReference("myLocation");
         firebaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -87,6 +88,8 @@ public class ChooseLocationActivity extends AppCompatActivity {
                 for (DataSnapshot di:dataSnapshot.getChildren()){
                     mLocationsArrayList.add(di.getValue(MyLocation.class));
                 }
+                mLocationAdapter.setData(mLocationsArrayList);
+                initUI();
             }
 
             @Override

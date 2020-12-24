@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,7 +26,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 
-public class MyLocationInfoScreen extends AppCompatActivity {
+public class LocationInfoActivity extends AppCompatActivity {
 
     private static final String TAG = "LocationInfoScreen";
     private ArrayList<String> mListImages = null;
@@ -38,28 +39,18 @@ public class MyLocationInfoScreen extends AppCompatActivity {
 
         Intent intent = getIntent();
         int location_idx = intent.getIntExtra("location_idx", 0);
-        ChooseLocationActivity.firebaseReference= FirebaseDatabase.getInstance().getReference("myLocation");
-        ChooseLocationActivity.firebaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot di:dataSnapshot.getChildren()){
-                    location = di.getValue(MyLocation.class);
-                    setTitle(location.getName());
-                    mListImages = location.getPictures();
-                }
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-            }
-        });
+        location = ChooseLocationActivity.mLocationsArrayList.get(location_idx);
+        setTitle(location.getName());
+        mListImages = location.getPictures();
 
 
         final ViewFlipper viewFlipper = findViewById(R.id.infoScreen_viewFlipper);
         for(int i=0; i<mListImages.size(); i++)
         {
+            Log.d(TAG, "onCreate: order flipper: "+mListImages.get(i));
             ImageView imageView = new ImageView(this);
-            Glide.with(viewFlipper.getContext()).load(mListImages.get(i)).into(imageView);
+            Glide.with(this).load(mListImages.get(i)).into(imageView);
             imageView.setScaleType(ImageView.ScaleType.FIT_XY);
             viewFlipper.addView(imageView);
         }

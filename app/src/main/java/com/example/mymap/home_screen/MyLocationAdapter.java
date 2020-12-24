@@ -34,6 +34,11 @@ public class MyLocationAdapter extends ArrayAdapter<MyLocation>  implements Comp
         _checkStates = new SparseBooleanArray(mArrayListLocations.size());
     }
 
+    public void setData(ArrayList<MyLocation> list)
+    {
+        mArrayListLocations = list;
+        notifyDataSetChanged();
+    }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -55,7 +60,6 @@ public class MyLocationAdapter extends ArrayAdapter<MyLocation>  implements Comp
         }
 
         MyLocation location = mArrayListLocations.get(position);
-
         Glide.with(_context).load(location.getIcon()).into(holder.pictureView);
         holder.locationName.setText(location.getName());
 

@@ -45,6 +45,7 @@
         android:id="@+id/btnGoToRouting" />
 
     <fragment
+
         android:id="@+id/map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
@@ -66,6 +67,5 @@
             android:background="#aaaa"
             android:id="@+id/btnCurLocation"></ImageButton>
     </fragment>
-
 
 </LinearLayout>
