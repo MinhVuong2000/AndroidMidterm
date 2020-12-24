@@ -50,7 +50,7 @@ public class ChooseLocationActivity extends AppCompatActivity {
         database = MyDatabase.getInstance(this);
         initData();
         initUI();
-        mLocationAdapter.setData(mLocationsArrayList);
+
     }
 
     private void initUI() {
@@ -86,6 +86,7 @@ public class ChooseLocationActivity extends AppCompatActivity {
                 for (DataSnapshot di:dataSnapshot.getChildren()){
                     mLocationsArrayList.add(di.getValue(MyLocation.class));
                 }
+                mLocationAdapter.setData(mLocationsArrayList);
             }
 
             @Override

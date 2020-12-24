@@ -1,4 +1,4 @@
-package com.example.mymap;
+package com.example.mymap.home_screen;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,11 +9,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-public class SettingsFragment extends Fragment {
+import com.example.mymap.R;
+
+public class AboutFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.settings_fragment,container,false);
-
+        return inflater.inflate(R.layout.about_fragment,container,false);
+        
     }
 }
