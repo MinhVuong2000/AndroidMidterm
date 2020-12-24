@@ -1,4 +1,4 @@
-package com.example.mymap;
+package com.example.mymap.trip_screen.map;
 
 import android.util.Log;
 

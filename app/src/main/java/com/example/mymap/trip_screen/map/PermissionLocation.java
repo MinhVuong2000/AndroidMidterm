@@ -1,4 +1,4 @@
-package com.example.mymap;
+package com.example.mymap.trip_screen.map;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -21,8 +21,8 @@ import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.LatLng;
 
-import static com.example.mymap.trip_screen.MapsFragment.PERMISSION_ID;
-import static com.example.mymap.trip_screen.MapsFragment.mFusedLocationClient;
+import static com.example.mymap.trip_screen.map.MapsFragment.PERMISSION_ID;
+import static com.example.mymap.trip_screen.map.MapsFragment.mFusedLocationClient;
 
 public class PermissionLocation {
     LatLng curLocation;

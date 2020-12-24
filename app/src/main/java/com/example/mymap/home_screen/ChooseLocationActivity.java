@@ -27,7 +27,8 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 public class ChooseLocationActivity extends AppCompatActivity {
-    private static final String TAG = "HomeActivity";
+    private static final String TAG = "ChooseLocationActivity";
+
     ArrayList<MyLocation> mLocationsArrayList;
     public static DatabaseReference firebaseReference;
     private ListView mListView;
@@ -45,8 +46,11 @@ public class ChooseLocationActivity extends AppCompatActivity {
         mTripName = getIntent().getStringExtra("TripName");
         Log.d(TAG, "onCreate: trip name" + mTripName);
         database = MyDatabase.getInstance(this);
-//        Toast.makeText(getApplicationContext(),"Đăng nhập thành công!",Toast.LENGTH_SHORT).show();
         initData();
+
+        //check data
+        Log.d(TAG, "onCreate: location0: "+ mLocationsArrayList.get(0).getName());
+
         initUI();
 
     }

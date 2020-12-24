@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 
 import androidx.annotation.NonNull;
 
+import com.example.mymap.home_screen.ChooseLocationActivity;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -20,7 +21,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.mymap.home_screen.HomeActivity.databaseReference;
 
 @IgnoreExtraProperties
 public class MyLocation {
@@ -97,8 +97,8 @@ public class MyLocation {
 
     public static MyLocation getLocationAtPos(final Integer pos){
         final MyLocation[] result = new MyLocation[1];
-        databaseReference= FirebaseDatabase.getInstance().getReference("myLocation").child(pos.toString());
-        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+        ChooseLocationActivity.firebaseReference= FirebaseDatabase.getInstance().getReference("myLocation").child(pos.toString());
+        ChooseLocationActivity.firebaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 result[0] = dataSnapshot.getValue(MyLocation.class);

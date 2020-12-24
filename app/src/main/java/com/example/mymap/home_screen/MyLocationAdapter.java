@@ -1,8 +1,6 @@
 package com.example.mymap.home_screen;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,7 +22,7 @@ import java.util.ArrayList;
 public class MyLocationAdapter extends ArrayAdapter<MyLocation>  implements CompoundButton.OnCheckedChangeListener {
     Context _context;
     int _layoutResourceID;
-    ArrayList<MyLocation> _locations = null;
+    ArrayList<MyLocation> mArrayListLocations = null;
     SparseBooleanArray _checkStates;
 
     public MyLocationAdapter(@NonNull Context context, int textViewResourceId,
@@ -32,8 +30,8 @@ public class MyLocationAdapter extends ArrayAdapter<MyLocation>  implements Comp
         super(context, textViewResourceId, objects);
         _context = context;
         _layoutResourceID = textViewResourceId;
-        _locations = objects;
-        _checkStates = new SparseBooleanArray(_locations.size());
+        mArrayListLocations = objects;
+        _checkStates = new SparseBooleanArray(mArrayListLocations.size());
     }
 
 
@@ -56,7 +54,7 @@ public class MyLocationAdapter extends ArrayAdapter<MyLocation>  implements Comp
             holder = (ViewHolder) convertView.getTag();
         }
 
-        MyLocation location = _locations.get(position);
+        MyLocation location = mArrayListLocations.get(position);
 
         Glide.with(_context).load(location.getIcon()).into(holder.pictureView);
         holder.locationName.setText(location.getName());
@@ -74,7 +72,7 @@ public class MyLocationAdapter extends ArrayAdapter<MyLocation>  implements Comp
 
     @Override
     public int getCount() {
-        return _locations.size();
+        return mArrayListLocations.size();
     }
 
     @Override

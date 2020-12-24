@@ -1,4 +1,4 @@
-package com.example.mymap.trip_screen;
+package com.example.mymap.trip_screen.map;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -8,7 +8,6 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
@@ -28,11 +27,9 @@ import com.directions.route.Route;
 import com.directions.route.RouteException;
 import com.directions.route.Routing;
 import com.directions.route.RoutingListener;
-import com.example.mymap.PermissionLocation;
-import com.example.mymap.PlaceTask;
 import com.example.mymap.database.MyLocation;
 import com.example.mymap.R;
-import com.example.mymap.trip_screen.gallery.GalleryActivity;
+import com.example.mymap.trip_screen.gallery.GalleryFragment;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.LocationServices;
@@ -283,7 +280,7 @@ public class MapsFragment extends Fragment
             @Override
             public void onClick(View view) {
                 startARouteInt = false;
-                Intent intent = new Intent(getActivity(), GalleryActivity.class);
+                Intent intent = new Intent(getActivity(), GalleryFragment.class);
                 intent.putExtra("reached_idx", locations_idx.get(roundIntent - 2));
                 startActivity(intent);
                 //checkRightDestination(curLocation,end);
@@ -295,7 +292,7 @@ public class MapsFragment extends Fragment
     private void checkRightDestination(LatLng curLocation, LatLng end) {
         if ((curLocation.latitude-end.latitude<epsilon && end.latitude-curLocation.latitude<epsilon)
                 && (curLocation.longitude-end.longitude<epsilon && end.longitude-curLocation.longitude<epsilon)){
-            Intent intent = new Intent(getActivity(),GalleryActivity.class);
+            Intent intent = new Intent(getActivity(), GalleryFragment.class);
             startActivity(intent);
         }
         else {

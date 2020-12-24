@@ -24,7 +24,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-import static com.example.mymap.home_screen.HomeActivity.databaseReference;
 
 public class MyLocationInfoScreen extends AppCompatActivity {
 
@@ -39,8 +38,8 @@ public class MyLocationInfoScreen extends AppCompatActivity {
 
         Intent intent = getIntent();
         int location_idx = intent.getIntExtra("location_idx", 0);
-        databaseReference= FirebaseDatabase.getInstance().getReference("myLocation");
-        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+        ChooseLocationActivity.firebaseReference= FirebaseDatabase.getInstance().getReference("myLocation");
+        ChooseLocationActivity.firebaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot di:dataSnapshot.getChildren()){

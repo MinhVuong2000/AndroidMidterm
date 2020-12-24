@@ -1,9 +1,10 @@
-package com.example.mymap;
+package com.example.mymap.trip_screen.map;
 
 import android.os.AsyncTask;
 
 import androidx.fragment.app.Fragment;
 
+import com.example.mymap.trip_screen.map.MyJsonParser;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -21,8 +22,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import static com.example.mymap.trip_screen.MapsFragment.markersItems;
-//import static com.example.mymap.trip_screen.MapsFragment.startARouteInt;
+import static com.example.mymap.trip_screen.map.MapsFragment.markersItems;
+//import static com.example.mymap.trip_screen.map.MapsFragment.startARouteInt;
 
 public class PlaceTask extends AsyncTask<String,Integer,String> {
     GoogleMap mMap;

@@ -27,6 +27,12 @@ public interface MyDAO {
     @Query("SELECT * FROM trip")
     List<Trip> getListTrip();
 
+    @Query("SELECT tripName FROM trip WHERE tripId = :tripId")
+    String getTripName(int tripId);
+
+    @Query("SELECT * FROM trip WHERE tripId = :tripId")
+    Trip getTrip(int tripId);
+
     @Query("SELECT photoPath FROM photo WHERE tripBelongId = :tripId")
     List<String> getListPhotoPathFromTrip(int tripId);
 
