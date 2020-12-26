@@ -23,7 +23,7 @@ public class MyLocationAdapter extends ArrayAdapter<MyLocation>  implements Comp
     Context _context;
     int _layoutResourceID;
     ArrayList<MyLocation> mArrayListLocations = null;
-    SparseBooleanArray _checkStates;
+    SparseBooleanArray mCheckStates;
 
     public MyLocationAdapter(@NonNull Context context, int textViewResourceId,
                              @NonNull ArrayList<MyLocation> objects) {
@@ -31,7 +31,7 @@ public class MyLocationAdapter extends ArrayAdapter<MyLocation>  implements Comp
         _context = context;
         _layoutResourceID = textViewResourceId;
         mArrayListLocations = objects;
-        _checkStates = new SparseBooleanArray(mArrayListLocations.size());
+        mCheckStates = new SparseBooleanArray(mArrayListLocations.size());
     }
 
     public void setData(ArrayList<MyLocation> list)
@@ -64,14 +64,14 @@ public class MyLocationAdapter extends ArrayAdapter<MyLocation>  implements Comp
         holder.locationName.setText(location.getName());
 
         holder.checkBox.setTag(position);
-        holder.checkBox.setChecked(_checkStates.get(position, false));
+        holder.checkBox.setChecked(mCheckStates.get(position, false));
         holder.checkBox.setOnCheckedChangeListener(this);
 
         return convertView;
     }
 
-    public SparseBooleanArray get_checkStates() {
-        return _checkStates;
+    public SparseBooleanArray getCheckStates() {
+        return mCheckStates;
     }
 
     @Override
@@ -81,7 +81,7 @@ public class MyLocationAdapter extends ArrayAdapter<MyLocation>  implements Comp
 
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        _checkStates.put((Integer) buttonView.getTag(), isChecked);
+        mCheckStates.put((Integer) buttonView.getTag(), isChecked);
     }
 
     static class ViewHolder{

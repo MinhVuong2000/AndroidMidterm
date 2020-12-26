@@ -1,6 +1,5 @@
 package com.example.mymap.database;
 
-import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 
 import java.util.Date;
@@ -10,14 +9,12 @@ public class TripLocation {
 
     private int tripBelongId;
     private int locationId;
-    private int routeOrder;
     private Date timePassed;
 
 
     public TripLocation(int tripBelongId, int locationId) {
         this.tripBelongId = tripBelongId;
         this.locationId = locationId;
-        routeOrder = -1;
         timePassed = null;
     }
 
@@ -27,14 +24,6 @@ public class TripLocation {
 
     public void setTripBelongId(int tripBelongId) {
         this.tripBelongId = tripBelongId;
-    }
-
-    public int getRouteOrder() {
-        return routeOrder;
-    }
-
-    public void setRouteOrder(int routeOrder) {
-        this.routeOrder = routeOrder;
     }
 
     public Date getTimePassed() {

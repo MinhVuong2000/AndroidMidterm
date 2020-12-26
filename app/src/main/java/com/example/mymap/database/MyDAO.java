@@ -7,6 +7,7 @@ import androidx.room.Query;
 import androidx.room.Update;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Dao
@@ -38,6 +39,10 @@ public interface MyDAO {
 
     @Query("SELECT * FROM trip_location WHERE tripBelongId = :tripId")
     List<TripLocation> getListTripLocationFromTrip(int tripId);
+
+    @Query("UPDATE trip_location SET timePassed = :time " +
+            "WHERE tripBelongId = :tripId AND locationId = :locationId")
+    void updateTimePassed(int tripId, int locationId, Date time);
 
     @Update
     void updateTrip(Trip trip);

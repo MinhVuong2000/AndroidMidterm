@@ -46,13 +46,12 @@ public class ChooseLocationActivity extends AppCompatActivity {
         setTitle("Choose Your Destinations");
 
         mTripName = getIntent().getStringExtra("TripName");
-        Log.d(TAG, "onCreate: trip name" + mTripName);
         database = MyDatabase.getInstance(this);
-        initData();
-        initUI();
 
-        mLocationsArrayList = new ArrayList<>();
+        initUI();
         initData();
+
+
     }
 
     private void initUI() {
@@ -89,7 +88,6 @@ public class ChooseLocationActivity extends AppCompatActivity {
                     mLocationsArrayList.add(di.getValue(MyLocation.class));
                 }
                 mLocationAdapter.setData(mLocationsArrayList);
-                initUI();
             }
 
             @Override
@@ -105,8 +103,7 @@ public class ChooseLocationActivity extends AppCompatActivity {
         long rowId = database.myDAO().insertTrip(new_trip);
         int tripId = database.myDAO().getTripIdFromRowId(rowId);
 
-        SparseBooleanArray sp = mLocationAdapter.get_checkStates();
-        ArrayList<Integer> picked_locations_idx = new ArrayList<>();
+        SparseBooleanArray sp = mLocationAdapter.getCheckStates();
         for(int i=0; i<sp.size(); i++){
             if(sp.valueAt(i)){
                 Log.d(TAG, "start_trip: key at" + sp.keyAt(i));
