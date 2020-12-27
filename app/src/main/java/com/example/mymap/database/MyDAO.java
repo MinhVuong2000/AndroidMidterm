@@ -23,7 +23,7 @@ public interface MyDAO {
     void insertPhoto(TripPhoto photo);
 
     @Insert
-    void insertTripLocations(TripLocation... tripLocation);
+    void insertTripLocations(TripLocation tripLocation);
 
     @Query("SELECT * FROM trip")
     List<Trip> getListTrip();

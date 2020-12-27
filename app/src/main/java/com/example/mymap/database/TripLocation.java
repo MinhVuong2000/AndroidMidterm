@@ -1,10 +1,11 @@
 package com.example.mymap.database;
 
 import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
 import java.util.Date;
 
-@Entity(tableName = "trip_location", primaryKeys = {"tripBelongId","locationId"})
+@Entity(tableName = "trip_location", primaryKeys = {"tripBelongId", "locationId"})
 public class TripLocation {
 
     private int tripBelongId;

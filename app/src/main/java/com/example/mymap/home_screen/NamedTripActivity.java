@@ -12,6 +12,12 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.mymap.R;
+import com.example.mymap.database.MyDatabase;
+import com.example.mymap.database.Trip;
+import com.example.mymap.database.TripLocation;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class NamedTripActivity extends AppCompatActivity {
 
@@ -21,6 +27,13 @@ public class NamedTripActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d(TAG, "onCreate: ");
+//        List<Trip> list1 = MyDatabase.getInstance(this).myDAO().getListTrip();
+//        for(int i=0; i<list1.size(); i++)
+//            Log.d(TAG, "tripId: " + list1.get(i).getTripId());
+//        List<TripLocation> list = MyDatabase.getInstance(this).myDAO().getListTripLocationFromTrip(2);
+//        for (int i =0; i<list.size(); i++)
+//            Log.d(TAG, "tripLocation: " + list.get(i).getLocationId());
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_named_trip);
 
@@ -29,6 +42,7 @@ public class NamedTripActivity extends AppCompatActivity {
 
         et_namedTrip.addTextChangedListener(myWatcher);
         btn_namedTrip.setOnClickListener(onClick);
+
     }
 
 

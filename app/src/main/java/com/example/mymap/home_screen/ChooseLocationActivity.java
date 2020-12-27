@@ -41,6 +41,7 @@ public class ChooseLocationActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d(TAG, "onCreate: ");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         setTitle("Choose Your Destinations");
@@ -48,13 +49,15 @@ public class ChooseLocationActivity extends AppCompatActivity {
         mTripName = getIntent().getStringExtra("TripName");
         database = MyDatabase.getInstance(this);
 
-        initUI();
+        
+
         initData();
 
 
     }
 
     private void initUI() {
+        Log.d(TAG, "initUI: ");
         mLocationAdapter = new MyLocationAdapter(this, R.layout.home_activity_listview_item, mLocationsArrayList);
         mListView = findViewById(R.id.listView);
         mListView.setAdapter(mLocationAdapter);
@@ -87,7 +90,7 @@ public class ChooseLocationActivity extends AppCompatActivity {
                 for (DataSnapshot di:dataSnapshot.getChildren()){
                     mLocationsArrayList.add(di.getValue(MyLocation.class));
                 }
-                mLocationAdapter.setData(mLocationsArrayList);
+                initUI();
             }
 
             @Override
@@ -99,6 +102,7 @@ public class ChooseLocationActivity extends AppCompatActivity {
 
 
     private void start_trip() {
+        Log.d(TAG, "start_trip: ");
         Trip new_trip = new Trip(mTripName);
         long rowId = database.myDAO().insertTrip(new_trip);
         int tripId = database.myDAO().getTripIdFromRowId(rowId);
@@ -106,15 +110,15 @@ public class ChooseLocationActivity extends AppCompatActivity {
         SparseBooleanArray sp = mLocationAdapter.getCheckStates();
         for(int i=0; i<sp.size(); i++){
             if(sp.valueAt(i)){
-                Log.d(TAG, "start_trip: key at" + sp.keyAt(i));
-                database.myDAO().insertTripLocations(new TripLocation(tripId, sp.keyAt(i)));
+                Log.d(TAG, "start_trip: tripId" + tripId + "locationId" + sp.keyAt(i));
+                TripLocation t = new TripLocation(tripId, sp.keyAt(i));
+                database.myDAO().insertTripLocations(t);
             }
         }
 
 
         Intent intent = new Intent(this, TripActivity.class);
         intent.putExtra("tripId", tripId);
-        Log.d(TAG, "start_trip: tripId" + tripId);
         startActivity(intent);
     }
 
