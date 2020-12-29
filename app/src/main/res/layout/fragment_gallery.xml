@@ -12,23 +12,17 @@
         android:layout_height="match_parent">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_images"
+            android:id="@+id/rv_gallery"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Open Camera"
-            android:onClick="open_camera"
-            android:layout_gravity="center|bottom"/>
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|right"
-            android:text="Continue Trip"
-            android:id="@+id/btnContinueTrip"/>
+        <ImageButton
+            android:id="@+id/ibtn_openCamera"
+            android:layout_width="92dp"
+            android:layout_height="53dp"
+            android:layout_gravity="right|bottom"
+            app:srcCompat="@drawable/ic_menu_camera" />
     </FrameLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

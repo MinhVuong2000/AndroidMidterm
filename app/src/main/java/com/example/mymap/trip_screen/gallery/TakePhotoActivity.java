@@ -1,8 +1,9 @@
-package com.example.mymap.database;
+package com.example.mymap.trip_screen.gallery;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -18,6 +19,9 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.example.mymap.R;
+import com.example.mymap.database.MyDatabase;
+import com.example.mymap.database.MyPhotoAdapter;
+import com.example.mymap.database.TripPhoto;
 
 import java.io.File;
 import java.io.IOException;
@@ -26,7 +30,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class AddPhotoToTripActitivy extends AppCompatActivity {
+public class TakePhotoActivity extends AppCompatActivity {
 
     private static final int REQUEST_IMAGE_CAPTURE = 123 ;
     private RecyclerView mRecyclerView;
@@ -36,7 +40,7 @@ public class AddPhotoToTripActitivy extends AppCompatActivity {
     private MyPhotoAdapter myPhotoAdapter;
     String currentPhotoPath;
 
-    private static final String TAG = "AddPhotoToTripActitivy";
+    private static final String TAG = "TakePhotoActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

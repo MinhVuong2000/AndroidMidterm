@@ -70,7 +70,7 @@
         <activity android:name=".home_screen.NamedTripActivity">
         </activity>
 
-        <activity android:name=".database.AddPhotoToTripActitivy" />
+        <activity android:name=".trip_screen.gallery.TakePhotoActivity" />
         <activity android:name=".trip_screen.TripActivity"></activity>
         <activity android:name=".home_screen.LocationInfoActivity" /> <!-- Don't use my api key, it will not work for you. -->
 

@@ -46,11 +46,7 @@ public class TripActivity extends AppCompatActivity {
     }
 
     private void initFragment() {
-        mMapFragment = new MapsFragment();
-        mGalleryFragment = new GalleryFragment();
-
-        Bundle bundle = new Bundle();
-
+        mGalleryFragment = GalleryFragment.newInstance(mTripId);
 
     }
 
@@ -64,8 +60,8 @@ public class TripActivity extends AppCompatActivity {
 
     private void setupViewPager() {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(mMapFragment, "Maps");
-        adapter.addFragment(new WorldFragment(), "World");
+        //adapter.addFragment(mMapFragment, "Maps");
+        adapter.addFragment(mGalleryFragment, "Gallery");
         viewPager.setAdapter(adapter);
     }
 }
