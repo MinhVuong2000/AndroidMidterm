@@ -47,6 +47,7 @@ public class TripActivity extends AppCompatActivity {
 
     private void initFragment() {
         mGalleryFragment = GalleryFragment.newInstance(mTripId);
+        mMapFragment = MapsFragment.newInstance(mTripId);
 
     }
 
@@ -60,7 +61,7 @@ public class TripActivity extends AppCompatActivity {
 
     private void setupViewPager() {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        //adapter.addFragment(mMapFragment, "Maps");
+        adapter.addFragment(mMapFragment, "Maps");
         adapter.addFragment(mGalleryFragment, "Gallery");
         viewPager.setAdapter(adapter);
     }

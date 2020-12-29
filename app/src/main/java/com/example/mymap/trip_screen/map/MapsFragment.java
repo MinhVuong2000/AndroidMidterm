@@ -94,6 +94,15 @@ public class MapsFragment extends Fragment
     public static ArrayList<Marker> markersItems = null;
 
 
+    public MapsFragment(){}
+
+    public static MapsFragment newInstance(int param){
+        MapsFragment fragment = new MapsFragment();
+        Bundle args = new Bundle();
+        args.putInt("param1", param);
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

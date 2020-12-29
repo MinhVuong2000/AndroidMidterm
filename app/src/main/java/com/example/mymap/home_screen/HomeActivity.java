@@ -46,6 +46,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(named_location);
             }
         });
+
+
     }
 
     @Override

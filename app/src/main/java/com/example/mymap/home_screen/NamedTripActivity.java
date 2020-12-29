@@ -28,12 +28,6 @@ public class NamedTripActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.d(TAG, "onCreate: ");
-//        List<Trip> list1 = MyDatabase.getInstance(this).myDAO().getListTrip();
-//        for(int i=0; i<list1.size(); i++)
-//            Log.d(TAG, "tripId: " + list1.get(i).getTripId());
-//        List<TripLocation> list = MyDatabase.getInstance(this).myDAO().getListTripLocationFromTrip(2);
-//        for (int i =0; i<list.size(); i++)
-//            Log.d(TAG, "tripLocation: " + list.get(i).getLocationId());
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_named_trip);
 
