@@ -1,11 +1,21 @@
 package com.example.mymap.trip_screen.map;
 
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
+import android.util.Log;
 
+import androidx.annotation.DrawableRes;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.example.mymap.trip_screen.map.MyJsonParser;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -22,15 +32,17 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import static com.example.mymap.trip_screen.map.MapsFragment.iconItems;
 import static com.example.mymap.trip_screen.map.MapsFragment.markersItems;
-//import static com.example.mymap.trip_screen.map.MapsFragment.startARouteInt;
 
 public class PlaceTask extends AsyncTask<String,Integer,String> {
     GoogleMap mMap;
     Fragment mActivity;
-    public PlaceTask(GoogleMap mMap, Fragment activity){
+    int mPosition;
+    public PlaceTask(GoogleMap mMap, Fragment activity, int position){
         this.mMap = mMap;
         this.mActivity = activity;
+        this.mPosition = position;
     }
 
     @Override
@@ -96,9 +108,20 @@ public class PlaceTask extends AsyncTask<String,Integer,String> {
                 String name = hashMapList.get("name");
                 LatLng latLng = new LatLng(lat, lng);
                 MarkerOptions options = new MarkerOptions().position(latLng)
-                        .title(name);
+                        .title(name)
+                        .icon(bitmapDescriptorFromVector(mActivity.getActivity(),iconItems[mPosition]));
                 markersItems.add(mMap.addMarker(options));
+                mMap.animateCamera(CameraUpdateFactory.newLatLng(markersItems.get(0).getPosition()));
             }
         }
+    }
+
+    private BitmapDescriptor bitmapDescriptorFromVector(Context context, int vectorResId) {
+        Drawable vectorDrawable = ContextCompat.getDrawable(context, vectorResId);
+        vectorDrawable.setBounds(0, 0, vectorDrawable.getIntrinsicWidth(), vectorDrawable.getIntrinsicHeight());
+        Bitmap bitmap = Bitmap.createBitmap(vectorDrawable.getIntrinsicWidth(), vectorDrawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        vectorDrawable.draw(canvas);
+        return BitmapDescriptorFactory.fromBitmap(bitmap);
     }
 }
