@@ -1,6 +1,7 @@
 package com.example.mymap.database;
 
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import java.util.Date;
@@ -17,6 +18,13 @@ public class TripLocation {
         this.tripBelongId = tripBelongId;
         this.locationId = locationId;
         timePassed = null;
+    }
+
+    @Ignore
+    public TripLocation(int tripBelongId, int locationId, Date timePassed) {
+        this.tripBelongId = tripBelongId;
+        this.locationId = locationId;
+        this.timePassed = timePassed;
     }
 
     public int getTripBelongId() {

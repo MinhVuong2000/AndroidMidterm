@@ -60,18 +60,20 @@
             android:name=".home_screen.HomeActivity"
             android:label="My Trip"
             android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
         <activity android:name=".home_screen.NamedTripActivity">
         </activity>
 
         <activity android:name=".trip_screen.gallery.TakePhotoActivity" />
-        <activity android:name=".trip_screen.TripActivity"></activity>
+        <activity android:name=".trip_screen.TripActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".home_screen.LocationInfoActivity" /> <!-- Don't use my api key, it will not work for you. -->
 
         <activity android:name=".database.AddTripActivity">

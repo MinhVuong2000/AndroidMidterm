@@ -12,6 +12,7 @@ import com.example.mymap.database.MyDatabase;
 import com.example.mymap.database.Trip;
 import com.example.mymap.trip_screen.gallery.GalleryFragment;
 import com.example.mymap.trip_screen.map.MapsFragment;
+import com.example.mymap.trip_screen.timeline.TimeLineFragment;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
@@ -31,14 +32,6 @@ public class TripActivity extends AppCompatActivity {
         mTripId = getIntent().getIntExtra("tripId",0);
         String tripName = MyDatabase.getInstance(this).myDAO().getTripName(mTripId);
         setTitle(tripName);
-
-//        pass to mapsfragment using bundle
-//        Bundle bundle = new Bundle();
-//        bundle.putIntegerArrayList("picked_locations_idx", locations_idx);
-//        bundle.putInt("roundIntent", roundIntent);
-//
-//        MapFragment = new MapsFragment();
-//        MapFragment.setArguments(bundle);
 
         initFragment();
         initUI();
@@ -60,9 +53,11 @@ public class TripActivity extends AppCompatActivity {
     }
 
     private void setupViewPager() {
+
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(mMapFragment, "Maps");
         adapter.addFragment(mGalleryFragment, "Gallery");
+        adapter.addFragment(new TimeLineFragment(), "TimeLine");
         viewPager.setAdapter(adapter);
     }
 }

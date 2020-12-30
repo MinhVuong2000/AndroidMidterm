@@ -129,7 +129,6 @@ public class MapsFragment extends Fragment
         permissionLocation = new PermissionLocation(curLocation,MapsFragment.this);
         Bundle bundle = getArguments();
         if(bundle!=null){
-            locations_idx = bundle.getIntegerArrayList("picked_locations_idx");
             roundIntent = bundle.getInt("roundIntent", 0);
         }
 
