@@ -31,11 +31,10 @@ import com.directions.route.Route;
 import com.directions.route.RouteException;
 import com.directions.route.Routing;
 import com.directions.route.RoutingListener;
+import com.example.mymap.database.MyDatabase;
 import com.example.mymap.database.MyLocation;
 import com.example.mymap.R;
-import com.example.mymap.database.Trip;
 import com.example.mymap.database.TripLocation;
-import com.example.mymap.trip_screen.gallery.GalleryFragment;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.LocationServices;
@@ -67,10 +66,9 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import com.example.mymap.home_screen.ChooseLocationActivity;
-
+import com.squareup.picasso.Picasso;
 
 import static android.app.Activity.RESULT_OK;
-import static com.example.mymap.home_screen.ChooseLocationActivity.database;
 import static com.example.mymap.home_screen.ChooseLocationActivity.mLocationsArrayList;
 
 public class MapsFragment extends Fragment
@@ -97,6 +95,7 @@ public class MapsFragment extends Fragment
     static int roundIntent;
     static boolean startARouteInt;
     int tripId;
+    MyDatabase database;
 
     Integer[] distanceList=null;
     int index_minDistance, round;
@@ -167,6 +166,7 @@ public class MapsFragment extends Fragment
     }
 
     private void initData() {
+        database = MyDatabase.getInstance(getActivity());
         tripLocationList = database.myDAO().getListTripLocationFromTrip(tripId);
         Log.d(TAG, "initData: size tripLocation: "+tripLocationList.size());
         //sort tripLocation

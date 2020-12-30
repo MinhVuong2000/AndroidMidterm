@@ -18,10 +18,6 @@ import android.widget.ViewFlipper;
 import com.bumptech.glide.Glide;
 import com.example.mymap.database.MyLocation;
 import com.example.mymap.R;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
