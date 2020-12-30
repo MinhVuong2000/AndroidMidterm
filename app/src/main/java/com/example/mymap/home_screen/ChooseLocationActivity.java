@@ -31,7 +31,7 @@ public class ChooseLocationActivity extends AppCompatActivity {
 
     public static ArrayList<MyLocation> mLocationsArrayList;
     public static DatabaseReference firebaseReference;
-    MyDatabase database;
+    public static MyDatabase database;
 
     private ListView mListView;
     private Button mBtn_startTrip;
@@ -49,9 +49,8 @@ public class ChooseLocationActivity extends AppCompatActivity {
         mTripName = getIntent().getStringExtra("TripName");
         database = MyDatabase.getInstance(this);
 
-        
-
         initData();
+        initUI();
 
 
     }

@@ -58,14 +58,6 @@
         map:uiScrollGestures="true"
         map:uiTiltGestures="true"
         tools:context=".trip_screen.map.MapsFragment">
-
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/cur_location"
-            android:layout_gravity="right"
-            android:background="#aaaa"
-            android:id="@+id/btnCurLocation"></ImageButton>
     </fragment>
 
 </LinearLayout>
