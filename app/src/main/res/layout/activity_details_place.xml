@@ -4,9 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    tools:context=".trip_screen.map.DetailsPlace"
     android:background="@mipmap/bg1"
-
-    tools:context="com.example.mymap.trip_screen.map.DetailsPlaces"
     android:orientation="vertical">
 
     <FrameLayout
@@ -57,20 +56,19 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="6dp"
-        android:lineSpacingMultiplier="1.15"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
+        android:layout_marginBottom="6dp"
         android:justificationMode="inter_word"
-        android:orientation="vertical"
-        >
+        android:lineSpacingMultiplier="1.15"
+        android:orientation="vertical">
         <TextView
             android:id="@+id/address"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/ic_baseline_location_on_24"
             android:drawablePadding="20dp"
-            android:paddingBottom="5pt"
+            android:padding="5dp"
             android:textSize="7pt"
             android:fontFamily="@font/century"/>
         <TextView
@@ -80,18 +78,22 @@
             android:drawableLeft="@drawable/ic_baseline_call_24"
             android:textAlignment="center"
             android:drawablePadding="20dp"
-            android:paddingBottom="5pt"
+            android:padding="5pt"
             android:textSize="7pt"
             android:fontFamily="@font/century"/>
-        <TextView
-            android:id="@+id/rating"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/ic_baseline_stars_24"
-            android:drawablePadding="20dp"
-            android:paddingBottom="5pt"
-            android:textSize="7pt"
-            android:fontFamily="@font/century">
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/rating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_baseline_stars_24"
+                android:drawablePadding="20dp"
+                android:padding="5pt"
+                android:textSize="7pt"
+                android:fontFamily="@font/century"/>
             <RatingBar
                 android:id="@+id/ratingBar"
                 android:numStars="5"
@@ -100,15 +102,17 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_centerHorizontal="true"
-                android:theme="@style/CustomRatingBar"/>
-        </TextView>
+                android:theme="@style/CustomRatingBar"
+                android:isIndicator="true"/>
+        </LinearLayout>
+
         <TextView
             android:id="@+id/user_rating_total"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/ic_baseline_person_pin_circle_24"
+            android:drawableLeft="@drawable/ic_baseline_supervised_user_circle_24"
             android:drawablePadding="20dp"
-            android:paddingBottom="5pt"
+            android:padding="5pt"
             android:textSize="7pt"
             android:fontFamily="@font/century"/>
         <TextView
@@ -117,7 +121,7 @@
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/ic_baseline_open_in_browser_24"
             android:drawablePadding="20dp"
-            android:paddingBottom="5pt"
+            android:padding="5pt"
             android:textSize="7pt"
             android:fontFamily="@font/century"/>
         <TextView
@@ -126,7 +130,7 @@
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/ic_baseline_access_time_24"
             android:drawablePadding="20dp"
-            android:paddingBottom="5pt"
+            android:padding="5pt"
             android:textSize="7pt"
             android:fontFamily="@font/century"/>
     </LinearLayout>
@@ -134,4 +138,3 @@
 
 
 </LinearLayout>
-

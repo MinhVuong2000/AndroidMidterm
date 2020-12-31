@@ -105,7 +105,6 @@ public class MapsFragment extends Fragment
     private static final String[] items = {"","restaurant", "coffee", "gasstation"};
     private static final String[] itemsDisplay = {"Tìm địa điểm gần đây", "Nhà hàng", "Quán Coffee", "Trạm xăng"};
     public static final int[] iconItems = {0,R.mipmap.ic_restaurant,R.mipmap.ic_drink,R.mipmap.ic_gas};
-    public static ArrayList<Marker> markersItems = null;
 
 
     public MapsFragment(){}
@@ -273,7 +272,7 @@ public class MapsFragment extends Fragment
         if (curLocation!=null){
             String url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json" +
                     "?location="+curLocation.latitude + ","+curLocation.longitude +
-                    "&radius=100" +
+                    "&radius=50" +
                     "&name=" + item +
                     "&sensor=true" +
                     "&fields=name,rating,formatted_phone_number" +

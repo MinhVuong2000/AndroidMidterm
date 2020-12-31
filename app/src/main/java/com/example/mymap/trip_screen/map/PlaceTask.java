@@ -1,6 +1,7 @@
 package com.example.mymap.trip_screen.map;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
@@ -11,12 +12,14 @@ import androidx.annotation.DrawableRes;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import com.example.mymap.R;
 import com.example.mymap.trip_screen.map.MyJsonParser;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.json.JSONException;
@@ -33,16 +36,20 @@ import java.util.HashMap;
 import java.util.List;
 
 import static com.example.mymap.trip_screen.map.MapsFragment.iconItems;
-import static com.example.mymap.trip_screen.map.MapsFragment.markersItems;
 
 public class PlaceTask extends AsyncTask<String,Integer,String> {
     GoogleMap mMap;
     Fragment mActivity;
     int mPosition;
+    ArrayList<String> place_idArray;
+    ArrayList<Marker> markersItems;
+
     public PlaceTask(GoogleMap mMap, Fragment activity, int position){
         this.mMap = mMap;
         this.mActivity = activity;
         this.mPosition = position;
+        place_idArray = new ArrayList<>();
+        markersItems = null;
     }
 
     @Override
@@ -87,7 +94,7 @@ public class PlaceTask extends AsyncTask<String,Integer,String> {
             JSONObject object = null;
             try {
                 object = new JSONObject(strings[0]);
-                mapList = myJsonParser.parseResult(object);
+                mapList = myJsonParser.parseResult(object, mPosition == -1 ? true : false);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -96,23 +103,81 @@ public class PlaceTask extends AsyncTask<String,Integer,String> {
 
         @Override
         protected void onPostExecute(List<HashMap<String, String>> hashMaps) {
-            if (markersItems != null){
-                for (int i=0;i<markersItems.size();i++)
-                    markersItems.get(i).remove();
+            if (mPosition != -1) {
+                if (markersItems != null) {
+                    for (int i = 0; i < markersItems.size(); i++)
+                        markersItems.get(i).remove();
+                }
+                markersItems = new ArrayList<>();
+                for (int i = 0; i < hashMaps.size(); i++) {
+                    HashMap<String, String> hashMapList = hashMaps.get(i);
+                    double lat = Double.parseDouble(hashMapList.get("lat"));
+                    double lng = Double.parseDouble(hashMapList.get("lng"));
+                    String name = hashMapList.get("name");
+                    String place_id = hashMapList.get("place_id");
+                    LatLng latLng = new LatLng(lat, lng);
+                    MarkerOptions options = new MarkerOptions().position(latLng)
+                            .title(name)
+                            .icon(bitmapDescriptorFromVector(mActivity.getActivity(), iconItems[mPosition]));
+                    place_idArray.add(place_id);
+                    markersItems.add(mMap.addMarker(options));
+                }
+                setUpClickDetailsPlace(mMap);
+                //mMap.animateCamera(CameraUpdateFactory.newLatLng(markersItems.get(0).getPosition()));
             }
-            markersItems = new ArrayList<>();
-            for (int i = 0; i < hashMaps.size(); i++) {
-                HashMap<String, String> hashMapList = hashMaps.get(i);
-                double lat = Double.parseDouble(hashMapList.get("lat"));
-                double lng = Double.parseDouble(hashMapList.get("lng"));
+            else{
+                ArrayList<String> photos = new ArrayList<>();
+                ArrayList<String> infos = new ArrayList<>();
+                for (int i = 0; i < hashMaps.size()-1; i++) {
+                    HashMap<String, String> hashMapList = hashMaps.get(i);
+                    String height = hashMapList.get("height");
+                    String photo_reference = hashMapList.get("photo_reference");
+                    String urlPhoto = "https://maps.googleapis.com/maps/api/place/photo" +
+                            "?maxheight=" + height +
+                            "&photoreference=" + photo_reference +
+                            "&key=" + mActivity.getResources().getString(R.string.google_maps_key);
+                    photos.add(urlPhoto);
+                }
+                HashMap<String, String> hashMapList = hashMaps.get(hashMaps.size()-1);
                 String name = hashMapList.get("name");
-                LatLng latLng = new LatLng(lat, lng);
-                MarkerOptions options = new MarkerOptions().position(latLng)
-                        .title(name)
-                        .icon(bitmapDescriptorFromVector(mActivity.getActivity(),iconItems[mPosition]));
-                markersItems.add(mMap.addMarker(options));
-                mMap.animateCamera(CameraUpdateFactory.newLatLng(markersItems.get(0).getPosition()));
+                String formatted_address = hashMapList.get("formatted_address");
+                String formatted_phone_number = hashMapList.get("formatted_phone_number");
+                String rating = hashMapList.get("rating");
+                String user_ratings_total = hashMapList.get("user_ratings_total");
+                String url = hashMapList.get("url");
+                String open_now = hashMapList.get("open_now");
+
+                infos.add(name);
+                infos.add(formatted_address);
+                infos.add(formatted_phone_number);
+                infos.add(rating);
+                infos.add(user_ratings_total);
+                infos.add(url);
+                infos.add(open_now);
+
+                Intent intent = new Intent(mActivity.getActivity(),DetailsPlace.class);
+                intent.putStringArrayListExtra("infos", infos);
+                intent.putStringArrayListExtra("photos",photos);
+                mActivity.startActivity(intent);
             }
+    }
+
+        private void setUpClickDetailsPlace(GoogleMap map) {
+            map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                @Override
+                public boolean onMarkerClick(Marker marker) {
+                    int place_id = markersItems.indexOf(marker);
+                    String url = "https://maps.googleapis.com/maps/api/place/details/json" +
+                            "?place_id=" + place_idArray.get(place_id) +
+                            "&fields=formatted_phone_number,formatted_address,opening_hours,website,url,price_level,rating,name,user_ratings_total,review,photo" +
+                            "&key=" + mActivity.getResources().getString(R.string.google_maps_key);
+
+                    Log.d("Maps", "getDetailPlace: "+ url);
+                    //exe place task method to download json data
+                    new PlaceTask(mMap,mActivity, -1).execute(url);
+                    return false;
+                }
+            });
         }
     }
 

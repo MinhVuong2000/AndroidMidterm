@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,28 +17,23 @@ import android.widget.TextView;
 import android.widget.ViewFlipper;
 
 import com.bumptech.glide.Glide;
-import com.example.mymap.database.MyLocation;
 import com.example.mymap.R;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class DetailsPlaces extends AppCompatActivity {
+public class DetailsPlace extends AppCompatActivity {
     private static final String TAG = "Maps";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_details_places);
+        setContentView(R.layout.activity_details_place);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Intent intent = getIntent();
-        final ArrayList<String> info = intent.getStringArrayListExtra("info");
+        final ArrayList<String> info = intent.getStringArrayListExtra("infos");
         ArrayList<String> photos = intent.getStringArrayListExtra("photos");
-
+        if (photos.size()==0)
+            photos.add("https://www.google.com/search?q=image+android&sxsrf=ALeKk003Q8eaT7gRhJgljT-Ic6rd-tvLvg:1609401996530&source=lnms&tbm=isch&sa=X&ved=2ahUKEwiK77bS4fftAhXRIqYKHd6TC10Q_AUoAXoECAUQAw&biw=1230&bih=667#imgrc=XKD7TltIpTVYkM");
         setTitle(info.get(0));
 
 
