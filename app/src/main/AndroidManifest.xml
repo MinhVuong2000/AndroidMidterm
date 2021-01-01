@@ -14,8 +14,6 @@
         android:name="android.hardware.camera"
         android:required="true" />
 
-
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -23,11 +21,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".trip_screen.map.DetailsPlace"></activity>
 
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="@string/google_maps_key" />
-
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
@@ -42,46 +40,32 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
-
-        <activity android:name=".home_screen.Profile"></activity>
+        <activity android:name=".home_screen.Profile" />
         <activity
             android:name=".home_screen.AboutActivity"
             android:label="About"
             android:parentActivityName=".home_screen.HomeActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".home_screen.SettingsActivity"
             android:label="Settings"
             android:parentActivityName=".home_screen.HomeActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".home_screen.HomeActivity"
             android:label="My Trip"
             android:theme="@style/AppTheme.NoActionBar">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
-
-        <activity android:name=".home_screen.NamedTripActivity">
-        </activity>
-
+        <activity android:name=".home_screen.NamedTripActivity"></activity>
         <activity android:name=".trip_screen.gallery.TakePhotoActivity" />
-        <activity android:name=".trip_screen.TripActivity">
-
-        </activity>
-        <activity android:name=".home_screen.LocationInfoActivity" /> <!-- Don't use my api key, it will not work for you. -->
-
-        <activity android:name=".database.AddTripActivity">
-
-        </activity>
-
+        <activity android:name=".trip_screen.TripActivity" />
+        <activity android:name=".home_screen.LocationInfoActivity" />
+        <activity android:name=".database.AddTripActivity"></activity>
         <activity android:name=".home_screen.ChooseLocationActivity" />
         <activity android:name=".home_screen.login1" />
         <activity
@@ -90,7 +74,6 @@
         <activity
             android:name=".trip_screen.gallery.AndroidCameraApi"
             android:label="Camera" />
-
     </application>
 
 </manifest>
