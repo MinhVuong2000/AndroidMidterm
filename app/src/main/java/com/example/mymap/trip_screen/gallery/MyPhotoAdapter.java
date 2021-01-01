@@ -1,4 +1,4 @@
-package com.example.mymap.database;
+package com.example.mymap.trip_screen.gallery;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mymap.R;
+import com.example.mymap.home_screen.TripAdapter;
 
 import java.util.List;
 
@@ -54,11 +55,20 @@ public class MyPhotoAdapter extends RecyclerView.Adapter<MyPhotoAdapter.PhotoVie
         return 0;
     }
 
-    public class PhotoViewHolder extends RecyclerView.ViewHolder{
+    public class PhotoViewHolder extends RecyclerView.ViewHolder implements  View.OnClickListener{
         private ImageView imageView;
+        private OnItemListener onItemListener;
         public PhotoViewHolder(@NonNull View itemView) {
             super(itemView);
             imageView = itemView.findViewById(R.id.iv_photo_test);
         }
+
+        @Override
+        public void onClick(View v) {
+            onItemListener.onItemClick(getAdapterPosition());
+        }
+    }
+    private interface OnItemListener{
+        void onItemClick(int position);
     }
 }

@@ -8,6 +8,10 @@ import android.view.Menu;
 import android.widget.Button;
 
 import com.example.mymap.R;
+import com.example.mymap.database.MyDatabase;
+import com.example.mymap.database.Trip;
+import com.example.mymap.trip_screen.TripActivity;
+import com.example.mymap.trip_screen.gallery.TakePhotoActivity;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.annotation.NonNull;
@@ -18,15 +22,58 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+import java.util.ArrayList;
+import java.util.List;
+
+public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, TripAdapter.OnItemListener {
     private DrawerLayout drawer;
+    private RecyclerView mRecyclerView;
+    private ArrayList<Trip> mListTrip;
+    private TripAdapter mTripAdapter;
     private AppBarConfiguration mAppBarConfiguration;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_trip);
 
+        initToolbar();
+        initRecyclerView();
+        Button new_trip = findViewById(R.id.newtrip);
+        new_trip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent named_location = new Intent(HomeActivity.this, NamedTripActivity.class);
+                startActivity(named_location);
+            }
+        });
+
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        List<Trip> list = MyDatabase.getInstance(this).myDAO().getListTrip();
+        mListTrip = new ArrayList<>(list);
+        mTripAdapter.setData(mListTrip);
+    }
+
+    private void initRecyclerView() {
+        mRecyclerView = findViewById(R.id.recyclerView_home);
+        List<Trip> list = MyDatabase.getInstance(this).myDAO().getListTrip();
+        mListTrip = new ArrayList<>(list);
+        mTripAdapter = new TripAdapter(list,this);
+        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this, 1);
+        mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setLayoutManager(layoutManager);
+        mRecyclerView.setAdapter(mTripAdapter);
+    }
+
+    private void initToolbar() {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
@@ -38,16 +85,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 R.string.navigation_drawer_open,R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
-        Button new_trip = findViewById(R.id.newtrip);
-        new_trip.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent named_location = new Intent(HomeActivity.this, NamedTripActivity.class);
-                startActivity(named_location);
-            }
-        });
-
-
     }
 
     @Override
@@ -88,5 +125,13 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             super.onBackPressed();
         }
 
+    }
+
+    @Override
+    public void onItemClick(int position) {
+        Trip trip = mListTrip.get(position);
+        Intent intent = new Intent(this, TripActivity.class);
+        intent.putExtra("tripId", trip.getTripId());
+        startActivity(intent);
     }
 }

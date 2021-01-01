@@ -31,6 +31,7 @@ import com.directions.route.Route;
 import com.directions.route.RouteException;
 import com.directions.route.Routing;
 import com.directions.route.RoutingListener;
+import com.example.mymap.database.MyDatabase;
 import com.example.mymap.database.MyLocation;
 import com.example.mymap.R;
 import com.example.mymap.database.Trip;
@@ -70,7 +71,6 @@ import com.example.mymap.home_screen.ChooseLocationActivity;
 
 
 import static android.app.Activity.RESULT_OK;
-import static com.example.mymap.home_screen.ChooseLocationActivity.database;
 import static com.example.mymap.home_screen.ChooseLocationActivity.mLocationsArrayList;
 
 public class MapsFragment extends Fragment
@@ -80,6 +80,8 @@ public class MapsFragment extends Fragment
     private int zoomDefault = 17;
     //google map object
     static GoogleMap mMap;
+
+    private MyDatabase database;
 
     public static FusedLocationProviderClient mFusedLocationClient;
     PermissionLocation permissionLocation;
@@ -150,6 +152,8 @@ public class MapsFragment extends Fragment
         else{
             Log.d(TAG, "cant get bundle");
         }
+
+        database = MyDatabase.getInstance(getContext());
 
         initData();
 

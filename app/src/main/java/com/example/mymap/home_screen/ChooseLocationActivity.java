@@ -25,6 +25,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 public class ChooseLocationActivity extends AppCompatActivity {
     private static final String TAG = "ChooseLocationActivity";
@@ -102,7 +104,8 @@ public class ChooseLocationActivity extends AppCompatActivity {
 
     private void start_trip() {
         Log.d(TAG, "start_trip: ");
-        Trip new_trip = new Trip(mTripName);
+        Date date = Calendar.getInstance().getTime();
+        Trip new_trip = new Trip(mTripName, date);
         long rowId = database.myDAO().insertTrip(new_trip);
         int tripId = database.myDAO().getTripIdFromRowId(rowId);
 

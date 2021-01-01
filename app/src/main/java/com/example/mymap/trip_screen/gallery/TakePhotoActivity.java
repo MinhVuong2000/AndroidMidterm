@@ -3,7 +3,6 @@ package com.example.mymap.trip_screen.gallery;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -20,7 +19,6 @@ import android.widget.Toast;
 
 import com.example.mymap.R;
 import com.example.mymap.database.MyDatabase;
-import com.example.mymap.database.MyPhotoAdapter;
 import com.example.mymap.database.TripPhoto;
 
 import java.io.File;

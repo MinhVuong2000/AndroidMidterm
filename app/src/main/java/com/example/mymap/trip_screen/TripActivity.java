@@ -6,6 +6,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.example.mymap.R;
 import com.example.mymap.database.MyDatabase;
@@ -18,10 +19,12 @@ import com.google.android.material.tabs.TabLayout;
 import java.util.ArrayList;
 
 public class TripActivity extends AppCompatActivity {
+    private static final String TAG = "TripActivity";
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private Fragment mMapFragment;
     private Fragment mGalleryFragment;
+    private Fragment mTimelineFragment;
     private int mTripId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +33,7 @@ public class TripActivity extends AppCompatActivity {
 
         //Get tripId from home_screen
         mTripId = getIntent().getIntExtra("tripId",0);
+        Log.d(TAG, "onCreate: tripid" + mTripId);
         String tripName = MyDatabase.getInstance(this).myDAO().getTripName(mTripId);
         setTitle(tripName);
 
@@ -41,7 +45,7 @@ public class TripActivity extends AppCompatActivity {
     private void initFragment() {
         mGalleryFragment = GalleryFragment.newInstance(mTripId);
         mMapFragment = MapsFragment.newInstance(mTripId);
-
+        mTimelineFragment = TimeLineFragment.newInstance(mTripId);
     }
 
     private void initUI() {
@@ -55,9 +59,9 @@ public class TripActivity extends AppCompatActivity {
     private void setupViewPager() {
 
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(mMapFragment, "Maps");
+        //adapter.addFragment(mMapFragment, "Maps");
         adapter.addFragment(mGalleryFragment, "Gallery");
-        adapter.addFragment(new TimeLineFragment(), "TimeLine");
+        adapter.addFragment(mTimelineFragment, "TimeLine");
         viewPager.setAdapter(adapter);
     }
 }

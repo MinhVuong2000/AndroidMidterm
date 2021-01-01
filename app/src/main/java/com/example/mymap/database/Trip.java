@@ -3,15 +3,18 @@ package com.example.mymap.database;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.util.Date;
+
 @Entity(tableName="trip")
 public class Trip {
     @PrimaryKey(autoGenerate = true)
     private int tripId;
 
     private String tripName;
+    private Date dateCreate;
 
-
-    public Trip(String tripName) {
+    public Trip(String tripName, Date dateCreate) {
+        this.dateCreate = dateCreate;
         this.tripName = tripName;
     }
 
@@ -31,4 +34,11 @@ public class Trip {
         this.tripName = tripName;
     }
 
+    public Date getDateCreate() {
+        return dateCreate;
+    }
+
+    public void setDateCreate(Date dateCreate) {
+        this.dateCreate = dateCreate;
+    }
 }

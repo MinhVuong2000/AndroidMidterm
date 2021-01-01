@@ -28,7 +28,7 @@ import java.util.List;
 public class TimeLineFragment extends Fragment {
 
     private static final String TAG = "TimeLineFragment";
-    private static final String ARG_PARAM1 = "param1";
+    private static final String ARG_PARAM1 = "tripId";
 
 
     private RecyclerView mRecyclerView;
@@ -57,6 +57,11 @@ public class TimeLineFragment extends Fragment {
 //
 //        List list = DB.myDAO().getListTripLocationFromTrip(mTripId);
 //        mListTripLocation = new ArrayList<>(list);
+        initDump();
+        mTimelineAdapter = new TimeLineAdapter(getContext(), mListTripLocation);
+    }
+
+    private void initDump() {
         Calendar calendar = Calendar.getInstance();
         calendar.set(2018, 11, 31, 10, 01);
         Date date1 = calendar.getTime();
@@ -65,8 +70,8 @@ public class TimeLineFragment extends Fragment {
         mListTripLocation = new ArrayList<>();
         mListTripLocation.add(new TripLocation(1,11, date1));
         mListTripLocation.add(new TripLocation(1,12, date2));
-        Log.d(TAG, "onCreate: size: "+ mListTripLocation.size());
-        mTimelineAdapter = new TimeLineAdapter(getContext(), mListTripLocation);
+        mListTripLocation.add(new TripLocation(1,13));
+        mListTripLocation.add(new TripLocation(1,14));
     }
 
     @Override

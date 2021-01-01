@@ -9,9 +9,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -23,10 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mymap.R;
 import com.example.mymap.database.MyDatabase;
-import com.example.mymap.database.MyPhotoAdapter;
 import com.example.mymap.database.TripPhoto;
-import com.example.mymap.trip_screen.TripActivity;
-import com.example.mymap.trip_screen.WorldFragment;
 
 import java.io.File;
 import java.io.IOException;
@@ -36,6 +31,8 @@ import java.util.Date;
 import java.util.List;
 
 public class GalleryFragment extends Fragment {
+    private static final String ARG_PARAM1 = "tripId";
+
     private int mTripId;
     private List<String> mListPhotoPath;
     private MyPhotoAdapter myPhotoAdapter;
@@ -52,7 +49,7 @@ public class GalleryFragment extends Fragment {
     public static GalleryFragment newInstance(int param){
         GalleryFragment fragment = new GalleryFragment();
         Bundle args = new Bundle();
-        args.putInt("param1", param);
+        args.putInt(ARG_PARAM1, param);
         fragment.setArguments(args);
         return fragment;
     }
@@ -82,7 +79,7 @@ public class GalleryFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         Bundle bundle = getArguments();
-        mTripId = bundle.getInt("param1",1);
+        mTripId = bundle.getInt(ARG_PARAM1,1);
         mDB = MyDatabase.getInstance(getContext());
 
         mListPhotoPath = new ArrayList<>();

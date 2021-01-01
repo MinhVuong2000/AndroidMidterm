@@ -1,19 +1,17 @@
-package com.example.mymap.database;
+package com.example.mymap.home_screen;
 
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mymap.R;
+import com.example.mymap.database.Trip;
 
+import java.util.Date;
 import java.util.List;
 
 public class TripAdapter extends RecyclerView.Adapter<TripAdapter.TripViewHolder> {
@@ -44,7 +42,9 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.TripViewHolder
         if(trip == null)
             return;
         holder.tvTripName.setText(trip.getTripName());
-        holder.tvTripId.setText(trip.getTripId()+ "");
+        Date date = trip.getDateCreate();
+        android.text.format.DateFormat df = new android.text.format.DateFormat();
+        holder.tvDate.setText("" + df.format("yyyy-MM-dd hh a", date));
     }
 
     @Override
@@ -57,12 +57,12 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.TripViewHolder
 
     public class TripViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView tvTripName;
-        private TextView tvTripId;
+        private TextView tvDate;
         private OnItemListener onItemListener;
         public TripViewHolder(@NonNull View itemView, OnItemListener listener) {
             super(itemView);
 
-            tvTripId = itemView.findViewById(R.id.tv_tripId);
+            tvDate = itemView.findViewById(R.id.tv_dateCreate);
             tvTripName = itemView.findViewById(R.id.tv_tripName);
             onItemListener = listener;
 
@@ -75,7 +75,7 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.TripViewHolder
         }
     }
 
-    public interface OnItemListener{
+    private interface OnItemListener{
         void onItemClick(int position);
     }
 }
