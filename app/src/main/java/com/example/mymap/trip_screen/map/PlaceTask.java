@@ -122,12 +122,13 @@ public class PlaceTask extends AsyncTask<String,Integer,String> {
                     place_idArray.add(place_id);
                     markersItems.add(mMap.addMarker(options));
                 }
+                mMap.animateCamera(CameraUpdateFactory.newLatLng(markersItems.get(0).getPosition()));
                 setUpClickDetailsPlace(mMap);
-                //mMap.animateCamera(CameraUpdateFactory.newLatLng(markersItems.get(0).getPosition()));
             }
             else{
                 ArrayList<String> photos = new ArrayList<>();
                 ArrayList<String> infos = new ArrayList<>();
+                Log.d("Maps", "onPostExecute: size hashMap(photo+info):"+hashMaps.size());
                 for (int i = 0; i < hashMaps.size()-1; i++) {
                     HashMap<String, String> hashMapList = hashMaps.get(i);
                     String height = hashMapList.get("height");

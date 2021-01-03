@@ -80,6 +80,7 @@
             android:drawablePadding="20dp"
             android:padding="5pt"
             android:textSize="7pt"
+            android:textColor="@color/quantum_bluegrey800"
             android:fontFamily="@font/century"/>
         <LinearLayout
             android:layout_width="match_parent"
@@ -123,6 +124,7 @@
             android:drawablePadding="20dp"
             android:padding="5pt"
             android:textSize="7pt"
+            android:textColor="@color/quantum_bluegrey800"
             android:fontFamily="@font/century"/>
         <TextView
             android:id="@+id/openHours"

@@ -248,7 +248,7 @@ public class MapsFragment extends Fragment
             @Override
             public void onClick(View view) {
                 //init place field list
-                List<Place.Field> fieldList = Arrays.asList(Place.Field.ADDRESS,
+                List<Place.Field> fieldList = Arrays.asList(Place.Field.ADDRESS,Place.Field.ID,
                         Place.Field.LAT_LNG, Place.Field.NAME);
                 //create intent
                 Intent intent = new Autocomplete.IntentBuilder(AutocompleteActivityMode.OVERLAY,
@@ -262,8 +262,27 @@ public class MapsFragment extends Fragment
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode==100 && resultCode== RESULT_OK ){
-            Place place = Autocomplete.getPlaceFromIntent(data);
-            Log.d(TAG, "onActivityResult: "+place.getName()+ " "+ place.getLatLng().toString());
+            final Place place = Autocomplete.getPlaceFromIntent(data);
+            Log.d(TAG, "onActivityResult: "+place.getName()+ " "+ place.getId());
+
+            String url = "https://maps.googleapis.com/maps/api/place/details/json" +
+                    "?place_id=" + place.getId() +
+                    "&fields=formatted_phone_number,formatted_address,opening_hours,website,url,price_level,rating,name,user_ratings_total,review,photo" +
+                    "&key=" + getActivity().getResources().getString(R.string.google_maps_key);
+            Log.d("Maps", "getDetailPlace: " + url);
+            //exe place task method to download json data
+            new PlaceTask(mMap, MapsFragment.this, -1).execute(url);
+
+//            final Marker markerFindAutocomplete = mMap.addMarker(new MarkerOptions().position(place.getLatLng()).title(place.getName()));
+//            mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+//                @Override
+//                public boolean onMarkerClick(Marker marker) {
+//                    if (marker.equals(markerFindAutocomplete))
+//                          copy string url .. place task to add Marker but have no see if it is far current zoom
+//                    }
+//                    return false;
+//                }
+//            });
         }
         else if (resultCode ==  AutocompleteActivity.RESULT_ERROR){
             Status status = Autocomplete.getStatusFromIntent(data);
@@ -293,7 +312,7 @@ public class MapsFragment extends Fragment
 
     public void arrayRoutes() {
         Log.d(TAG, "arrayRoutes: enter");
-        curLocation = new LatLng(10.782165,106.6943696);
+        //curLocation = new LatLng(10.782165,106.6943696);
         if (curLocation == null){
             Toast.makeText(getContext(),"Can get your location. Turn back again!",Toast.LENGTH_LONG).show();
         }
