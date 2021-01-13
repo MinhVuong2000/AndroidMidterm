@@ -31,6 +31,7 @@ import com.directions.route.Route;
 import com.directions.route.RouteException;
 import com.directions.route.Routing;
 import com.directions.route.RoutingListener;
+import com.example.mymap.FinishTrip;
 import com.example.mymap.database.MyDatabase;
 import com.example.mymap.database.MyLocation;
 import com.example.mymap.R;
@@ -97,7 +98,6 @@ public class MapsFragment extends Fragment
     static int roundIntent;
     static boolean startARouteInt;
     int tripId;
-    MyDatabase database;
 
     Integer[] distanceList=null;
     int index_minDistance, round;
@@ -151,7 +151,7 @@ public class MapsFragment extends Fragment
             Log.d(TAG, "cant get bundle");
         }
 
-        database = MyDatabase.getInstance(getContext());
+        //database = MyDatabase.getInstance(getContext());
 
         initData();
 
@@ -198,7 +198,7 @@ public class MapsFragment extends Fragment
             }
         //create list latlng for find routes
         latLngArrayList = new ArrayList<>();
-        for (int i=0; i<tripLocationList.size(); i++){
+        for (int i=roundIntent-1; i<tripLocationList.size(); i++){
             latLngArrayList.add(mLocationsArrayList.get(tripLocationList.get(i).getLocationId()).getLatlngLatlng());
         }
     }
@@ -312,7 +312,9 @@ public class MapsFragment extends Fragment
 
     public void arrayRoutes() {
         Log.d(TAG, "arrayRoutes: enter");
-        //curLocation = new LatLng(10.782165,106.6943696);
+
+        curLocation = new LatLng(10.782165,106.6943696);
+
         if (curLocation == null){
             Toast.makeText(getContext(),"Can get your location. Turn back again!",Toast.LENGTH_LONG).show();
         }
@@ -334,7 +336,7 @@ public class MapsFragment extends Fragment
                     Log.d(TAG, "arrayRoutes: "+nextLoca+" "+nextNextLoca);
                     Findroutes(latLngArrayList.get(nextLoca-1),latLngArrayList.get(nextNextLoca));
                 }
-                addScaleIconLocation(mMap,mLocationsArrayList.get(tripLocationList.get(nextLoca-1).getLocationId()),120,120, false);
+                addScaleIconLocation(mMap,mLocationsArrayList.get(tripLocationList.get(roundIntent-1 + nextLoca-1).getLocationId()),120,120, false);
             }
         }
     }
@@ -356,13 +358,24 @@ public class MapsFragment extends Fragment
         showRoute(routeMaps.get(roundIntent-1),mMap,false,startARouteInt);
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(start,zoomDefault+2));
         roundIntent++;
-        btnGotoRouting.setText("Check in Destination");
+        btnGotoRouting.setText("Next Location");
         btnGotoRouting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startARouteInt = false;
                 database.myDAO().updateTimePassed(tripId,roundIntent-2,new Date());
                 //checkRightDestination(curLocation,end);
+                if (roundIntent <= tripLocationList.size()){
+                    startARoute();
+                    if (roundIntent == tripLocationList.size()-1)
+                        btnGotoRouting.setText("Finish Trip");
+                }
+
+                else{
+                    Intent intent = new Intent(getActivity(), FinishTrip.class);
+                    intent.putExtra("tripId", tripId);
+                    startActivity(intent);
+                }
             }
         });
     }
@@ -392,7 +405,7 @@ public class MapsFragment extends Fragment
                     .withListener(this)
                     .alternativeRoutes(false)
                     .waypoints(Start, End)
-                    .key(getResources().getString(R.string.google_maps_key))//"AIzaSyAOypUw4K4LWnW5ON7gD_3pXAim0PaDn6o"
+                    .key(getResources().getString(R.string.google_maps_key))
                     .build();
 
             routing.execute();
@@ -449,9 +462,9 @@ public class MapsFragment extends Fragment
             latLngArrayList.set(index_minDistance+round,temp);
 
             //swap tripLocationList
-            TripLocation tmp = tripLocationList.get(round-1);
-            tripLocationList.set(round-1,tripLocationList.get(index_minDistance+round-1));
-            tripLocationList.set(index_minDistance+round-1,tmp);
+            TripLocation tmp = tripLocationList.get(roundIntent - 1 + round-1);
+            tripLocationList.set(roundIntent - 1 + round-1,tripLocationList.get(roundIntent - 1 + index_minDistance+round-1));
+            tripLocationList.set(roundIntent - 1 + index_minDistance+round-1,tmp);
         }
         routeMaps.add(routeMapsRound.get(index_minDistance));
         showRoute(routeMaps.get(round-1), mMap,roundIntent>round, startARouteInt);
@@ -532,6 +545,3 @@ public class MapsFragment extends Fragment
         }
     }
 }
-
-//detail place: https://www.youtube.com/watch?v=0LiRz-9Py8s&t=286s
-//https://github.com/sksoumik/Nearby-Search
