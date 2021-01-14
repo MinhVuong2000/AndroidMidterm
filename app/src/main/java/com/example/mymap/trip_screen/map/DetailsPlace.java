@@ -34,7 +34,6 @@ public class DetailsPlace extends AppCompatActivity {
         ArrayList<String> photos = intent.getStringArrayListExtra("photos");
         if (photos.size()==0)
             photos.add("https://www.google.com/search?q=image+android&sxsrf=ALeKk003Q8eaT7gRhJgljT-Ic6rd-tvLvg:1609401996530&source=lnms&tbm=isch&sa=X&ved=2ahUKEwiK77bS4fftAhXRIqYKHd6TC10Q_AUoAXoECAUQAw&biw=1230&bih=667#imgrc=XKD7TltIpTVYkM");
-        setTitle(info.get(0));
 
 
         final ViewFlipper viewFlipper = findViewById(R.id.infoScreen_viewFlipper);
@@ -54,6 +53,7 @@ public class DetailsPlace extends AppCompatActivity {
         TextView textViewUrl = findViewById(R.id.url);
         TextView textViewOpenNow = findViewById(R.id.openHours);
 
+        this.setTitle(info.get(0));
         textViewAddress.setText(info.get(1));
         textViewPhone.setText(info.get(2));
         textViewPhone.setOnClickListener(new View.OnClickListener() {
@@ -65,14 +65,7 @@ public class DetailsPlace extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
-            @Override
-            public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
-
-                ratingBar.setRating((float) Double.parseDouble(info.get(3)));
-
-            }
-        });
+        ratingBar.setRating((float) Double.parseDouble(info.get(3)));
         textViewUserRatingTotal.setText(info.get(4));
         textViewUrl.setText(info.get(5));
         textViewUrl.setOnClickListener(new View.OnClickListener() {

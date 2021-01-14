@@ -28,14 +28,18 @@ public class MyJsonParser {
                 dataList.put("height",height);
                 dataList.put("width",width);
                 dataList.put("photo_reference",photo_reference);
+                Log.d(TAG, "parseJsonObject: photos: "+dataList.toString());
             }
             else{
                 if (detailsPlace){
                     Log.d(TAG, "parseJsonObject: detail");
                     String name = object.getString("name");
                     String formatted_address = object.getString("formatted_address");
-                    String formatted_phone_number = object.getString("formatted_phone_number");
-                    String open_now = object.getJSONObject("opening_hours").getBoolean("formatted_address")?"Opening":"Closed";
+                    String formatted_phone_number = "None";
+                    if (object.has("formatted_phone_number") ){
+                        formatted_phone_number = object.getString("formatted_phone_number");
+                    }
+                    String open_now = object.getJSONObject("opening_hours").getBoolean("open_now")?"Opening":"Closed";
                     String rating = object.getString("rating");
                     String user_ratings_total = object.getString("user_ratings_total");
                     String url = object.getString("url");
@@ -46,6 +50,7 @@ public class MyJsonParser {
                     dataList.put("user_ratings_total",user_ratings_total);
                     dataList.put("url",url);
                     dataList.put("open_now",open_now);
+                    Log.d(TAG, "parseJsonObject: detail: "+dataList.toString());
                 }
                 else{
                     Log.d(TAG, "parseJsonObject: nearbySearch");
