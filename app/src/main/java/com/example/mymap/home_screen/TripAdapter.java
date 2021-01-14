@@ -75,7 +75,7 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.TripViewHolder
         }
     }
 
-    private interface OnItemListener{
+    interface OnItemListener{
         void onItemClick(int position);
     }
 }

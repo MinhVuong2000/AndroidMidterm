@@ -97,7 +97,6 @@ public class MapsFragment extends Fragment
     static int roundIntent;
     static boolean startARouteInt;
     int tripId;
-    MyDatabase database;
 
     Integer[] distanceList=null;
     int index_minDistance, round;
