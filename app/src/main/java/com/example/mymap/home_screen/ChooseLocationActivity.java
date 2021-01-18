@@ -28,11 +28,11 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+import static com.example.mymap.home_screen.HomeActivity.mLocationsArrayList;
+
 public class ChooseLocationActivity extends AppCompatActivity {
     private static final String TAG = "ChooseLocationActivity";
 
-    public static ArrayList<MyLocation> mLocationsArrayList;
-    public static DatabaseReference firebaseReference;
     public static MyDatabase database;
 
     private ListView mListView;
@@ -51,7 +51,6 @@ public class ChooseLocationActivity extends AppCompatActivity {
         mTripName = getIntent().getStringExtra("TripName");
         database = MyDatabase.getInstance(this);
 
-        initData();
         initUI();
 
 
@@ -80,26 +79,6 @@ public class ChooseLocationActivity extends AppCompatActivity {
             }
         });
     }
-
-
-    private void initData() {
-        mLocationsArrayList = new ArrayList<>();
-        firebaseReference = FirebaseDatabase.getInstance().getReference("myLocation");
-        firebaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot di:dataSnapshot.getChildren()){
-                    mLocationsArrayList.add(di.getValue(MyLocation.class));
-                }
-                initUI();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-            }
-        });
-    }
-
 
 
     private void start_trip() {

@@ -36,7 +36,7 @@ public class LocationInfoActivity extends AppCompatActivity {
         Intent intent = getIntent();
         int location_idx = intent.getIntExtra("location_idx", 0);
 
-        location = ChooseLocationActivity.mLocationsArrayList.get(location_idx);
+        location = HomeActivity.mLocationsArrayList.get(location_idx);
         setTitle(location.getName());
         mListImages = location.getPictures();
 

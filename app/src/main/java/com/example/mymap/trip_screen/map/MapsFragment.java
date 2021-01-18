@@ -70,7 +70,7 @@ import com.example.mymap.home_screen.ChooseLocationActivity;
 import com.squareup.picasso.Picasso;
 
 import static android.app.Activity.RESULT_OK;
-import static com.example.mymap.home_screen.ChooseLocationActivity.mLocationsArrayList;
+import static com.example.mymap.home_screen.HomeActivity.mLocationsArrayList;
 
 public class MapsFragment extends Fragment
         implements OnMapReadyCallback, RoutingListener {
@@ -313,7 +313,7 @@ public class MapsFragment extends Fragment
     public void arrayRoutes() {
         Log.d(TAG, "arrayRoutes: enter");
 
-        curLocation = new LatLng(10.782165,106.6943696);
+        //curLocation = new LatLng(10.782165,106.6943696);
 
         if (curLocation == null){
             Toast.makeText(getContext(),"Can get your location. Turn back again!",Toast.LENGTH_LONG).show();

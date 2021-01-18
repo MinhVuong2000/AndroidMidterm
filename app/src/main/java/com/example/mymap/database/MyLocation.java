@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory;
 import androidx.annotation.NonNull;
 
 import com.example.mymap.home_screen.ChooseLocationActivity;
+import com.example.mymap.home_screen.HomeActivity;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -97,8 +98,8 @@ public class MyLocation {
 
     public static MyLocation getLocationAtPos(final Integer pos){
         final MyLocation[] result = new MyLocation[1];
-        ChooseLocationActivity.firebaseReference= FirebaseDatabase.getInstance().getReference("myLocation").child(pos.toString());
-        ChooseLocationActivity.firebaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+        HomeActivity.firebaseReference= FirebaseDatabase.getInstance().getReference("myLocation").child(pos.toString());
+        HomeActivity.firebaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 result[0] = dataSnapshot.getValue(MyLocation.class);
