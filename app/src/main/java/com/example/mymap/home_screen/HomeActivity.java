@@ -9,10 +9,16 @@ import android.widget.Button;
 
 import com.example.mymap.R;
 import com.example.mymap.database.MyDatabase;
+import com.example.mymap.database.MyLocation;
 import com.example.mymap.database.Trip;
 import com.example.mymap.trip_screen.TripActivity;
 import com.example.mymap.trip_screen.gallery.TakePhotoActivity;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -33,7 +39,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private RecyclerView mRecyclerView;
     private ArrayList<Trip> mListTrip;
     private TripAdapter mTripAdapter;
-    private AppBarConfiguration mAppBarConfiguration;
+
+    public static ArrayList<MyLocation> mLocationsArrayList;
+    public static DatabaseReference firebaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +59,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             }
         });
 
+        initData();
 
     }
 
@@ -134,4 +143,23 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         intent.putExtra("tripId", trip.getTripId());
         startActivity(intent);
     }
+
+
+    private void initData() {
+        mLocationsArrayList = new ArrayList<>();
+        firebaseReference = FirebaseDatabase.getInstance().getReference("myLocation");
+        firebaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot di:dataSnapshot.getChildren()){
+                    mLocationsArrayList.add(di.getValue(MyLocation.class));
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
+    }
+
 }
