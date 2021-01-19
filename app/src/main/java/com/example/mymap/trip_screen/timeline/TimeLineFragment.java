@@ -52,12 +52,14 @@ public class TimeLineFragment extends Fragment {
         return fragment;
     }
 
+
     @Override
-    public void onResume() {
-        Log.d(TAG, "onResume: ");
-        super.onResume();
-        initData();
-        mTimelineAdapter.setData(mListTripLocation);
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if(isVisibleToUser){
+            initData();
+            mTimelineAdapter.setData(mListTripLocation);
+        }
     }
 
     @Override
@@ -104,4 +106,6 @@ public class TimeLineFragment extends Fragment {
         mRecyclerView.setAdapter(mTimelineAdapter);
         return view;
     }
+
+
 }
