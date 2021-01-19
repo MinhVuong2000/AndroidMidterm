@@ -72,6 +72,7 @@ import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -161,19 +162,12 @@ public class MapsFragment extends Fragment
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(getActivity());//get intent from HomeActivity
         permissionLocation = new PermissionLocation(curLocation,MapsFragment.this);
         Bundle bundle = getArguments();
-        if(bundle!=null){
+        if(bundle!=null)
             tripId = bundle.getInt("param1",0);
-            Log.d(TAG, "onCreate: tripId "+tripId);
-        }
-        else{
-            Log.d(TAG, "cant get bundle");
-        }
-
         initData();
         markersItems = null;
         startARouteInt = false;
         dataItemScroll = new Data(tripLocationList).getData();
-        Log.d(TAG, "onCreate: dataItemScroll"+dataItemScroll.get(0).toString());
 
         if (android.os.Build.VERSION.SDK_INT >= 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -184,7 +178,6 @@ public class MapsFragment extends Fragment
     private void initData() {
         database = MyDatabase.getInstance(getActivity());
         tripLocationList = database.myDAO().getListTripLocationFromTrip(tripId);
-        Log.d(TAG, "initData: size tripLocation: "+tripLocationList.size());
         //sort tripLocation
         for (int i=0;i<tripLocationList.size();i++){
             if (tripLocationList.get(i).getTimePassed()==null)
@@ -204,10 +197,11 @@ public class MapsFragment extends Fragment
             roundIntent = tripLocationList.size();
         else for (int i=0;i<tripLocationList.size();i++){
                 if (tripLocationList.get(i).getTimePassed()==null){
-                    roundIntent = i;
+                    roundIntent = i+1;
                     break;
                 }
             }
+        Log.d(TAG, "initData: routeIntent start: "+roundIntent);
     }
 
     @Override
@@ -371,7 +365,7 @@ public class MapsFragment extends Fragment
             @Override
             public void onClick(View view) {
                 roundIntent++;
-                database.myDAO().updateTimePassed(tripId,roundIntent-2,new Date());
+                database.myDAO().updateTimePassed(tripId,roundIntent-2, Calendar.getInstance().getTime());
                 //checkRightDestination(curLocation,end);
                 if (roundIntent < tripLocationList.size()+1){
                     horizontalInfiniteCycleViewPager.notifyDataSetChanged();
@@ -391,7 +385,7 @@ public class MapsFragment extends Fragment
     private void checkRightDestination(LatLng curLocation, LatLng end) {
         if ((curLocation.latitude-end.latitude<epsilon && end.latitude-curLocation.latitude<epsilon)
                 && (curLocation.longitude-end.longitude<epsilon && end.longitude-curLocation.longitude<epsilon)){
-            database.myDAO().updateTimePassed(tripId,roundIntent-2,new Date());
+            database.myDAO().updateTimePassed(tripId,roundIntent-2,Calendar.getInstance().getTime());
         }
         else {
             Toast.makeText(getActivity(),"Here is not Destination. Please go on!",Toast.LENGTH_LONG).show();
