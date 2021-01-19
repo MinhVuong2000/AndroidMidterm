@@ -56,7 +56,7 @@ dependencies {
 
     implementation 'com.google.firebase:firebase-database-ktx'
     implementation 'com.google.firebase:firebase-analytics-ktx'
-    implementation 'com.google.android.gms:play-services-basement:17.4.0'
+    implementation 'com.google.android.gms:play-services-basement:17.5.0'
     implementation platform('com.google.firebase:firebase-bom:26.1.1')
 
     //noinspection GradleCompatible
@@ -90,6 +90,8 @@ dependencies {
     implementation 'com.android.support:palette-v7:25.1.1'
 
     implementation 'com.android.support:support-v4'
+
+    implementation 'com.github.devlight:infinitecycleviewpager:1.0.2'
 
     implementation 'com.github.vipulasri:timelineview:1.1.5'
 }
