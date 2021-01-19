@@ -30,7 +30,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class GalleryFragment extends Fragment {
+public class GalleryFragment extends Fragment implements MyPhotoAdapter.OnItemListener{
     private static final String ARG_PARAM1 = "tripId";
 
     private int mTripId;
@@ -84,7 +84,7 @@ public class GalleryFragment extends Fragment {
 
         mListPhotoPath = new ArrayList<>();
         mListPhotoPath = MyDatabase.getInstance(getContext()).myDAO().getListPhotoPathFromTrip(mTripId);
-        myPhotoAdapter = new MyPhotoAdapter(mListPhotoPath);
+        myPhotoAdapter = new MyPhotoAdapter(mListPhotoPath, this);
 
 
     }
@@ -156,5 +156,12 @@ public class GalleryFragment extends Fragment {
         // Save a file: path for use with ACTION_VIEW intents
         currentPhotoPath = image.getAbsolutePath();
         return image;
+    }
+
+    @Override
+    public void onItemClick(int position) {
+        Intent intent = new Intent(getActivity(), PhotoActivity.class);
+        intent.putExtra("photoPath", mListPhotoPath.get(position));
+        startActivity(intent);
     }
 }

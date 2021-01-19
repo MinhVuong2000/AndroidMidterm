@@ -12,7 +12,7 @@ import com.example.mymap.database.MyDatabase;
 import com.example.mymap.database.MyLocation;
 import com.example.mymap.database.Trip;
 import com.example.mymap.trip_screen.TripActivity;
-import com.example.mymap.trip_screen.gallery.TakePhotoActivity;
+
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;

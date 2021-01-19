@@ -11,16 +11,17 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mymap.R;
-import com.example.mymap.home_screen.TripAdapter;
 
 import java.util.List;
 
 public class MyPhotoAdapter extends RecyclerView.Adapter<MyPhotoAdapter.PhotoViewHolder> {
 
     private List<String> mListPhotoPath;
+    private OnItemListener mOnItemListener;
 
-    public MyPhotoAdapter(List<String> mListPhotoPath) {
+    public MyPhotoAdapter(List<String> mListPhotoPath, OnItemListener mOnItemListener) {
         this.mListPhotoPath = mListPhotoPath;
+        this.mOnItemListener = mOnItemListener;
     }
 
     public void setData(List<String> list)
@@ -33,7 +34,7 @@ public class MyPhotoAdapter extends RecyclerView.Adapter<MyPhotoAdapter.PhotoVie
     @Override
     public PhotoViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.photo_item, parent, false);
-        return new PhotoViewHolder(view);
+        return new PhotoViewHolder(view, mOnItemListener);
     }
 
     @Override
@@ -58,9 +59,11 @@ public class MyPhotoAdapter extends RecyclerView.Adapter<MyPhotoAdapter.PhotoVie
     public class PhotoViewHolder extends RecyclerView.ViewHolder implements  View.OnClickListener{
         private ImageView imageView;
         private OnItemListener onItemListener;
-        public PhotoViewHolder(@NonNull View itemView) {
+        public PhotoViewHolder(@NonNull View itemView, OnItemListener listener) {
             super(itemView);
             imageView = itemView.findViewById(R.id.iv_photo_test);
+            onItemListener = listener;
+            imageView.setOnClickListener(this);
         }
 
         @Override
@@ -68,7 +71,7 @@ public class MyPhotoAdapter extends RecyclerView.Adapter<MyPhotoAdapter.PhotoVie
             onItemListener.onItemClick(getAdapterPosition());
         }
     }
-    private interface OnItemListener{
+    public interface OnItemListener{
         void onItemClick(int position);
     }
 }

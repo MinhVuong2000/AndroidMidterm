@@ -61,7 +61,7 @@ public class TripActivity extends AppCompatActivity {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(mMapFragment, "Maps");
         adapter.addFragment(mGalleryFragment, "Gallery");
-        adapter.addFragment(mTimelineFragment, "TimeLine");
+        //adapter.addFragment(mTimelineFragment, "TimeLine");
         viewPager.setAdapter(adapter);
     }
 }

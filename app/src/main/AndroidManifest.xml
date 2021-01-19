@@ -66,15 +66,17 @@
             </intent-filter>
         </activity>
         <activity android:name=".home_screen.NamedTripActivity" />
-        <activity android:name=".trip_screen.gallery.TakePhotoActivity" />
-        <activity android:name=".trip_screen.TripActivity" />
+        <activity android:name=".trip_screen.TripActivity" >
+
+        </activity>
+
         <activity android:name=".home_screen.LocationInfoActivity" />
-        <activity android:name=".database.AddTripActivity" />
         <activity android:name=".home_screen.ChooseLocationActivity" />
         <activity android:name=".home_screen.login1" />
         <activity
             android:name=".trip_screen.gallery.PhotoActivity"
-            android:label="Your Photo" />
+            android:label="Your Photo"
+            android:theme="@style/AppTheme"/>
         <activity
             android:name=".trip_screen.gallery.AndroidCameraApi"
             android:label="Camera" />
