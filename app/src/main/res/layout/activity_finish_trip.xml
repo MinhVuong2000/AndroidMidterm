@@ -43,7 +43,7 @@
         android:layout_height="50dp" />
 
     <Button
-        android:id="@+id/rating_bt_rate"
+        android:id="@+id/finish_trip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

@@ -49,7 +49,6 @@ public class ScrollViewAdapter extends PagerAdapter {
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
         final View layout;
         Log.d("Maps", "instantiateItem: "+position);
-        position = getCount() - position - 1;
 
         layout= mLayoutInflater.inflate(R.layout.slide_place_item,
                 container, false);
@@ -63,7 +62,7 @@ public class ScrollViewAdapter extends PagerAdapter {
                 .into(imageView);
         name.setText(data.get(position).getName());
         state.setText(data.get(position).getState());
-        map.animateCamera(CameraUpdateFactory.newLatLng(data.get(position).getLatLng()));
+        map.animateCamera(CameraUpdateFactory.newLatLng(data.get((position+1)%getCount()).getLatLng()));
 
         container.addView(layout);
         return layout;

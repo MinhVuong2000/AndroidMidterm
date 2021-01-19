@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -11,6 +12,7 @@ import android.widget.EditText;
 import android.widget.RatingBar;
 
 import com.example.mymap.database.MyDatabase;
+import com.example.mymap.home_screen.HomeActivity;
 
 public class FinishTrip extends AppCompatActivity {
 
@@ -26,7 +28,7 @@ public class FinishTrip extends AppCompatActivity {
 
         final EditText editTextComment = (EditText) findViewById(R.id.rating_comment);
         final RatingBar ratingBar = (RatingBar) findViewById(R.id.rating_bar);
-        Button btRate = (Button) findViewById(R.id.rating_bt_rate);
+        Button btRate = (Button) findViewById(R.id.finish_trip);
 
         btRate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -37,6 +39,10 @@ public class FinishTrip extends AppCompatActivity {
                 //Log.d("RatingDebug", "Comment = " + comment);
                 if (stars == 0.0)
                     addNotRateYetDialog();
+                else{
+                    Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                    startActivity(intent);
+                }
             }
 
         });

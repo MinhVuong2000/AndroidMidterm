@@ -89,6 +89,8 @@ public class MapsFragment extends Fragment
     private int zoomDefault = 17;
     //google map object
     static GoogleMap mMap;
+    static ArrayList<Marker> markersItems;
+    private ArrayList<Polyline> polylinesRoute;
 
     private MyDatabase database;
 
@@ -137,8 +139,6 @@ public class MapsFragment extends Fragment
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.activity_maps, container, false);
         btnGotoRouting = (Button) view.findViewById(R.id.btnGoToRouting);
-        if (savedInstanceState != null)
-            btnGotoRouting.setText(savedInstanceState.getString("text_start_route"));
 
         editTextSearch = (EditText)view.findViewById(R.id.edit_text_search);
         spinner = (Spinner)view.findViewById(R.id.spinnerNearby);
@@ -156,12 +156,6 @@ public class MapsFragment extends Fragment
     }
 
     @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putString("text_start_route", btnGotoRouting.getText().toString());
-    }
-
-    @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(getActivity());//get intent from HomeActivity
@@ -176,6 +170,7 @@ public class MapsFragment extends Fragment
         }
 
         initData();
+        markersItems = null;
         startARouteInt = false;
         dataItemScroll = new Data(tripLocationList).getData();
         Log.d(TAG, "onCreate: dataItemScroll"+dataItemScroll.get(0).toString());
@@ -304,17 +299,6 @@ public class MapsFragment extends Fragment
             Log.d("Maps", "getDetailPlace: " + url);
             //exe place task method to download json data
             new PlaceTask(mMap, MapsFragment.this, -1).execute(url);
-
-//            final Marker markerFindAutocomplete = mMap.addMarker(new MarkerOptions().position(place.getLatLng()).title(place.getName()));
-//            mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-//                @Override
-//                public boolean onMarkerClick(Marker marker) {
-//                    if (marker.equals(markerFindAutocomplete))
-//                          copy string url .. place task to add Marker but have no see if it is far current zoom
-//                    }
-//                    return false;
-//                }
-//            });
         }
         else if (resultCode ==  AutocompleteActivity.RESULT_ERROR){
             Status status = Autocomplete.getStatusFromIntent(data);
@@ -362,8 +346,9 @@ public class MapsFragment extends Fragment
 
             routeMapsRound = new ArrayList<>();
             routeMaps = new ArrayList<Route>(sizeLatLngList-1);
+            polylinesRoute = new ArrayList<Polyline>(sizeLatLngList-1);
 
-            mMap.animateCamera( CameraUpdateFactory.newLatLngZoom(mLocationsArrayList.get(tripLocationList.get(roundIntent-1).getLocationId()).getLatlngLatlng(), zoomDefault));
+            mMap.animateCamera( CameraUpdateFactory.newLatLngZoom(latLngArrayList.get(roundIntent-1), zoomDefault));
             mMap.addMarker(new MarkerOptions().position(curLocation)
                     .icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_home)));
             for (int nextLoca=1;nextLoca<sizeLatLngList;nextLoca++){
@@ -389,22 +374,25 @@ public class MapsFragment extends Fragment
 
 
     public void startARoute() {
+        Log.d(TAG, "startARoute: roundIntent:"+roundIntent);
         startARouteInt=true;
         LatLng start = routeMaps.get(roundIntent-1).getPoints().get(0);
-        showRoute(routeMaps.get(roundIntent-1),mMap,false,startARouteInt);
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(start,zoomDefault+2));
+        for (int i=0;i<roundIntent-1;i++)
+            showRoute(routeMaps.get(i),i,mMap,true,false);
+        showRoute(routeMaps.get(roundIntent-1),roundIntent-1,mMap,false,startARouteInt);
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(start,zoomDefault+1));
         btnGotoRouting.setText("Next Location");
+        if (roundIntent == tripLocationList.size())
+            btnGotoRouting.setText("Finish Trip");
         btnGotoRouting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 roundIntent++;
                 database.myDAO().updateTimePassed(tripId,roundIntent-2,new Date());
                 //checkRightDestination(curLocation,end);
-                if (roundIntent <= tripLocationList.size()){
-                    startARoute();
-                    if (roundIntent == tripLocationList.size())
-                        btnGotoRouting.setText("Finish Trip");
+                if (roundIntent < tripLocationList.size()+1){
                     horizontalInfiniteCycleViewPager.notifyDataSetChanged();
+                    startARoute();
                 }
 
                 else{
@@ -503,7 +491,7 @@ public class MapsFragment extends Fragment
             tripLocationList.set(roundIntent - 1 + index_minDistance+round-1,tmp);
         }
         routeMaps.add(routeMapsRound.get(index_minDistance));
-        showRoute(routeMaps.get(round-1), mMap,roundIntent>round, startARouteInt);
+        showRoute(routeMaps.get(round-1),round-1, mMap,roundIntent>round, startARouteInt);
         round++;
 
         routeMapsRound.clear();
@@ -512,15 +500,18 @@ public class MapsFragment extends Fragment
         index_minDistance = 0;
     }
 
-
-    public static void showRoute(Route r, GoogleMap mMap, boolean changeColor, boolean startARoute){
-        List<Polyline> polylines = null;
-        if(polylines!=null) {
-            polylines.clear();
+    public void showRoute(Route r, int indexRoute, GoogleMap mMap, boolean changeColor, boolean startARoute){
+        Log.d(TAG, "showRoute: sizePoliline:"+polylinesRoute.size());
+        boolean deletepoly = true;
+        if (polylinesRoute.size() == sizeLatLngList-1){
+            polylinesRoute.get(indexRoute).remove();
+            polylinesRoute.remove(indexRoute);
         }
+
+        else
+            deletepoly = false;
         PolylineOptions polyOptions = new PolylineOptions();
 
-        polylines = new ArrayList<>();
         if (changeColor)
             polyOptions.color(Color.argb(100,100,100,100));
         if (startARoute)
@@ -528,7 +519,9 @@ public class MapsFragment extends Fragment
         polyOptions.width(7);
         polyOptions.addAll(r.getPoints());
         Polyline polyline = mMap.addPolyline(polyOptions);
-        polylines.add(polyline);
+        if (deletepoly)
+            polylinesRoute.add(indexRoute,polyline);
+        else polylinesRoute.add(polyline);
     }
 
     @SuppressLint("MissingPermission")
