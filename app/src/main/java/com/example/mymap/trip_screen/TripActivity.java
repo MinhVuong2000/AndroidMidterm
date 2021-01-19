@@ -50,6 +50,7 @@ public class TripActivity extends AppCompatActivity {
 
     private void initUI() {
         viewPager = (ViewPager) findViewById(R.id.viewpager);
+        viewPager.setOffscreenPageLimit(2);
         tabLayout = (TabLayout) findViewById(R.id.tabs);
 
         setupViewPager();
@@ -61,7 +62,7 @@ public class TripActivity extends AppCompatActivity {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(mMapFragment, "Maps");
         adapter.addFragment(mGalleryFragment, "Gallery");
-        //adapter.addFragment(mTimelineFragment, "TimeLine");
+        adapter.addFragment(mTimelineFragment, "TimeLine");
         viewPager.setAdapter(adapter);
     }
 }

@@ -124,7 +124,7 @@
             android:drawablePadding="20dp"
             android:padding="5pt"
             android:textSize="7pt"
-            android:textColor="@color/quantum_bluegrey800"
+            android:textColor="@color/quantum_purple200"
             android:fontFamily="@font/century"/>
         <TextView
             android:id="@+id/openHours"

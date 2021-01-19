@@ -36,20 +36,19 @@ import java.util.HashMap;
 import java.util.List;
 
 import static com.example.mymap.trip_screen.map.MapsFragment.iconItems;
+import static com.example.mymap.trip_screen.map.MapsFragment.markersItems;
 
 public class PlaceTask extends AsyncTask<String,Integer,String> {
     GoogleMap mMap;
     Fragment mActivity;
     int mPosition;
     ArrayList<String> place_idArray;
-    ArrayList<Marker> markersItems;
 
     public PlaceTask(GoogleMap mMap, Fragment activity, int position){
         this.mMap = mMap;
         this.mActivity = activity;
         this.mPosition = position;
         place_idArray = new ArrayList<>();
-        markersItems = null;
     }
 
     @Override
@@ -105,8 +104,12 @@ public class PlaceTask extends AsyncTask<String,Integer,String> {
         protected void onPostExecute(List<HashMap<String, String>> hashMaps) {
             if (mPosition != -1) {
                 if (markersItems != null) {
-                    for (int i = 0; i < markersItems.size(); i++)
+                    Log.d("Maps", "onPostExecute: clear marker");
+                    for (int i=0;i<markersItems.size();i++)
                         markersItems.get(i).remove();
+                }
+                else{
+                    Log.d("Maps", "onPostExecute: maker null");
                 }
                 markersItems = new ArrayList<>();
                 for (int i = 0; i < hashMaps.size(); i++) {
