@@ -60,7 +60,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         });
 
         initData();
+    }
 
+    private void initData() {
+        mLocationsArrayList = MyLocation.getAllLocations();
     }
 
     @Override
@@ -145,21 +148,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     }
 
 
-    private void initData() {
-        mLocationsArrayList = new ArrayList<>();
-        firebaseReference = FirebaseDatabase.getInstance().getReference("myLocation");
-        firebaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot di:dataSnapshot.getChildren()){
-                    mLocationsArrayList.add(di.getValue(MyLocation.class));
-                }
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-            }
-        });
-    }
 
 }

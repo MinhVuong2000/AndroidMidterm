@@ -221,16 +221,17 @@ public class MapsFragment extends Fragment
         horizontalInfiniteCycleViewPager.setCenterPageScaleOffset(20.0F);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
-                android.R.layout.simple_spinner_item,itemsDisplay);
+                android.R.layout.simple_spinner_item, itemsDisplay);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
-                if (position!=0){
+                if (position != 0) {
                     getPlacesWithItem(items[position], position);
                 }
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
             }
@@ -239,10 +240,9 @@ public class MapsFragment extends Fragment
         btnGotoRouting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (roundIntent!=sizeLatLngList){
+                if (roundIntent != sizeLatLngList) {
                     startARoute();
-                }
-                else{
+                } else {
                     Intent intent = new Intent(getActivity(), ChooseLocationActivity.class);
                     startActivity(intent);
                 }
@@ -250,39 +250,22 @@ public class MapsFragment extends Fragment
         });
 
         //init places
-        Places.initialize(getActivity(),getResources().getString(R.string.google_maps_key));
+        Places.initialize(getActivity(), getResources().getString(R.string.google_maps_key));
         //set editText non focusable
         editTextSearch.setFocusable(false);
         editTextSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //init place field list
-                List<Place.Field> fieldList = Arrays.asList(Place.Field.ADDRESS,Place.Field.ID,
+                List<Place.Field> fieldList = Arrays.asList(Place.Field.ADDRESS, Place.Field.ID,
                         Place.Field.LAT_LNG, Place.Field.NAME);
                 //create intent
                 Intent intent = new Autocomplete.IntentBuilder(AutocompleteActivityMode.OVERLAY,
                         fieldList).build(getActivity());
-                startActivityForResult(intent,100);
+                startActivityForResult(intent, 100);
             }
 
         });
-        editTextSearch.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                Log.d(TAG, "onTextChanged: ");
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-
     }
 
     @Override

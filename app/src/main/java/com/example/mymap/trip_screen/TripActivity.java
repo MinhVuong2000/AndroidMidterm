@@ -33,7 +33,6 @@ public class TripActivity extends AppCompatActivity {
 
         //Get tripId from home_screen
         mTripId = getIntent().getIntExtra("tripId",0);
-        Log.d(TAG, "onCreate: tripid" + mTripId);
         String tripName = MyDatabase.getInstance(this).myDAO().getTripName(mTripId);
         setTitle(tripName);
 

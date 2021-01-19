@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
 
 import com.example.mymap.R;
+import com.example.mymap.database.MyLocation;
 import com.example.mymap.database.TripLocation;
 import com.github.vipulasri.timelineview.TimelineView;
 import com.google.android.material.drawable.DrawableUtils;
@@ -25,12 +26,15 @@ import java.util.Date;
 
 public class TimeLineAdapter extends RecyclerView.Adapter<TimeLineAdapter.TimeLineViewHolder> {
     private static final String TAG = "TimeLineAdapter";
-    ArrayList<TripLocation> mListTripLocation;
     Context mContext;
-    public TimeLineAdapter(Context context,ArrayList<TripLocation> list)
-    {
-        mListTripLocation = list;
-        mContext = context;
+    ArrayList<TripLocation> mListTripLocation;
+    ArrayList<MyLocation> mListLocation;
+
+
+    public TimeLineAdapter(Context mContext, ArrayList<TripLocation> mListTripLocation, ArrayList<MyLocation> mListLocation) {
+        this.mContext = mContext;
+        this.mListTripLocation = mListTripLocation;
+        this.mListLocation = mListLocation;
     }
 
     public void setData(ArrayList<TripLocation> list)
@@ -57,7 +61,7 @@ public class TimeLineAdapter extends RecyclerView.Adapter<TimeLineAdapter.TimeLi
         if(tripLocation.getTimePassed() == null) {
             holder.mTimelineView.setMarker(mContext.getDrawable(R.drawable.ic_marker_inactive));
             holder.mTimelineView.setLineStyle(1); //dash
-            holder.mTv_message.setText("location id: " + tripLocation.getLocationId());
+            holder.mTv_message.setText("Sắp đến " + mListLocation.get(mListTripLocation.get(position).getLocationId()));
             int color = mContext.getColor(R.color.colorWhite);
             holder.mCardView.setCardBackgroundColor(color);
         }
@@ -66,7 +70,7 @@ public class TimeLineAdapter extends RecyclerView.Adapter<TimeLineAdapter.TimeLi
         Date date = tripLocation.getTimePassed();
         android.text.format.DateFormat df = new android.text.format.DateFormat();
         holder.mTv_date.setText("Time: " + df.format("yyyy-MM-dd hh:mm a", date));
-        holder.mTv_message.setText("Đã đi qua location id: " + tripLocation.getLocationId());
+        holder.mTv_message.setText("Đã đến " + mListLocation.get(mListTripLocation.get(position).getLocationId()));
 
         }
     }

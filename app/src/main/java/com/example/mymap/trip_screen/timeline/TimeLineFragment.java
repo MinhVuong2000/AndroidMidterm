@@ -13,12 +13,16 @@ import android.view.ViewGroup;
 
 import com.example.mymap.R;
 import com.example.mymap.database.MyDatabase;
+import com.example.mymap.database.MyLocation;
 import com.example.mymap.database.TripLocation;
+import com.example.mymap.home_screen.HomeActivity;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
+import static com.example.mymap.home_screen.HomeActivity.mLocationsArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -49,16 +53,28 @@ public class TimeLineFragment extends Fragment {
     }
 
     @Override
+    public void onResume() {
+        Log.d(TAG, "onResume: ");
+        super.onResume();
+        initData();
+        mTimelineAdapter.setData(mListTripLocation);
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d(TAG, "onCreate: ");
-//        DB = MyDatabase.getInstance(getContext());
-         mTripId = getArguments().getInt(ARG_PARAM1, 1);
-//
-//        List list = DB.myDAO().getListTripLocationFromTrip(mTripId);
-//        mListTripLocation = new ArrayList<>(list);
-        initDump();
-        mTimelineAdapter = new TimeLineAdapter(getContext(), mListTripLocation);
+        DB = MyDatabase.getInstance(getContext());
+        mTripId = getArguments().getInt(ARG_PARAM1, 1);
+
+        initData();
+        //initDump();
+        mTimelineAdapter = new TimeLineAdapter(getContext(), mListTripLocation, mLocationsArrayList);
+    }
+
+    private void initData() {
+        List list = DB.myDAO().getListTripLocationFromTrip(mTripId);
+        mListTripLocation = new ArrayList<>(list);
+
     }
 
     private void initDump() {

@@ -11,6 +11,7 @@ import com.example.mymap.home_screen.HomeActivity;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.IgnoreExtraProperties;
 import com.google.firebase.database.ValueEventListener;
@@ -98,8 +99,8 @@ public class MyLocation {
 
     public static MyLocation getLocationAtPos(final Integer pos){
         final MyLocation[] result = new MyLocation[1];
-        HomeActivity.firebaseReference= FirebaseDatabase.getInstance().getReference("myLocation").child(pos.toString());
-        HomeActivity.firebaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+        DatabaseReference firebaseReference= FirebaseDatabase.getInstance().getReference("myLocation").child(pos.toString());
+        firebaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 result[0] = dataSnapshot.getValue(MyLocation.class);
@@ -111,6 +112,24 @@ public class MyLocation {
             }
         });
         return result[0];
+    }
+
+    public static ArrayList<MyLocation> getAllLocations() {
+        final ArrayList<MyLocation> res = new ArrayList<>();
+        DatabaseReference firebaseReference = FirebaseDatabase.getInstance().getReference("myLocation");
+        firebaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot di:dataSnapshot.getChildren()){
+                    res.add(di.getValue(MyLocation.class));
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
+        return res;
     }
 
     public static Bitmap getPicture(String urlSrc){
