@@ -14,7 +14,7 @@ public class Item {
 
     public Item(TripLocation location) {
         this.name = mLocationsArrayList.get(location.getLocationId()).getName();
-        this.state = location.getTimePassed()==null?"Not pass":"passed";
+        this.state = location.getTimePassed()==null?"Chưa đi qua":"Đã đi qua";
         this.icon = mLocationsArrayList.get(location.getLocationId()).getIcon();
         this.latLng = mLocationsArrayList.get(location.getLocationId()).getLatlngLatlng();
     }

@@ -207,7 +207,6 @@ public class MapsFragment extends Fragment
         getLastLocation(false);
 
         horizontalInfiniteCycleViewPager.setAdapter(new ScrollViewAdapter(dataItemScroll, getContext(), mMap));
-        horizontalInfiniteCycleViewPager.setCenterPageScaleOffset(20.0F);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
                 android.R.layout.simple_spinner_item,itemsDisplay);
@@ -352,17 +351,19 @@ public class MapsFragment extends Fragment
             showRoute(routeMaps.get(i),i,mMap,true,false);
         showRoute(routeMaps.get(roundIntent-1),roundIntent-1,mMap,false,startARouteInt);
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(start,zoomDefault+1));
-        btnGotoRouting.setText("Next Location");
+        btnGotoRouting.setText("Địa điểm kế tiếp");
         if (roundIntent == tripLocationList.size())
-            btnGotoRouting.setText("Finish Trip");
+            btnGotoRouting.setText("Kết thúc hành trình");
         btnGotoRouting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 roundIntent++;
-                database.myDAO().updateTimePassed(tripId,roundIntent-2, Calendar.getInstance().getTime());
+                database.myDAO().updateTimePassed(tripId,tripLocationList.get(roundIntent-2).getLocationId(), Calendar.getInstance().getTime());
+                tripLocationList.get(roundIntent-2).setTimePassed(Calendar.getInstance().getTime());
                 //checkRightDestination(curLocation,end);
                 if (roundIntent < tripLocationList.size()+1){
-                    horizontalInfiniteCycleViewPager.notifyDataSetChanged();
+                    dataItemScroll = new Data(tripLocationList).getData();
+                    horizontalInfiniteCycleViewPager.setAdapter(new ScrollViewAdapter(dataItemScroll, getContext(), mMap));
                     startARoute();
                 }
 
