@@ -44,7 +44,11 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
-        <activity android:name=".home_screen.Profile" />
+        <activity
+            android:name=".home_screen.Profile"
+            android:label="Profile"
+            android:parentActivityName=".home_screen.HomeActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".home_screen.AboutActivity"
             android:label="About"
