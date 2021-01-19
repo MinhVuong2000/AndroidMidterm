@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,7 +33,7 @@ import java.util.List;
 
 public class GalleryFragment extends Fragment implements MyPhotoAdapter.OnItemListener{
     private static final String ARG_PARAM1 = "tripId";
-
+    private static final String TAG = "GalleryFragment";
     private int mTripId;
     private List<String> mListPhotoPath;
     private MyPhotoAdapter myPhotoAdapter;
@@ -56,6 +57,7 @@ public class GalleryFragment extends Fragment implements MyPhotoAdapter.OnItemLi
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        Log.d(TAG, "onCreateView: ");
         View view = inflater.inflate(R.layout.fragment_gallery, container, false);
         mRecyclerView =  view.findViewById(R.id.rv_gallery);
         mIBtn_camera = view.findViewById(R.id.ibtn_openCamera);
@@ -77,7 +79,7 @@ public class GalleryFragment extends Fragment implements MyPhotoAdapter.OnItemLi
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        Log.d(TAG, "onCreate: ");
         Bundle bundle = getArguments();
         mTripId = bundle.getInt(ARG_PARAM1,1);
         mDB = MyDatabase.getInstance(getContext());

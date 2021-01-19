@@ -51,9 +51,9 @@ public class TimeLineFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        Log.d(TAG, "onCreate: ");
 //        DB = MyDatabase.getInstance(getContext());
-//        mTripId = getArguments().getInt(ARG_PARAM1);
+         mTripId = getArguments().getInt(ARG_PARAM1, 1);
 //
 //        List list = DB.myDAO().getListTripLocationFromTrip(mTripId);
 //        mListTripLocation = new ArrayList<>(list);
@@ -62,6 +62,7 @@ public class TimeLineFragment extends Fragment {
     }
 
     private void initDump() {
+        Log.d(TAG, "initDump: ");
         Calendar calendar = Calendar.getInstance();
         calendar.set(2018, 11, 31, 10, 01);
         Date date1 = calendar.getTime();
@@ -77,6 +78,7 @@ public class TimeLineFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        Log.d(TAG, "onCreateView: ");
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_timeline, container, false);
         mRecyclerView = view.findViewById(R.id.recyclerView_timeline);
