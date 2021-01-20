@@ -324,7 +324,7 @@ public class MapsFragment extends Fragment
         //create list latlng for find routes
         latLngArrayList = new ArrayList<>();
         latLngArrayList.add(curLocation);
-        for (int i=roundIntent-1; i<tripLocationList.size(); i++){
+        for (int i=0; i<tripLocationList.size(); i++){
             latLngArrayList.add(mLocationsArrayList.get(tripLocationList.get(i).getLocationId()).getLatlngLatlng());
         }
         if (curLocation == null){
@@ -478,9 +478,9 @@ public class MapsFragment extends Fragment
             latLngArrayList.set(index_minDistance+round,temp);
 
             //swap tripLocationList
-            TripLocation tmp = tripLocationList.get(roundIntent - 1 + round-1);
-            tripLocationList.set(roundIntent - 1 + round-1,tripLocationList.get(roundIntent - 1 + index_minDistance+round-1));
-            tripLocationList.set(roundIntent - 1 + index_minDistance+round-1,tmp);
+            TripLocation tmp = tripLocationList.get(round-1);
+            tripLocationList.set(round-1,tripLocationList.get(index_minDistance+round-1));
+            tripLocationList.set(index_minDistance+round-1,tmp);
         }
         routeMaps.add(routeMapsRound.get(index_minDistance));
         showRoute(routeMaps.get(round-1),round-1, mMap,roundIntent>round, startARouteInt);
