@@ -54,7 +54,6 @@ public class ScrollViewAdapter extends PagerAdapter {
     @Override
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
         final View layout;
-        Log.d("Maps", "instantiateItem: "+position);
 
         layout= mLayoutInflater.inflate(R.layout.slide_place_item,
                 container, false);

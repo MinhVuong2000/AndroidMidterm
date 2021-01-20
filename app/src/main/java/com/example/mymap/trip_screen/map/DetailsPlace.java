@@ -22,7 +22,6 @@ import com.example.mymap.R;
 import java.util.ArrayList;
 
 public class DetailsPlace extends AppCompatActivity {
-    private static final String TAG = "Maps";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,7 +38,6 @@ public class DetailsPlace extends AppCompatActivity {
         final ViewFlipper viewFlipper = findViewById(R.id.infoScreen_viewFlipper);
         for(int i=0; i<photos.size(); i++)
         {
-            Log.d(TAG, "onCreate: order flipper: "+photos.get(i));
             ImageView imageView = new ImageView(this);
             Glide.with(this).load(photos.get(i)).into(imageView);
             imageView.setScaleType(ImageView.ScaleType.FIT_XY);

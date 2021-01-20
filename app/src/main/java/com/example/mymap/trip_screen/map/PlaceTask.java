@@ -104,12 +104,8 @@ public class PlaceTask extends AsyncTask<String,Integer,String> {
         protected void onPostExecute(List<HashMap<String, String>> hashMaps) {
             if (mPosition != -1) {
                 if (markersItems != null) {
-                    Log.d("Maps", "onPostExecute: clear marker");
                     for (int i=0;i<markersItems.size();i++)
                         markersItems.get(i).remove();
-                }
-                else{
-                    Log.d("Maps", "onPostExecute: maker null");
                 }
                 markersItems = new ArrayList<>();
                 for (int i = 0; i < hashMaps.size(); i++) {
@@ -131,7 +127,6 @@ public class PlaceTask extends AsyncTask<String,Integer,String> {
             else{
                 ArrayList<String> photos = new ArrayList<>();
                 ArrayList<String> infos = new ArrayList<>();
-                Log.d("Maps", "onPostExecute: size hashMap(photo+info):"+hashMaps.size());
                 for (int i = 0; i < hashMaps.size()-1; i++) {
                     HashMap<String, String> hashMapList = hashMaps.get(i);
                     String height = hashMapList.get("height");
@@ -175,8 +170,6 @@ public class PlaceTask extends AsyncTask<String,Integer,String> {
                             "?place_id=" + place_idArray.get(place_id) +
                             "&fields=formatted_phone_number,formatted_address,opening_hours,website,url,price_level,rating,name,user_ratings_total,review,photo" +
                             "&key=" + mActivity.getResources().getString(R.string.google_maps_key);
-
-                    Log.d("Maps", "getDetailPlace: "+ url);
                     //exe place task method to download json data
                     new PlaceTask(mMap,mActivity, -1).execute(url);
                     return false;

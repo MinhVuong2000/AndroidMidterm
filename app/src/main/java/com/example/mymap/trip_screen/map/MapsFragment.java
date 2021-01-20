@@ -144,7 +144,6 @@ public class MapsFragment extends Fragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        Log.d(TAG, "onCreateView: createview");
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.activity_maps, container, false);
         btnGotoRouting = (Button) view.findViewById(R.id.btnGoToRouting);
@@ -199,13 +198,10 @@ public class MapsFragment extends Fragment
                     break;
                 }
             }
-
-        Log.d(TAG, "initData: routeIntent start: "+roundIntent);
     }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        Log.d(TAG, "onMapReady: enter");
         mMap = googleMap;
         mMap.setMapType(get_type_map(SettingsActivity.map_type));
         getLastLocation(false);
@@ -266,13 +262,11 @@ public class MapsFragment extends Fragment
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode==100 && resultCode== RESULT_OK ){
             final Place place = Autocomplete.getPlaceFromIntent(data);
-            Log.d(TAG, "onActivityResult: "+place.getName()+ " "+ place.getId());
 
             String url = "https://maps.googleapis.com/maps/api/place/details/json" +
                     "?place_id=" + place.getId() +
                     "&fields=formatted_phone_number,formatted_address,opening_hours,website,url,price_level,rating,name,user_ratings_total,review,photo" +
                     "&key=" + getActivity().getResources().getString(R.string.google_maps_key);
-            Log.d("Maps", "getDetailPlace: " + url);
             //exe place task method to download json data
             new PlaceTask(mMap, MapsFragment.this, -1).execute(url);
         }
@@ -298,8 +292,6 @@ public class MapsFragment extends Fragment
                     "&sensor=true" +
                     "&fields=name,rating,formatted_phone_number" +
                     "&key=" + getResources().getString(R.string.google_maps_key);
-
-            Log.d(TAG, "getPlacesWithItem: "+ url);
             //exe place task method to download json data
             new PlaceTask(mMap,MapsFragment.this, position).execute(url);
         }
@@ -312,7 +304,6 @@ public class MapsFragment extends Fragment
         //init for find route
         index_minDistance = 0;
         round=1;
-        Log.d(TAG, "arrayRoutes: enter");
         //create list latlng for find routes
         latLngArrayList = new ArrayList<>();
         latLngArrayList.add(curLocation);
@@ -335,10 +326,8 @@ public class MapsFragment extends Fragment
                     .icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_home)));
             for (int nextLoca=1;nextLoca<sizeLatLngList;nextLoca++){
                 for (int nextNextLoca = nextLoca;nextNextLoca<sizeLatLngList;nextNextLoca++){
-                    Log.d(TAG, "arrayRoutes: "+nextLoca+" "+nextNextLoca);
                     Findroutes(latLngArrayList.get(nextLoca-1),latLngArrayList.get(nextNextLoca));
                 }
-                Log.d(TAG, "arrayRoutes: roundIntent"+roundIntent + "nextLoca: "+nextLoca);
                 addScaleIconLocation(mMap,mLocationsArrayList.get(tripLocationList.get(nextLoca-1).getLocationId()),120,120, false);
             }
         }
@@ -356,7 +345,6 @@ public class MapsFragment extends Fragment
 
 
     public void startARoute() {
-        Log.d(TAG, "startARoute: roundIntent:"+roundIntent);
         startARouteInt=true;
         btnGotoRouting.setText("Địa điểm kế tiếp");
 
@@ -486,7 +474,6 @@ public class MapsFragment extends Fragment
     }
 
     public void showRoute(Route r, int indexRoute, GoogleMap mMap, boolean changeColor, boolean startARoute){
-        Log.d(TAG, "showRoute: sizePoliline:"+polylinesRoute.size());
         boolean deletepoly = true;
         if (polylinesRoute.size() == sizeLatLngList-1){
             polylinesRoute.get(indexRoute).remove();
@@ -512,13 +499,10 @@ public class MapsFragment extends Fragment
     @SuppressLint("MissingPermission")
     private void getLastLocation(final boolean onlyGetLocation)
     {
-        Log.d(TAG, "getLastLocation: enter");
         // check if permissions are given
         if (permissionLocation.checkPermissions()) {
             // check if location is enabled
             if (permissionLocation.isLocationEnabled()) {
-
-                Log.d(TAG, "getLastLocation: isLocationEnable");
                 // getting last location from FusedLocationClient object
                 Task<Location> task = mFusedLocationClient.getLastLocation();
                 task.addOnSuccessListener(new OnSuccessListener<Location>() {
@@ -527,7 +511,6 @@ public class MapsFragment extends Fragment
                         if (location != null) {
                             curLocation = new LatLng(location.getLatitude()
                                     , location.getLongitude());
-                            Log.d(TAG, "Location: " + curLocation.toString());
                             if (!onlyGetLocation){
                                 arrayRoutes();
                             }
