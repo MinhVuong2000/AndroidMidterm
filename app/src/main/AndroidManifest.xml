@@ -22,7 +22,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".trip_screen.TripDoneInfo"
-            android:parentActivityName=".home_screen.HomeActivity"></activity>
+            android:parentActivityName=".home_screen.HomeActivity">
+        </activity>
         <activity
             android:name=".FinishTrip"
             android:label="@string/title_activity_finish_trip"
@@ -49,7 +50,9 @@
 
         <activity
             android:name=".home_screen.Profile"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:label="Profile"
+            android:parentActivityName=".home_screen.HomeActivity"/>
         <activity
             android:name=".home_screen.AboutActivity"
             android:label="About"
@@ -62,7 +65,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".home_screen.HomeActivity"
-            android:label="My Trip"
+            android:label="SaiGonTrip"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
