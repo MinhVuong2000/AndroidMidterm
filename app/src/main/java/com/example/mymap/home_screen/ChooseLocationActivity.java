@@ -1,6 +1,5 @@
 package com.example.mymap.home_screen;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import androidx.appcompat.widget.Toolbar;
@@ -17,17 +16,10 @@ import android.widget.ListView;
 
 import com.example.mymap.R;
 import com.example.mymap.database.MyDatabase;
-import com.example.mymap.database.MyLocation;
 import com.example.mymap.database.Trip;
 import com.example.mymap.database.TripLocation;
 import com.example.mymap.trip_screen.TripActivity;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -92,7 +84,7 @@ public class ChooseLocationActivity extends AppCompatActivity {
     private void start_trip() {
         Log.d(TAG, "start_trip: ");
         Date date = Calendar.getInstance().getTime();
-        Trip new_trip = new Trip(mTripName, date);
+        Trip new_trip = new Trip(mTripName, date, isDone);
         long rowId = database.myDAO().insertTrip(new_trip);
         int tripId = database.myDAO().getTripIdFromRowId(rowId);
 

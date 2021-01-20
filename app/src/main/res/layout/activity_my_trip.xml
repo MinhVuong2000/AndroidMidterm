@@ -9,11 +9,13 @@
     android:fitsSystemWindows="true"
     tools:context=".home_screen.HomeActivity"
     tools:openDrawer="start">
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/fragment_container"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
         <androidx.appcompat.widget.Toolbar
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
@@ -26,58 +28,33 @@
             tools:ignore="MissingConstraints">
         </androidx.appcompat.widget.Toolbar>
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/p"
-            tools:ignore="MissingConstraints"
-            android:background="#F44336"
-            android:text="Pending"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar"
-            android:textColor="#fff"
-            android:textStyle="bold">
-        </Button>
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/p"
-            android:id="@+id/recyclerView_pend"/>
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/done"
-            tools:ignore="MissingConstraints"
-            android:background="#28F321"
-            android:text="Done"
-            app:layout_constraintTop_toBottomOf="@+id/recyclerView_pend"
-            android:textColor="#fff"
-            android:textStyle="bold">
-        </Button>
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/p"
-            android:id="@+id/recyclerView_done"/>
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tabLayout_home"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:tabMode="fixed"
+                app:tabGravity="fill"/>
+
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/viewPager_home"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"  />
+        </LinearLayout>
 
         <Button
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_marginRight="20dp"
             android:layout_marginBottom="20dp"
-            android:id="@+id/newtrip"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            android:background="@drawable/add"
-
-
-            tools:ignore="MissingConstraints">
-
+            android:layout_gravity="end|bottom"
+            android:id="@+id/btn_newTrip"
+            android:background="@drawable/add">
         </Button>
 
+    </FrameLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
     <com.google.android.material.navigation.NavigationView
         android:layout_width="wrap_content"
         android:layout_height="match_parent"

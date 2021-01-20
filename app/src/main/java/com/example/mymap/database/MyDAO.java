@@ -28,6 +28,12 @@ public interface MyDAO {
     @Query("SELECT * FROM trip")
     List<Trip> getListTrip();
 
+    @Query("SELECT * FROM trip WHERE isDone = 'true'")
+    List<Trip> getListTripDone();
+
+    @Query("SELECT * FROM trip WHERE isDone = 'false'")
+    List<Trip> getListTripPending();
+
     @Query("SELECT tripName FROM trip WHERE tripId = :tripId")
     String getTripName(int tripId);
 

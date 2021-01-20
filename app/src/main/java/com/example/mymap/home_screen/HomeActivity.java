@@ -13,7 +13,9 @@ import com.example.mymap.database.MyLocation;
 import com.example.mymap.database.Trip;
 import com.example.mymap.trip_screen.TripActivity;
 
+import com.example.mymap.trip_screen.ViewPagerAdapter;
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -24,21 +26,27 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.core.view.GravityCompat;
+import androidx.fragment.app.Fragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, TripAdapter.OnItemListener {
     private DrawerLayout drawer;
-    private RecyclerView mRecyclerView;
+    private TabLayout tabLayout;
+    private ViewPager viewPager;
+    private Fragment mPendingFragment;
+    private Fragment mDoneFragment;
     private ArrayList<Trip> mListTrip;
     private TripAdapter mTripAdapter;
+    private Button btnNewTrip;
 
     public static ArrayList<MyLocation> mLocationsArrayList;
     public static DatabaseReference firebaseReference;
@@ -48,44 +56,51 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_trip);
 
+
+
+
+        initData();
+        initFragment();
+        initUI();
+    }
+
+    private void initUI() {
         initToolbar();
-        initRecyclerView();
-        Button new_trip = findViewById(R.id.newtrip);
-        new_trip.setOnClickListener(new View.OnClickListener() {
+        initViewPager();
+        btnNewTrip = findViewById(R.id.btn_newTrip);
+        btnNewTrip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent named_location = new Intent(HomeActivity.this, NamedTripActivity.class);
                 startActivity(named_location);
             }
         });
+    }
 
-        initData();
+    private void initViewPager() {
+        viewPager = (ViewPager) findViewById(R.id.viewPager_home);
+        tabLayout = (TabLayout) findViewById(R.id.tabLayout_home);
+
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        adapter.addFragment(mDoneFragment, "Done");
+        adapter.addFragment(mPendingFragment, "Pending");
+        viewPager.setAdapter(adapter);
+
+        tabLayout.setupWithViewPager(viewPager);
+    }
+
+
+
+    private void initFragment() {
+        mDoneFragment = DoneFragment.newInstance();
+        mPendingFragment = PendingFragment.newInstance();
     }
 
     private void initData() {
         mLocationsArrayList = MyLocation.getAllLocations();
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        List<Trip> list = MyDatabase.getInstance(this).myDAO().getListTrip();
-        mListTrip = new ArrayList<>(list);
-        mTripAdapter.setData(mListTrip);
-    }
 
-    private void initRecyclerView() {
-
-        mRecyclerView = findViewById(R.id.recyclerView_pend);
-
-        List<Trip> list = MyDatabase.getInstance(this).myDAO().getListTrip();
-        mListTrip = new ArrayList<>(list);
-        mTripAdapter = new TripAdapter(list,this);
-        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this, 1);
-        mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.setLayoutManager(layoutManager);
-        mRecyclerView.setAdapter(mTripAdapter);
-    }
 
     private void initToolbar() {
         Toolbar toolbar = findViewById(R.id.toolbar);
