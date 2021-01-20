@@ -15,6 +15,7 @@ import com.example.mymap.database.MyDatabase;
 import com.example.mymap.database.Trip;
 import com.example.mymap.trip_screen.gallery.GalleryFragment;
 import com.example.mymap.trip_screen.map.MapsFragment;
+import com.example.mymap.trip_screen.review.ReviewFragment;
 import com.example.mymap.trip_screen.timeline.TimeLineFragment;
 import com.google.android.material.tabs.TabLayout;
 
@@ -27,7 +28,9 @@ public class TripActivity extends AppCompatActivity {
     private Fragment mMapFragment;
     private Fragment mGalleryFragment;
     private Fragment mTimelineFragment;
+    private Fragment mReviewFragment;
     private int mTripId;
+    private int mIsDone;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,8 +42,10 @@ public class TripActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         //Get tripId from home_screen
-        mTripId = getIntent().getIntExtra("tripId",0);
-        Log.d(TAG, "onCreate: tripid" + mTripId);
+        Intent intent = getIntent();
+        mTripId = intent.getIntExtra("tripId",0);
+        mIsDone = intent.getIntExtra("isDone", 0);
+        Log.d(TAG, "onCreate: isDone" + mIsDone);
 
         String tripName = MyDatabase.getInstance(this).myDAO().getTripName(mTripId);
         setTitle(tripName);
@@ -54,6 +59,7 @@ public class TripActivity extends AppCompatActivity {
         mGalleryFragment = GalleryFragment.newInstance(mTripId);
         mMapFragment = MapsFragment.newInstance(mTripId);
         mTimelineFragment = TimeLineFragment.newInstance(mTripId);
+        mReviewFragment = ReviewFragment.newInstance(mTripId);
     }
 
     private void initUI() {
@@ -67,9 +73,15 @@ public class TripActivity extends AppCompatActivity {
 
     private void setupViewPager() {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(mMapFragment, "Maps");
+        if(mIsDone == 0) {
+            adapter.addFragment(mMapFragment, "Maps");
+        }
+        else{
+            adapter.addFragment(mReviewFragment, "Review");
+        }
         adapter.addFragment(mGalleryFragment, "Gallery");
         adapter.addFragment(mTimelineFragment, "TimeLine");
+
         viewPager.setAdapter(adapter);
     }
 }

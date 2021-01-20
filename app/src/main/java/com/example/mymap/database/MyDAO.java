@@ -43,7 +43,7 @@ public interface MyDAO {
     @Query("SELECT photoPath FROM photo WHERE tripBelongId = :tripId")
     List<String> getListPhotoPathFromTrip(int tripId);
 
-    @Query("SELECT * FROM trip_location WHERE tripBelongId = :tripId")
+    @Query("SELECT * FROM trip_location WHERE tripBelongId = :tripId ORDER BY routeOrder")
     List<TripLocation> getListTripLocationFromTrip(int tripId);
 
     @Query("SELECT locationId FROM trip_location WHERE tripBelongId = :tripId")
@@ -53,8 +53,18 @@ public interface MyDAO {
             "WHERE tripBelongId = :tripId AND locationId = :locationId")
     void updateTimePassed(int tripId, int locationId, Date time);
 
+    @Query("UPDATE trip_location SET routeOrder = :order " +
+            "WHERE tripBelongId = :tripId AND locationId = :locationId")
+    void updateRouteOrder(int tripId, int locationId, int order);
+
+    @Query("UPDATE trip SET reviewStar = :star, review = :review " +
+            "WHERE tripId = :tripId")
+    void updateTripReviewAndStar(int tripId, int star, String review);
+
     @Query("UPDATE trip SET isDone = 1 WHERE tripId = :tripId")
     void updateTripIsDone(int tripId);
+
+
 
     @Update
     void updateTripLocation(TripLocation tripLocation);

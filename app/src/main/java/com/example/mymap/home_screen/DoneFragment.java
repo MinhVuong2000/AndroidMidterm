@@ -83,14 +83,9 @@ public class DoneFragment extends Fragment implements TripAdapter.OnItemListener
     @Override
     public void onItemClick(int position) {
         Trip trip = mListTrip.get(position);
-        Intent intent;
-        if (mListTrip.get(position).getIsDone()==0){
-            intent = new Intent(getContext(), TripActivity.class);
-        }
-        else{
-            intent = new Intent(getContext(), TripDoneInfo.class);
-        }
+        Intent intent = new Intent(getContext(), TripActivity.class);
         intent.putExtra("tripId", trip.getTripId());
+        intent.putExtra("isDone", 1);
         startActivity(intent);
     }
 }

@@ -11,11 +11,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RatingBar;
 
+import com.example.mymap.database.MyDAO;
 import com.example.mymap.database.MyDatabase;
 import com.example.mymap.home_screen.HomeActivity;
 
 public class FinishTrip extends AppCompatActivity {
     private int mTripId;
+    private MyDAO mDAO;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,10 +29,11 @@ public class FinishTrip extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
+        mDAO = MyDatabase.getInstance(getApplicationContext()).myDAO();
 
         mTripId = getIntent().getIntExtra("tripId", 0);
 
-        setTitle(MyDatabase.getInstance(this).myDAO().getTripName(mTripId));
+        setTitle(mDAO.getTripName(mTripId));
         //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         final EditText editTextComment = (EditText) findViewById(R.id.rating_comment);
@@ -41,12 +45,11 @@ public class FinishTrip extends AppCompatActivity {
             public void onClick(View view) {
                 double stars = Double.parseDouble(String.valueOf(ratingBar.getRating()));
                 String comment = editTextComment.getText().toString();
-                //Log.d("RatingDebug", "Stars = " + stars);
-                //Log.d("RatingDebug", "Comment = " + comment);
                 if (stars == 0.0)
                     addNotRateYetDialog();
                 else{
-                    MyDatabase.getInstance(getBaseContext()).myDAO().updateTripIsDone(mTripId);
+                    mDAO.updateTripIsDone(mTripId);
+                    mDAO.updateTripReviewAndStar(mTripId, (int)stars*2, comment);
                     Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
                     startActivity(intent);
                 }

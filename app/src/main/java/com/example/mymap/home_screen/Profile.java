@@ -15,9 +15,11 @@ import android.widget.TextView;
 
 
 import com.example.mymap.R;
+import com.example.mymap.database.MyDatabase;
 
 public class Profile extends AppCompatActivity {
 
+    MyDatabase DB;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,10 +42,11 @@ public class Profile extends AppCompatActivity {
         ImageView avatar = (ImageView)findViewById(R.id.avt);
         avatar.setImageURI(user.get_avatar());
 
-        TextView trip1 = (TextView)findViewById(R.id.tr1);
-        TextView trip2 = (TextView)findViewById(R.id.tr2);
-        TextView trip3 = (TextView)findViewById(R.id.tr3);
+        TextView trip1 = (TextView)findViewById(R.id.tv_numTripDone);
+        TextView trip2 = (TextView)findViewById(R.id.tv_numTripPending);
+        TextView trip3 = (TextView)findViewById(R.id.tv_numLocation);
 
+        DB = MyDatabase.getInstance(this);
         trip1.setText(Integer.toString(user.get_doneTrip()));
         trip2.setText(Integer.toString(user.get_doingTrip()));
         trip3.setText(Integer.toString(user.get_countTrip()));

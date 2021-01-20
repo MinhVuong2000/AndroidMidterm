@@ -16,10 +16,6 @@ import com.example.mymap.database.MyDatabase;
 
 import com.example.mymap.database.TripLocation;
 
-import com.example.mymap.database.MyLocation;
-import com.example.mymap.database.TripLocation;
-import com.example.mymap.home_screen.HomeActivity;
-
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -73,29 +69,28 @@ public class TimeLineFragment extends Fragment {
         mTripId = getArguments().getInt(ARG_PARAM1, 1);
 
         initData();
-        //initDump();
         mTimelineAdapter = new TimeLineAdapter(getContext(), mListTripLocation, mLocationsArrayList);
     }
 
     private void initData() {
         List list = DB.myDAO().getListTripLocationFromTrip(mTripId);
         mListTripLocation = new ArrayList<>(list);
-
+        Log.d(TAG, "initData: " + mListTripLocation.size());
     }
 
-    private void initDump() {
-        Log.d(TAG, "initDump: ");
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(2018, 11, 31, 10, 01);
-        Date date1 = calendar.getTime();
-        calendar.set(2018, 11, 31, 12, 00);
-        Date date2 = calendar.getTime();
-        mListTripLocation = new ArrayList<>();
-        mListTripLocation.add(new TripLocation(1,11, date1));
-        mListTripLocation.add(new TripLocation(1,12, date2));
-        mListTripLocation.add(new TripLocation(1,13));
-        mListTripLocation.add(new TripLocation(1,14));
-    }
+//    private void initDump() {
+//        Log.d(TAG, "initDump: ");
+//        Calendar calendar = Calendar.getInstance();
+//        calendar.set(2018, 11, 31, 10, 01);
+//        Date date1 = calendar.getTime();
+//        calendar.set(2018, 11, 31, 12, 00);
+//        Date date2 = calendar.getTime();
+//        mListTripLocation = new ArrayList<>();
+//        mListTripLocation.add(new TripLocation(1,11, order, date1));
+//        mListTripLocation.add(new TripLocation(1,12, order, date2));
+//        mListTripLocation.add(new TripLocation(1,13));
+//        mListTripLocation.add(new TripLocation(1,14));
+//    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

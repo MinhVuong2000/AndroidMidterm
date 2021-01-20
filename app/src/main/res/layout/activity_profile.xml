@@ -45,80 +45,51 @@
             <TextView
                 android:id="@+id/name"
                 android:layout_gravity="center|bottom"
-                android:textSize="30sp"
+                android:textSize="16sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </FrameLayout>
 
-        <LinearLayout
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            tools:context=".home_screen.Profile"
-            tools:ignore="MissingConstraints">
+            android:layout_marginBottom="3dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="6dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="8dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <TextView
+                android:paddingTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:id="@+id/tv_numTripDone"
+                android:gravity="left"
+                android:textSize="16sp" />
+
 
             <TextView
                 android:paddingTop="10dp"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="left"
-                android:text="So trip da hoan thanh: "
-                android:textSize="30sp" />
-
-            <TextView
-                android:id="@+id/tr1"
-                android:paddingTop="10dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="30sp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            tools:context=".home_screen.Profile"
-            tools:ignore="MissingConstraints">
+                android:id="@+id/tv_numTripPending"
+                android:textSize="16sp" />
 
             <TextView
                 android:paddingTop="10dp"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="left"
-                android:text="So trip dang thuc hien: "
-                android:textSize="30sp" />
-
-            <TextView
-                android:id="@+id/tr2"
-                android:paddingTop="10dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="30sp" />
+                android:id="@+id/tv_numLocation"
+                android:textSize="16sp" />
         </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            tools:context=".home_screen.Profile"
-            tools:ignore="MissingConstraints">
-
-            <TextView
-                android:paddingTop="10dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="left"
-                android:text="So dia diem da tham quan: "
-                android:textSize="30sp" />
-
-            <TextView
-                android:id="@+id/tr3"
-                android:paddingTop="10dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="30sp" />
-        </LinearLayout>
+        </androidx.cardview.widget.CardView>
     </LinearLayout>
+
+
 
 </androidx.drawerlayout.widget.DrawerLayout>
 

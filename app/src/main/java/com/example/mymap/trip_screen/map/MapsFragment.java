@@ -423,19 +423,16 @@ public class MapsFragment extends Fragment
     @Override
     public void onRoutingFailure(RouteException e) {
         Toast.makeText(getActivity(),"Finding Route failed!", Toast.LENGTH_LONG).show();
-        Log.d(TAG, "onRoutingFailure: ");
     }
 
     @Override
     public void onRoutingStart() {
         Toast.makeText(getActivity(),"Finding Route...",Toast.LENGTH_SHORT).show();
-        Log.d(TAG, "onRoutingStart: ");
     }
 
     @Override
     public void onRoutingCancelled() {
         Toast.makeText(getActivity(),"Finding Route cancelled!", Toast.LENGTH_LONG).show();
-        Log.d(TAG, "onRoutingCancelled: ");
     }
 
 
@@ -455,7 +452,9 @@ public class MapsFragment extends Fragment
                 }
                 break;
             }
-            Log.d(TAG, "onRoutingSuccess: ");
+        }
+        for(int i=0; i<tripLocationList.size(); i++) {
+            MyDatabase.getInstance(getContext()).myDAO().updateRouteOrder(tripId,tripLocationList.get(i).getLocationId(), i);
         }
     }
 

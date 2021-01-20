@@ -12,12 +12,32 @@ public class Trip {
 
     private String tripName;
     private Date dateCreate;
+    private int reviewStar;
+    private String review;
     private int isDone;
 
     public Trip(String tripName, Date dateCreate, int isDone) {
         this.dateCreate = dateCreate;
         this.tripName = tripName;
         this.isDone = isDone;
+        review = "";
+        reviewStar = 0;
+    }
+
+    public int getReviewStar() {
+        return reviewStar;
+    }
+
+    public void setReviewStar(int reviewStar) {
+        this.reviewStar = reviewStar;
+    }
+
+    public String getReview() {
+        return review;
+    }
+
+    public void setReview(String review) {
+        this.review = review;
     }
 
     public int getIsDone() {
