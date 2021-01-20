@@ -57,7 +57,7 @@ public class DoneFragment extends Fragment implements TripAdapter.OnItemListener
     @Override
     public void onResume() {
         super.onResume();
-        List<Trip> list = MyDatabase.getInstance(getContext()).myDAO().getListTripPending();
+        List<Trip> list = MyDatabase.getInstance(getContext()).myDAO().getListTripDone();
         mListTrip = new ArrayList<>(list);
         mTripAdapter.setData(mListTrip);
     }

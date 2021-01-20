@@ -15,7 +15,7 @@ import com.example.mymap.database.MyDatabase;
 import com.example.mymap.home_screen.HomeActivity;
 
 public class FinishTrip extends AppCompatActivity {
-
+    private int mTripId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,7 +27,7 @@ public class FinishTrip extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
 
-        int mTripId = getIntent().getIntExtra("tripId", 0);
+        mTripId = getIntent().getIntExtra("tripId", 0);
 
         setTitle(MyDatabase.getInstance(this).myDAO().getTripName(mTripId));
         //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -46,6 +46,7 @@ public class FinishTrip extends AppCompatActivity {
                 if (stars == 0.0)
                     addNotRateYetDialog();
                 else{
+                    MyDatabase.getInstance(getBaseContext()).myDAO().updateTripIsDone(mTripId);
                     Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
                     startActivity(intent);
                 }

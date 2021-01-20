@@ -28,10 +28,10 @@ public interface MyDAO {
     @Query("SELECT * FROM trip")
     List<Trip> getListTrip();
 
-    @Query("SELECT * FROM trip WHERE isDone = 'true'")
+    @Query("SELECT * FROM trip WHERE isDone = 1")
     List<Trip> getListTripDone();
 
-    @Query("SELECT * FROM trip WHERE isDone = 'false'")
+    @Query("SELECT * FROM trip WHERE isDone = 0")
     List<Trip> getListTripPending();
 
     @Query("SELECT tripName FROM trip WHERE tripId = :tripId")
@@ -53,8 +53,8 @@ public interface MyDAO {
             "WHERE tripBelongId = :tripId AND locationId = :locationId")
     void updateTimePassed(int tripId, int locationId, Date time);
 
-    @Update
-    void updateTrip(Trip trip);
+    @Query("UPDATE trip SET isDone = 1 WHERE tripId = :tripId")
+    void updateTripIsDone(int tripId);
 
     @Update
     void updateTripLocation(TripLocation tripLocation);

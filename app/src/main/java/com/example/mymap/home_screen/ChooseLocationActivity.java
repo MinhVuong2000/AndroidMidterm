@@ -84,7 +84,7 @@ public class ChooseLocationActivity extends AppCompatActivity {
     private void start_trip() {
         Log.d(TAG, "start_trip: ");
         Date date = Calendar.getInstance().getTime();
-        Trip new_trip = new Trip(mTripName, date, isDone);
+        Trip new_trip = new Trip(mTripName, date, 0);
         long rowId = database.myDAO().insertTrip(new_trip);
         int tripId = database.myDAO().getTripIdFromRowId(rowId);
 

@@ -12,20 +12,20 @@ public class Trip {
 
     private String tripName;
     private Date dateCreate;
-    private Boolean isDone;
+    private int isDone;
 
-    public Trip(String tripName, Date dateCreate, Boolean isDone) {
+    public Trip(String tripName, Date dateCreate, int isDone) {
         this.dateCreate = dateCreate;
         this.tripName = tripName;
         this.isDone = isDone;
     }
 
-    public Boolean getDone() {
+    public int getIsDone() {
         return isDone;
     }
 
-    public void setDone(Boolean done) {
-        isDone = done;
+    public void setIsDone(int isDone) {
+        this.isDone = isDone;
     }
 
     public int getTripId() {
