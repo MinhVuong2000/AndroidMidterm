@@ -20,7 +20,7 @@
             android:layout_height="match_parent"
             android:id="@+id/edit_text_search"
             android:layout_weight="1"
-            android:hint="Search &amp; Explore"
+            android:hint="Tìm &amp; Khám phá"
             android:padding="16dp"
 
             android:drawablePadding="16dp"
@@ -42,7 +42,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="3.2"
-        android:text="Start Journey"
+        android:text="Bắt đầu hành trình"
         android:layout_gravity="right"
         android:shadowRadius = "@integer/google_play_services_version"
         android:textColor="@color/design_default_color_on_secondary"

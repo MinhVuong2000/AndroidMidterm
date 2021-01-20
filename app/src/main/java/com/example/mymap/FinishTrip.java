@@ -60,7 +60,7 @@ public class FinishTrip extends AppCompatActivity {
 
     private void addNotRateYetDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Bạn chưa đánh ");
+        builder.setTitle("Bạn chưa đánh giá");
         builder.setMessage("Bạn có thể không đánh giá bằng chữ nhưng cần đánh giá bằng sao.");
         builder.setCancelable(true);
         builder.setPositiveButton( "OK",
