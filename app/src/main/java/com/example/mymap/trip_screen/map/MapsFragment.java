@@ -106,7 +106,7 @@ public class MapsFragment extends Fragment
     List<TripLocation> tripLocationList;
     static ArrayList<Route> routeMaps = null;
     static LatLng curLocation=null;
-    static ArrayList<LatLng> latLngArrayList = null;
+    ArrayList<LatLng> latLngArrayList = null;
     static int sizeLatLngList;
     static int roundIntent;
     static boolean startARouteInt;
@@ -179,25 +179,25 @@ public class MapsFragment extends Fragment
         database = MyDatabase.getInstance(getActivity());
         tripLocationList = database.myDAO().getListTripLocationFromTrip(tripId);
         //sort tripLocation
-        for (int i=0;i<tripLocationList.size();i++){
-            if (tripLocationList.get(i).getTimePassed()==null)
-                    continue;
-            for (int j=i+1;j<tripLocationList.size();j++){
-                if (tripLocationList.get(j).getTimePassed()==null ||
-                        tripLocationList.get(i).getTimePassed().compareTo(tripLocationList.get(j).getTimePassed())>0){
-                    TripLocation tmp = tripLocationList.get(i);
-                    tripLocationList.set(i,tripLocationList.get(j));
-                    tripLocationList.set(j,tmp);
-                }
-            }
-        }
+//        for (int i=0;i<tripLocationList.size();i++){
+//            if (tripLocationList.get(i).getTimePassed()==null)
+//                    continue;
+//            for (int j=i+1;j<tripLocationList.size();j++){
+//                if (tripLocationList.get(j).getTimePassed()==null ||
+//                        tripLocationList.get(i).getTimePassed().compareTo(tripLocationList.get(j).getTimePassed())<0){
+//                    TripLocation tmp = tripLocationList.get(i);
+//                    tripLocationList.set(i,tripLocationList.get(j));
+//                    tripLocationList.set(j,tmp);
+//                }
+//            }
+//        }
         //init roundIntent
         if (tripLocationList.get(0).getTimePassed()==null) roundIntent=1;
         else if (tripLocationList.get(tripLocationList.size()-1).getTimePassed()!=null)
             roundIntent = tripLocationList.size();
         else for (int i=0;i<tripLocationList.size();i++){
                 if (tripLocationList.get(i).getTimePassed()==null){
-                    roundIntent = i+1;
+                    roundIntent = i;
                     break;
                 }
             }
@@ -212,7 +212,6 @@ public class MapsFragment extends Fragment
         getLastLocation(false);
 
         horizontalInfiniteCycleViewPager.setAdapter(new ScrollViewAdapter(dataItemScroll, getContext(), mMap));
-        horizontalInfiniteCycleViewPager.setCenterPageScaleOffset(20.0F);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
                 android.R.layout.simple_spinner_item, itemsDisplay);
@@ -234,10 +233,12 @@ public class MapsFragment extends Fragment
         btnGotoRouting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (roundIntent != sizeLatLngList) {
+                if (roundIntent < tripLocationList.size()+1){
                     startARoute();
-                } else {
-                    Intent intent = new Intent(getActivity(), ChooseLocationActivity.class);
+                }
+                else{
+                    Intent intent = new Intent(getActivity(), FinishTrip.class);
+                    intent.putExtra("tripId", tripId);
                     startActivity(intent);
                 }
             }
@@ -353,25 +354,26 @@ public class MapsFragment extends Fragment
     public void startARoute() {
         Log.d(TAG, "startARoute: roundIntent:"+roundIntent);
         startARouteInt=true;
+        btnGotoRouting.setText("Địa điểm kế tiếp");
         LatLng start = routeMaps.get(roundIntent-1).getPoints().get(0);
         for (int i=0;i<roundIntent-1;i++)
             showRoute(routeMaps.get(i),i,mMap,true,false);
         showRoute(routeMaps.get(roundIntent-1),roundIntent-1,mMap,false,startARouteInt);
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(start,zoomDefault+1));
-        btnGotoRouting.setText("Next Location");
         if (roundIntent == tripLocationList.size())
-            btnGotoRouting.setText("Finish Trip");
+            btnGotoRouting.setText("Kết thúc hành trình");
         btnGotoRouting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 roundIntent++;
-                database.myDAO().updateTimePassed(tripId,roundIntent-2, Calendar.getInstance().getTime());
+                database.myDAO().updateTimePassed(tripId,tripLocationList.get(roundIntent-2).getLocationId(), Calendar.getInstance().getTime());
+                tripLocationList.get(roundIntent-2).setTimePassed(Calendar.getInstance().getTime());
                 //checkRightDestination(curLocation,end);
                 if (roundIntent < tripLocationList.size()+1){
-                    horizontalInfiniteCycleViewPager.notifyDataSetChanged();
+                    dataItemScroll = new Data(tripLocationList).getData();
+                    horizontalInfiniteCycleViewPager.setAdapter(new ScrollViewAdapter(dataItemScroll, getContext(), mMap));
                     startARoute();
                 }
-
                 else{
                     Intent intent = new Intent(getActivity(), FinishTrip.class);
                     intent.putExtra("tripId", tripId);
