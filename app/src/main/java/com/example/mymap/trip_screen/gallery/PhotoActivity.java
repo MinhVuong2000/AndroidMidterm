@@ -1,5 +1,6 @@
 package com.example.mymap.trip_screen.gallery;
 
+import android.app.ActionBar;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -29,10 +30,10 @@ public class PhotoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_photo);
-        Log.d(TAG, "onCreate: ");
+
         mImageView = (ImageView) findViewById(R.id.image);
         String photoPath = getIntent().getStringExtra("photoPath");
-        //loadNormal(photoPath);
+
         loadWithGlide(photoPath);
 
     }

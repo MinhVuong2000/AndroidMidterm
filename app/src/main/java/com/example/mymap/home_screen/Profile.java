@@ -25,7 +25,6 @@ public class Profile extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-
         Toolbar toolbar = findViewById(R.id.profile_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -47,9 +46,9 @@ public class Profile extends AppCompatActivity {
         TextView trip3 = (TextView)findViewById(R.id.tv_numLocation);
 
         DB = MyDatabase.getInstance(this);
-        trip1.setText(Integer.toString(user.get_doneTrip()));
-        trip2.setText(Integer.toString(user.get_doingTrip()));
-        trip3.setText(Integer.toString(user.get_countTrip()));
+        trip1.setText("Số chuyến đi đã hoàn thành: " + DB.myDAO().getNumTripDone());
+        trip2.setText("Số chuyến đi đang thực hiện: " + DB.myDAO().getNumTripPending());
+        trip3.setText("Số địa điểm đã đi qua: " + DB.myDAO().getNumLocationPassed());
 
     }
 }

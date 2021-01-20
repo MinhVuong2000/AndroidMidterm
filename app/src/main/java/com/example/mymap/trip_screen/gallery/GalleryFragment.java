@@ -35,10 +35,12 @@ import java.util.List;
 
 public class GalleryFragment extends Fragment implements MyPhotoAdapter.OnItemListener{
     private static final String ARG_PARAM1 = "tripId";
+    private static final String ARG_PARAM2 = "isDone";
 
     private static final String TAG = "GalleryFragment";
 
     private int mTripId;
+    private int mIsDone;
     private List<String> mListPhotoPath;
     private MyPhotoAdapter myPhotoAdapter;
     private RecyclerView mRecyclerView;
@@ -51,10 +53,11 @@ public class GalleryFragment extends Fragment implements MyPhotoAdapter.OnItemLi
 
     public GalleryFragment(){}
 
-    public static GalleryFragment newInstance(int param){
+    public static GalleryFragment newInstance(int param1, int param2){
         GalleryFragment fragment = new GalleryFragment();
         Bundle args = new Bundle();
-        args.putInt(ARG_PARAM1, param);
+        args.putInt(ARG_PARAM1, param1);
+        args.putInt(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -76,6 +79,7 @@ public class GalleryFragment extends Fragment implements MyPhotoAdapter.OnItemLi
                 dispatchTakePictureIntent();
             }
         });
+        if(mIsDone == 1) mIBtn_camera.setVisibility(View.INVISIBLE);
         return view;
     }
 
@@ -84,6 +88,7 @@ public class GalleryFragment extends Fragment implements MyPhotoAdapter.OnItemLi
         super.onCreate(savedInstanceState);
         Bundle bundle = getArguments();
         mTripId = bundle.getInt(ARG_PARAM1,1);
+        mIsDone = bundle.getInt(ARG_PARAM2,0);
         mDB = MyDatabase.getInstance(getContext());
 
         mListPhotoPath = new ArrayList<>();

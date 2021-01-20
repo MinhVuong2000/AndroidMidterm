@@ -49,7 +49,7 @@ public class FinishTrip extends AppCompatActivity {
                     addNotRateYetDialog();
                 else{
                     mDAO.updateTripIsDone(mTripId);
-                    mDAO.updateTripReviewAndStar(mTripId, (int)stars*2, comment);
+                    mDAO.updateTripReviewAndStar(mTripId, (int)stars, comment);
                     Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
                     startActivity(intent);
                 }

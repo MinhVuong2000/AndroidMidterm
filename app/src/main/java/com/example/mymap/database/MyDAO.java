@@ -53,6 +53,15 @@ public interface MyDAO {
             "WHERE tripBelongId = :tripId AND locationId = :locationId")
     void updateTimePassed(int tripId, int locationId, Date time);
 
+    @Query("SELECT COUNT(*) FROM trip WHERE isDone = 1")
+    Integer getNumTripDone();
+
+    @Query("SELECT COUNT(*) FROM trip WHERE isDone = 0")
+    Integer getNumTripPending();
+
+    @Query("SELECT COUNT(DISTINCT locationId) FROM trip_location WHERE timePassed")
+    Integer getNumLocationPassed();
+
     @Query("UPDATE trip_location SET routeOrder = :order " +
             "WHERE tripBelongId = :tripId AND locationId = :locationId")
     void updateRouteOrder(int tripId, int locationId, int order);

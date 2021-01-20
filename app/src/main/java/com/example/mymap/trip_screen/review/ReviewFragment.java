@@ -63,7 +63,7 @@ public class ReviewFragment extends Fragment {
         mTvReview = view.findViewById(R.id.tv_review);
         mRateBar = view.findViewById(R.id.rb_review);
         mTvReview.setText(mTrip.getReview());
-        mRateBar.setRating(mTrip.getReviewStar()/(float)2);
+        mRateBar.setRating(mTrip.getReviewStar());
         return view;
     }
 }

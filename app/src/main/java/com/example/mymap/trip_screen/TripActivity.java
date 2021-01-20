@@ -56,7 +56,7 @@ public class TripActivity extends AppCompatActivity {
     }
 
     private void initFragment() {
-        mGalleryFragment = GalleryFragment.newInstance(mTripId);
+        mGalleryFragment = GalleryFragment.newInstance(mTripId, mIsDone);
         mMapFragment = MapsFragment.newInstance(mTripId);
         mTimelineFragment = TimeLineFragment.newInstance(mTripId);
         mReviewFragment = ReviewFragment.newInstance(mTripId);

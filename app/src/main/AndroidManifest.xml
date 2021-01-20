@@ -92,8 +92,7 @@
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".trip_screen.gallery.PhotoActivity"
-            android:label="Your Photo"
-            android:theme="@style/AppTheme" />
+            android:label="Your Photo" />
         <activity
             android:name=".trip_screen.gallery.AndroidCameraApi"
             android:label="Camera" />
