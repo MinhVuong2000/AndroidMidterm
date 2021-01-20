@@ -71,12 +71,19 @@ public class ScrollViewAdapter extends PagerAdapter {
         state.setText(data.get(position).getState());
         String distanceText = SettingsActivity.unit==0?""+String.format("%.2f",distanceList.get(position).getDistanceValue()* 0.000621) + " miles":""+ String.format("%.2f",distanceList.get(position).getDistanceValue()/1000) + " km";
         if (position==0)
-            distance.setText("Quãng đường xuất phát từ vị trí ban đầu:\n\t\t\t"+ distanceText);
-        else distance.setText("Quãng đường xuất phát từ " + data.get(position-1).getName()+":\n\t\t\t"+ distanceText);
-        map.animateCamera(CameraUpdateFactory.newLatLng(data.get((position+(int)(getCount()/2))%getCount()).getLatLng()));
+            distance.setText("Quảng đường xuất phát từ vị trí ban đầu:\n\t\t\t"+ distanceText);
+        else distance.setText("Quảng đường xuất phát từ " + data.get(position-1).getName()+":\n\t\t\t"+ distanceText);
 
         container.addView(layout);
         return layout;
+    }
+
+    @Override
+    public void setPrimaryItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
+        super.setPrimaryItem(container, position, object);
+
+        map.animateCamera(CameraUpdateFactory.newLatLng(data.get((position)%getCount()).getLatLng()));
+
     }
 
     @Override

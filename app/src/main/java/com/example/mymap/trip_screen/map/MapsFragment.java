@@ -54,6 +54,7 @@ import com.example.mymap.trip_screen.map.scroll_view.Data;
 import com.example.mymap.trip_screen.map.scroll_view.Item;
 import com.example.mymap.trip_screen.map.scroll_view.ScrollViewAdapter;
 import com.gigamole.infinitecycleviewpager.HorizontalInfiniteCycleViewPager;
+import com.gigamole.infinitecycleviewpager.OnInfiniteCyclePageTransformListener;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.LocationServices;
