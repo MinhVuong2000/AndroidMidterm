@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.mymap">
+
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <uses-feature android:name="android.hardware.camera2.full" />
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+
+        <activity android:name=".FinishTrip"
+            android:label="@string/title_activity_finish_trip"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:parentActivityName=".home_screen.HomeActivity"/>
+
+        <activity android:name=".trip_screen.map.DetailsPlace" />
+
+        <meta-data
+            android:name="com.google.android.maps.v2.API_KEY"
+            android:value="@string/google_maps_key" />
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.example.android.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
+        <activity android:name=".home_screen.Profile" />
+        <activity
+            android:name=".home_screen.AboutActivity"
+            android:label="About"
+            android:parentActivityName=".home_screen.HomeActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".home_screen.SettingsActivity"
+            android:label="Settings"
+            android:parentActivityName=".home_screen.HomeActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".home_screen.HomeActivity"
+            android:label="My Trip"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".home_screen.NamedTripActivity"
+            android:parentActivityName=".home_screen.HomeActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:label="Create your trip!">
+
+        </activity>
+        <activity android:name=".trip_screen.TripActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:parentActivityName=".home_screen.HomeActivity">
+
+        </activity>
+
+        <activity android:name=".home_screen.LocationInfoActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
+        <activity android:name=".home_screen.ChooseLocationActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:label="Choose your destination"
+            android:parentActivityName=".home_screen.NamedTripActivity">
+
+        </activity>
+        <activity android:name=".home_screen.login1"
+            android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
+        <activity
+            android:name=".trip_screen.gallery.PhotoActivity"
+            android:label="Your Photo"
+            android:theme="@style/AppTheme"/>
+        <activity
+            android:name=".trip_screen.gallery.AndroidCameraApi"
+            android:label="Camera" />
+    </application>
+
+</manifest>
