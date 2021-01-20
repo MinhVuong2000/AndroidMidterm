@@ -13,6 +13,7 @@ import com.example.mymap.database.MyLocation;
 import com.example.mymap.database.Trip;
 import com.example.mymap.trip_screen.TripActivity;
 
+import com.example.mymap.trip_screen.TripDoneInfo;
 import com.example.mymap.trip_screen.ViewPagerAdapter;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
@@ -160,7 +161,13 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public void onItemClick(int position) {
         Trip trip = mListTrip.get(position);
-        Intent intent = new Intent(this, TripActivity.class);
+        Intent intent;
+        if (mListTrip.get(position).getIsDone()==0){
+            intent = new Intent(this, TripActivity.class);
+        }
+        else{
+            intent = new Intent(this, TripDoneInfo.class);
+        }
         intent.putExtra("tripId", trip.getTripId());
         startActivity(intent);
     }

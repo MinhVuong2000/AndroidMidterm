@@ -15,6 +15,7 @@ import com.example.mymap.R;
 import com.example.mymap.database.MyDatabase;
 import com.example.mymap.database.Trip;
 import com.example.mymap.trip_screen.TripActivity;
+import com.example.mymap.trip_screen.TripDoneInfo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -82,7 +83,13 @@ public class DoneFragment extends Fragment implements TripAdapter.OnItemListener
     @Override
     public void onItemClick(int position) {
         Trip trip = mListTrip.get(position);
-        Intent intent = new Intent(getContext(), TripActivity.class);
+        Intent intent;
+        if (mListTrip.get(position).getIsDone()==0){
+            intent = new Intent(getContext(), TripActivity.class);
+        }
+        else{
+            intent = new Intent(getContext(), TripDoneInfo.class);
+        }
         intent.putExtra("tripId", trip.getTripId());
         startActivity(intent);
     }
