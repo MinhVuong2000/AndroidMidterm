@@ -38,20 +38,20 @@ import androidx.appcompat.widget.Toolbar;
 public class SettingsActivity extends AppCompatActivity {
 
 
-    static int MapTypeNormal = 0;
-    static int MapTypeHybrid = 1;
-    static int MapTypeSatelite = 2;
-    static int ThemeLight = 0;
-    static int ThemeDark = 1;
-    static int TimelineLight = 0;
-    static int TimelineDark = 1;
-    static int UnitMile = 0;
-    static int UnitKm = 1;
+    private int MapTypeNormal = 0;
+    private int MapTypeHybrid = 1;
+    private int MapTypeSatelite = 2;
+    private int ThemeLight = 0;
+    private int ThemeDark = 1;
+    private int TimelineLight = 0;
+    private int TimelineDark = 1;
+    private int UnitMile = 0;
+    private int UnitKm = 1;
 
-    public int map_type;
-    public int theme;
-    public int timeline;
-    public int unit;
+    public static int map_type;
+    public static int theme;
+    public static int timeline;
+    public static int unit;
 
 
     @Override

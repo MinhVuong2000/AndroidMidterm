@@ -1,5 +1,7 @@
 package com.example.mymap.trip_screen.map.scroll_view;
 
+import android.content.Intent;
+
 import com.example.mymap.database.MyLocation;
 import com.example.mymap.database.TripLocation;
 import com.google.android.gms.maps.model.LatLng;

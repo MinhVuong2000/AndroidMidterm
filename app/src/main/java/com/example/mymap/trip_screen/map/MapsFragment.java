@@ -49,6 +49,7 @@ import com.example.mymap.database.MyDatabase;
 import com.example.mymap.database.MyLocation;
 import com.example.mymap.R;
 import com.example.mymap.database.TripLocation;
+import com.example.mymap.home_screen.SettingsActivity;
 import com.example.mymap.trip_screen.map.scroll_view.Data;
 import com.example.mymap.trip_screen.map.scroll_view.Item;
 import com.example.mymap.trip_screen.map.scroll_view.ScrollViewAdapter;
@@ -187,20 +188,6 @@ public class MapsFragment extends Fragment
         database = MyDatabase.getInstance(getActivity());
         tripLocationList = database.myDAO().getListTripLocationFromTrip(tripId);
 
-        //sort tripLocation
-//        for (int i=0;i<tripLocationList.size();i++){
-//            if (tripLocationList.get(i).getTimePassed()==null)
-//                    continue;
-//            for (int j=i+1;j<tripLocationList.size();j++){
-//                if (tripLocationList.get(j).getTimePassed()==null ||
-//                        tripLocationList.get(i).getTimePassed().compareTo(tripLocationList.get(j).getTimePassed())<0){
-//                    TripLocation tmp = tripLocationList.get(i);
-//                    tripLocationList.set(i,tripLocationList.get(j));
-//                    tripLocationList.set(j,tmp);
-//                }
-//            }
-//        }
-
         //init roundIntent
         if (tripLocationList.get(0).getTimePassed()==null) roundIntent=1;
         else if (tripLocationList.get(tripLocationList.size()-1).getTimePassed()!=null)
@@ -219,10 +206,8 @@ public class MapsFragment extends Fragment
     public void onMapReady(GoogleMap googleMap) {
         Log.d(TAG, "onMapReady: enter");
         mMap = googleMap;
-
+        mMap.setMapType(get_type_map(SettingsActivity.map_type));
         getLastLocation(false);
-
-        horizontalInfiniteCycleViewPager.setAdapter(new ScrollViewAdapter(dataItemScroll, getContext(), mMap));
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
                 android.R.layout.simple_spinner_item, itemsDisplay);
@@ -294,6 +279,12 @@ public class MapsFragment extends Fragment
             Status status = Autocomplete.getStatusFromIntent(data);
             Toast.makeText(getActivity(),status.getStatusMessage(),Toast.LENGTH_SHORT).show();
         }
+    }
+
+    int get_type_map(int type_map_setting){
+        if (type_map_setting==1) return GoogleMap.MAP_TYPE_HYBRID;
+        if (type_map_setting==2) return GoogleMap.MAP_TYPE_SATELLITE;
+        return GoogleMap.MAP_TYPE_NORMAL;
     }
 
 
@@ -384,7 +375,7 @@ public class MapsFragment extends Fragment
                 //checkRightDestination(curLocation,end);
                 if (roundIntent < tripLocationList.size()+1){
                     dataItemScroll = new Data(tripLocationList).getData();
-                    horizontalInfiniteCycleViewPager.setAdapter(new ScrollViewAdapter(dataItemScroll, getContext(), mMap));
+                    horizontalInfiniteCycleViewPager.setAdapter(new ScrollViewAdapter(dataItemScroll, getContext(), mMap, routeMaps));
                     startARoute();
                 }
                 else{
@@ -485,7 +476,9 @@ public class MapsFragment extends Fragment
         routeMaps.add(routeMapsRound.get(index_minDistance));
         showRoute(routeMaps.get(round-1),round-1, mMap,roundIntent>round, startARouteInt);
         round++;
-
+        if (routeMaps.size()==sizeLatLngList-1){
+            horizontalInfiniteCycleViewPager.setAdapter(new ScrollViewAdapter(dataItemScroll, getContext(), mMap, routeMaps));
+        }
         routeMapsRound.clear();
         routeMapsRound = new ArrayList<>();
         distanceList = new Integer[sizeLatLngList-round];

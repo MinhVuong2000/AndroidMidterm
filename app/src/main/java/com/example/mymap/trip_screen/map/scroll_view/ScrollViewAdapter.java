@@ -13,25 +13,31 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.PagerAdapter;
 
 import com.bumptech.glide.Glide;
+import com.directions.route.Route;
 import com.example.mymap.R;
+import com.example.mymap.home_screen.SettingsActivity;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 
+import org.w3c.dom.Text;
+
+import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ScrollViewAdapter extends PagerAdapter {
     private List<Item> data;
     private Context mContext;
     private LayoutInflater mLayoutInflater;
-    private boolean mIsTwoWay;
+    ArrayList<Route> distanceList;
     GoogleMap map;
 
-    public ScrollViewAdapter(List<Item> data, Context context, GoogleMap map) {
+    public ScrollViewAdapter(List<Item> data, Context context, GoogleMap map, ArrayList<Route> distance) {
         this.data = data;
         this.mContext = context;
         mLayoutInflater = LayoutInflater.from(context);
-        mIsTwoWay = false;
         this.map = map;
+        this.distanceList = distance;
     }
 
     @Override
@@ -56,13 +62,18 @@ public class ScrollViewAdapter extends PagerAdapter {
         ImageView imageView = layout.findViewById(R.id.imagePlace);
         TextView name = layout.findViewById(R.id.namePlace);
         TextView state = layout.findViewById(R.id.statedPlace);
+        TextView distance = layout.findViewById(R.id.distance);
 
         Glide.with(mContext)
                 .load(data.get(position).getIcon())
                 .into(imageView);
         name.setText(data.get(position).getName());
         state.setText(data.get(position).getState());
-        map.animateCamera(CameraUpdateFactory.newLatLng(data.get((position+1)%getCount()).getLatLng()));
+        String distanceText = SettingsActivity.unit==0?""+String.format("%.2f",distanceList.get(position).getDistanceValue()* 0.000621) + " miles":""+ String.format("%.2f",distanceList.get(position).getDistanceValue()/1000) + " km";
+        if (position==0)
+            distance.setText("Quảng đường xuất phát từ vị trí ban đầu:\n\t\t\t"+ distanceText);
+        else distance.setText("Quảng đường xuất phát từ " + data.get(position-1).getName()+":\n\t\t\t"+ distanceText);
+        map.animateCamera(CameraUpdateFactory.newLatLng(data.get((position+(int)(getCount()/2))%getCount()).getLatLng()));
 
         container.addView(layout);
         return layout;
