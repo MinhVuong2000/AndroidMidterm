@@ -60,7 +60,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         });
 
         initData();
+    }
 
+    private void initData() {
+        mLocationsArrayList = MyLocation.getAllLocations();
     }
 
     @Override
@@ -72,7 +75,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void initRecyclerView() {
+
         mRecyclerView = findViewById(R.id.recyclerView_pend);
+
         List<Trip> list = MyDatabase.getInstance(this).myDAO().getListTrip();
         mListTrip = new ArrayList<>(list);
         mTripAdapter = new TripAdapter(list,this);
@@ -95,6 +100,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         drawer.addDrawerListener(toggle);
         toggle.syncState();
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -145,21 +151,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     }
 
 
-    private void initData() {
-        mLocationsArrayList = new ArrayList<>();
-        firebaseReference = FirebaseDatabase.getInstance().getReference("myLocation");
-        firebaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot di:dataSnapshot.getChildren()){
-                    mLocationsArrayList.add(di.getValue(MyLocation.class));
-                }
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-            }
-        });
-    }
 
 }

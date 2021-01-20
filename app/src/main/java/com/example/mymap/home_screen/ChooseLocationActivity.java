@@ -2,7 +2,9 @@ package com.example.mymap.home_screen;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
 import androidx.appcompat.widget.Toolbar;
+
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -47,10 +49,12 @@ public class ChooseLocationActivity extends AppCompatActivity {
         Log.d(TAG, "onCreate: ");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+
 
         mTripName = getIntent().getStringExtra("TripName");
         database = MyDatabase.getInstance(this);

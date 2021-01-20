@@ -17,15 +17,26 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.StrictMode;
+
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
+import android.view.KeyEvent;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.directions.route.AbstractRouting;
@@ -67,6 +78,7 @@ import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -100,7 +112,7 @@ public class MapsFragment extends Fragment
     List<TripLocation> tripLocationList;
     static ArrayList<Route> routeMaps = null;
     static LatLng curLocation=null;
-    static ArrayList<LatLng> latLngArrayList = null;
+    ArrayList<LatLng> latLngArrayList = null;
     static int sizeLatLngList;
     static int roundIntent;
     static boolean startARouteInt;
@@ -156,19 +168,14 @@ public class MapsFragment extends Fragment
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(getActivity());//get intent from HomeActivity
         permissionLocation = new PermissionLocation(curLocation,MapsFragment.this);
         Bundle bundle = getArguments();
-        if(bundle!=null){
+
+        if(bundle!=null)
             tripId = bundle.getInt("param1",0);
-            Log.d(TAG, "onCreate: tripId "+tripId);
-        }
-        else{
-            Log.d(TAG, "cant get bundle");
-        }
 
         initData();
         markersItems = null;
         startARouteInt = false;
         dataItemScroll = new Data(tripLocationList).getData();
-        Log.d(TAG, "onCreate: dataItemScroll"+dataItemScroll.get(0).toString());
 
         if (android.os.Build.VERSION.SDK_INT >= 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -179,20 +186,21 @@ public class MapsFragment extends Fragment
     private void initData() {
         database = MyDatabase.getInstance(getActivity());
         tripLocationList = database.myDAO().getListTripLocationFromTrip(tripId);
-        Log.d(TAG, "initData: size tripLocation: "+tripLocationList.size());
+
         //sort tripLocation
-        for (int i=0;i<tripLocationList.size();i++){
-            if (tripLocationList.get(i).getTimePassed()==null)
-                    continue;
-            for (int j=i+1;j<tripLocationList.size();j++){
-                if (tripLocationList.get(j).getTimePassed()==null ||
-                        tripLocationList.get(i).getTimePassed().compareTo(tripLocationList.get(j).getTimePassed())>0){
-                    TripLocation tmp = tripLocationList.get(i);
-                    tripLocationList.set(i,tripLocationList.get(j));
-                    tripLocationList.set(j,tmp);
-                }
-            }
-        }
+//        for (int i=0;i<tripLocationList.size();i++){
+//            if (tripLocationList.get(i).getTimePassed()==null)
+//                    continue;
+//            for (int j=i+1;j<tripLocationList.size();j++){
+//                if (tripLocationList.get(j).getTimePassed()==null ||
+//                        tripLocationList.get(i).getTimePassed().compareTo(tripLocationList.get(j).getTimePassed())<0){
+//                    TripLocation tmp = tripLocationList.get(i);
+//                    tripLocationList.set(i,tripLocationList.get(j));
+//                    tripLocationList.set(j,tmp);
+//                }
+//            }
+//        }
+
         //init roundIntent
         if (tripLocationList.get(0).getTimePassed()==null) roundIntent=1;
         else if (tripLocationList.get(tripLocationList.size()-1).getTimePassed()!=null)
@@ -203,6 +211,8 @@ public class MapsFragment extends Fragment
                     break;
                 }
             }
+
+        Log.d(TAG, "initData: routeIntent start: "+roundIntent);
     }
 
     @Override
@@ -213,19 +223,19 @@ public class MapsFragment extends Fragment
         getLastLocation(false);
 
         horizontalInfiniteCycleViewPager.setAdapter(new ScrollViewAdapter(dataItemScroll, getContext(), mMap));
-        horizontalInfiniteCycleViewPager.setCenterPageScaleOffset(20.0F);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
-                android.R.layout.simple_spinner_item,itemsDisplay);
+                android.R.layout.simple_spinner_item, itemsDisplay);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
-                if (position!=0){
+                if (position != 0) {
                     getPlacesWithItem(items[position], position);
                 }
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
             }
@@ -234,30 +244,33 @@ public class MapsFragment extends Fragment
         btnGotoRouting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (roundIntent!=sizeLatLngList){
+                if (roundIntent < tripLocationList.size()+1){
                     startARoute();
                 }
                 else{
-                    Intent intent = new Intent(getActivity(), ChooseLocationActivity.class);
+                    Intent intent = new Intent(getActivity(), FinishTrip.class);
+                    intent.putExtra("tripId", tripId);
                     startActivity(intent);
                 }
             }
         });
 
         //init places
-        Places.initialize(getActivity(),getResources().getString(R.string.google_maps_key));
+
+        Places.initialize(getActivity(), getResources().getString(R.string.google_maps_key));
         //set editText non focusable
         editTextSearch.setFocusable(false);
         editTextSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //init place field list
-                List<Place.Field> fieldList = Arrays.asList(Place.Field.ADDRESS,Place.Field.ID,
+                List<Place.Field> fieldList = Arrays.asList(Place.Field.ADDRESS, Place.Field.ID,
                         Place.Field.LAT_LNG, Place.Field.NAME);
                 //create intent
                 Intent intent = new Autocomplete.IntentBuilder(AutocompleteActivityMode.OVERLAY,
                         fieldList).build(getActivity());
-                startActivityForResult(intent,100);
+
+                startActivityForResult(intent, 100);
             }
         });
     }
@@ -353,25 +366,27 @@ public class MapsFragment extends Fragment
     public void startARoute() {
         Log.d(TAG, "startARoute: roundIntent:"+roundIntent);
         startARouteInt=true;
+        btnGotoRouting.setText("Địa điểm kế tiếp");
+
         LatLng start = routeMaps.get(roundIntent-1).getPoints().get(0);
         for (int i=0;i<roundIntent-1;i++)
             showRoute(routeMaps.get(i),i,mMap,true,false);
         showRoute(routeMaps.get(roundIntent-1),roundIntent-1,mMap,false,startARouteInt);
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(start,zoomDefault+1));
-        btnGotoRouting.setText("Next Location");
         if (roundIntent == tripLocationList.size())
-            btnGotoRouting.setText("Finish Trip");
+            btnGotoRouting.setText("Kết thúc hành trình");
         btnGotoRouting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 roundIntent++;
-                database.myDAO().updateTimePassed(tripId,roundIntent-2,new Date());
+                database.myDAO().updateTimePassed(tripId,tripLocationList.get(roundIntent-2).getLocationId(), Calendar.getInstance().getTime());
+                tripLocationList.get(roundIntent-2).setTimePassed(Calendar.getInstance().getTime());
                 //checkRightDestination(curLocation,end);
                 if (roundIntent < tripLocationList.size()+1){
-                    horizontalInfiniteCycleViewPager.notifyDataSetChanged();
+                    dataItemScroll = new Data(tripLocationList).getData();
+                    horizontalInfiniteCycleViewPager.setAdapter(new ScrollViewAdapter(dataItemScroll, getContext(), mMap));
                     startARoute();
                 }
-
                 else{
                     Intent intent = new Intent(getActivity(), FinishTrip.class);
                     intent.putExtra("tripId", tripId);
@@ -385,7 +400,7 @@ public class MapsFragment extends Fragment
     private void checkRightDestination(LatLng curLocation, LatLng end) {
         if ((curLocation.latitude-end.latitude<epsilon && end.latitude-curLocation.latitude<epsilon)
                 && (curLocation.longitude-end.longitude<epsilon && end.longitude-curLocation.longitude<epsilon)){
-            database.myDAO().updateTimePassed(tripId,roundIntent-2,new Date());
+            database.myDAO().updateTimePassed(tripId,roundIntent-2,Calendar.getInstance().getTime());
         }
         else {
             Toast.makeText(getActivity(),"Here is not Destination. Please go on!",Toast.LENGTH_LONG).show();

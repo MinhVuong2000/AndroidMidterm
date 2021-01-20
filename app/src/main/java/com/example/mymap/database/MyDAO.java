@@ -40,6 +40,9 @@ public interface MyDAO {
     @Query("SELECT * FROM trip_location WHERE tripBelongId = :tripId")
     List<TripLocation> getListTripLocationFromTrip(int tripId);
 
+    @Query("SELECT locationId FROM trip_location WHERE tripBelongId = :tripId")
+    List<Integer> getLocationIdsFromTrip(int tripId);
+
     @Query("UPDATE trip_location SET timePassed = :time " +
             "WHERE tripBelongId = :tripId AND locationId = :locationId")
     void updateTimePassed(int tripId, int locationId, Date time);

@@ -1,6 +1,7 @@
 package com.example.mymap.trip_screen;
 
 import androidx.appcompat.app.AppCompatActivity;
+
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
@@ -40,6 +41,7 @@ public class TripActivity extends AppCompatActivity {
         //Get tripId from home_screen
         mTripId = getIntent().getIntExtra("tripId",0);
         Log.d(TAG, "onCreate: tripid" + mTripId);
+
         String tripName = MyDatabase.getInstance(this).myDAO().getTripName(mTripId);
         setTitle(tripName);
 

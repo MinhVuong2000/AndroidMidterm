@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
@@ -33,11 +34,11 @@ public class LocationInfoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_activity_info_screen);
 
-
         Intent intent = getIntent();
         int location_idx = intent.getIntExtra("location_idx", 0);
 
         location = HomeActivity.mLocationsArrayList.get(location_idx);
+
         mListImages = location.getPictures();
 
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -45,6 +46,7 @@ public class LocationInfoActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setTitle(location.getName());
+
 
         final ViewFlipper viewFlipper = findViewById(R.id.infoScreen_viewFlipper);
         for(int i=0; i<mListImages.size(); i++)

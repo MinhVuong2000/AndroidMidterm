@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="3.2"
+
         android:orientation="horizontal">
 
         <EditText
@@ -21,6 +22,7 @@
             android:layout_weight="1"
             android:hint="Search &amp; Explore"
             android:padding="16dp"
+
             android:drawablePadding="16dp"
             android:drawableLeft="@drawable/ic_baseline_search_24"
             android:gravity="center"
@@ -68,6 +70,7 @@
         android:layout_height="match_parent"
         app:icvp_interpolator="@android:anim/accelerate_decelerate_interpolator"
         app:icvp_scroll_duration="200"
+
         app:icvp_center_page_scale_offset="50dp"
         app:icvp_min_page_scale_offset="10dp"
         app:icvp_max_page_scale="0.7"

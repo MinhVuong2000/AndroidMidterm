@@ -56,17 +56,22 @@ public class DetailsPlace extends AppCompatActivity {
         this.setTitle(info.get(0));
         textViewAddress.setText(info.get(1));
         textViewPhone.setText(info.get(2));
-        textViewPhone.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_DIAL);
-                String tel = "tel:" + info.get(2);
-                intent.setData(Uri.parse(tel));
-                startActivity(intent);
-            }
-        });
+
+        if (info.get(2)!="None"){
+            textViewPhone.setTextColor(getResources().getColor(R.color.quantum_purple200));
+            textViewPhone.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(Intent.ACTION_DIAL);
+                    String tel = "tel:" + info.get(2);
+                    intent.setData(Uri.parse(tel));
+                    startActivity(intent);
+                }
+            });
+        }
         ratingBar.setRating((float) Double.parseDouble(info.get(3)));
-        textViewUserRatingTotal.setText(info.get(4));
+        textViewUserRatingTotal.setText(info.get(4)+" người đã đánh giá");
+
         textViewUrl.setText(info.get(5));
         textViewUrl.setOnClickListener(new View.OnClickListener() {
             @Override

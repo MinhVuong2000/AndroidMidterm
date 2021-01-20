@@ -6,6 +6,9 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.TextUtils;
+
+import android.util.Log;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +35,8 @@ import java.util.List;
 
 public class GalleryFragment extends Fragment implements MyPhotoAdapter.OnItemListener{
     private static final String ARG_PARAM1 = "tripId";
+
+    private static final String TAG = "GalleryFragment";
 
     private int mTripId;
     private List<String> mListPhotoPath;
@@ -77,7 +82,6 @@ public class GalleryFragment extends Fragment implements MyPhotoAdapter.OnItemLi
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         Bundle bundle = getArguments();
         mTripId = bundle.getInt(ARG_PARAM1,1);
         mDB = MyDatabase.getInstance(getContext());

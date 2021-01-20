@@ -13,12 +13,21 @@ import android.view.ViewGroup;
 
 import com.example.mymap.R;
 import com.example.mymap.database.MyDatabase;
+
 import com.example.mymap.database.TripLocation;
+
+import com.example.mymap.database.MyLocation;
+import com.example.mymap.database.TripLocation;
+import com.example.mymap.home_screen.HomeActivity;
+
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
+import static com.example.mymap.home_screen.HomeActivity.mLocationsArrayList;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -49,19 +58,33 @@ public class TimeLineFragment extends Fragment {
     }
 
     @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if(isVisibleToUser){
+            initData();
+            mTimelineAdapter.setData(mListTripLocation);
+        }
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        DB = MyDatabase.getInstance(getContext());
+        mTripId = getArguments().getInt(ARG_PARAM1, 1);
 
-//        DB = MyDatabase.getInstance(getContext());
-//        mTripId = getArguments().getInt(ARG_PARAM1);
-//
-//        List list = DB.myDAO().getListTripLocationFromTrip(mTripId);
-//        mListTripLocation = new ArrayList<>(list);
-        initDump();
-        mTimelineAdapter = new TimeLineAdapter(getContext(), mListTripLocation);
+        initData();
+        //initDump();
+        mTimelineAdapter = new TimeLineAdapter(getContext(), mListTripLocation, mLocationsArrayList);
+    }
+
+    private void initData() {
+        List list = DB.myDAO().getListTripLocationFromTrip(mTripId);
+        mListTripLocation = new ArrayList<>(list);
+
     }
 
     private void initDump() {
+        Log.d(TAG, "initDump: ");
         Calendar calendar = Calendar.getInstance();
         calendar.set(2018, 11, 31, 10, 01);
         Date date1 = calendar.getTime();
@@ -86,4 +109,5 @@ public class TimeLineFragment extends Fragment {
         mRecyclerView.setAdapter(mTimelineAdapter);
         return view;
     }
+
 }

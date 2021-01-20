@@ -1,7 +1,9 @@
 package com.example.mymap.home_screen;
 
 import androidx.appcompat.app.AppCompatActivity;
+
 import androidx.appcompat.widget.Toolbar;
+
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -32,10 +34,12 @@ public class NamedTripActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_named_trip);
 
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+
 
         et_namedTrip = findViewById(R.id.et_namedTrip);
         btn_namedTrip = findViewById(R.id.btn_namedTrip);
